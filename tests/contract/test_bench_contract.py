@@ -26,6 +26,11 @@ SIGA = ROOT.parent
 MANIFEST = ROOT / "datasets/benchmark/manifest.json"
 
 
+def _requires_siga() -> None:
+    if not (SIGA / "siga-ex").is_dir():
+        pytest.skip("Clone do SIGA não disponível ao lado (CI sem siga-ex)")
+
+
 def _sha_date(sha: str) -> str:
     out = subprocess.run(
         ["git", "-C", str(SIGA), "show", "--no-patch", "--format=%ad", "--date=short", sha],
@@ -38,6 +43,7 @@ def _sha_date(sha: str) -> str:
 
 
 def test_manifest_valid_and_temporal():
+    _requires_siga()
     manifest = load_manifest(MANIFEST)
     assert manifest["branch"] == "desenvolvimento"
     total = 0
