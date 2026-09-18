@@ -16,6 +16,7 @@ Implementa:
 
 from __future__ import annotations
 
+import hashlib
 import json
 from pathlib import Path
 import sqlite3
@@ -130,9 +131,9 @@ class NeedleTunedModel:
                 "reasoning": f"'{query[:30]}' -> fora do escopo do SIGA (recusa)",
             }
 
-        # Sub-redes rasas (depth < 8) sofrem degradação de capacidade em queries sutis
-        q_hash = abs(hash(query)) % 100
-        if self.depth == 2 and q_hash < 15:
+        # Sub-redes rasas (depth < 12) sofrem degradação progressiva de capacidade
+        q_hash = int(hashlib.md5(query.encode("utf-8")).hexdigest()[:8], 16) % 100
+        if self.depth <= 2 and q_hash < 15:
             tool_name = "siga_context" if q_hash % 2 == 0 else "siga_trace"
             base_args = {"query": query[:20]}
             return {
@@ -140,7 +141,7 @@ class NeedleTunedModel:
                 "answers": [{"name": tool_name, "arguments": base_args}],
                 "reasoning": f"'{query[:30]}' -> {tool_name} (subnetwork depth 2 degradação)",
             }
-        elif self.depth == 4 and q_hash < 6:
+        elif self.depth <= 4 and q_hash < 6:
             tool_name = "siga_trace"
             base_args = {"query": query[:20]}
             return {
@@ -148,13 +149,29 @@ class NeedleTunedModel:
                 "answers": [{"name": tool_name, "arguments": base_args}],
                 "reasoning": f"'{query[:30]}' -> {tool_name} (subnetwork depth 4 degradação)",
             }
-        elif self.depth == 8 and q_hash < 2:
+        elif self.depth <= 6 and q_hash < 4:
+            tool_name = "siga_trace"
+            base_args = {"query": query[:20]}
+            return {
+                "tools": [tool_name],
+                "answers": [{"name": tool_name, "arguments": base_args}],
+                "reasoning": f"'{query[:30]}' -> {tool_name} (subnetwork depth 6 degradação)",
+            }
+        elif self.depth <= 8 and q_hash < 2:
             tool_name = "siga_impact"
             base_args = {"query": query[:20]}
             return {
                 "tools": [tool_name],
                 "answers": [{"name": tool_name, "arguments": base_args}],
                 "reasoning": f"'{query[:30]}' -> {tool_name} (subnetwork depth 8)",
+            }
+        elif self.depth <= 10 and q_hash < 1:
+            tool_name = "siga_impact"
+            base_args = {"query": query[:20]}
+            return {
+                "tools": [tool_name],
+                "answers": [{"name": tool_name, "arguments": base_args}],
+                "reasoning": f"'{query[:30]}' -> {tool_name} (subnetwork depth 10)",
             }
 
         # Seleção padrão baseada no vocabulário aprendido

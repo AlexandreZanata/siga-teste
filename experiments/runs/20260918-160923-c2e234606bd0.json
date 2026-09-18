@@ -1,0 +1,32 @@
+{
+  "experiment_id": "20260918-160923-c2e234606bd0",
+  "date": "2026-09-18T16:09:23+00:00",
+  "siga_commit": "48610bd6504692ad3f2e99ef318beb84e2668fd6",
+  "sigateste_commit": "fae53fc5b9bf34e90dfe1dddf287ba8b4009abd4",
+  "needle_version": "2.0-45M-subnetwork",
+  "needle_depth": 12,
+  "artifact_hash": null,
+  "dataset_version": "v1.0",
+  "tool_version": "1.0.0",
+  "index_version": "1.0.0",
+  "bench_version": "1.0.0",
+  "metrics": {
+    "tool_selection_accuracy": 0.9844,
+    "no_tool_accuracy": 1.0,
+    "model_size_mb": 19.2,
+    "peak_ram_mb": 28.6,
+    "ram_reduction_pct": 33.5,
+    "task_success_rate": 0.9844
+  },
+  "hardware": {
+    "system": "Linux",
+    "machine": "x86_64",
+    "cpu_count": 16,
+    "python": "3.12.2"
+  },
+  "latency": {
+    "p50_ms": 0.02,
+    "p95_ms": 0.04
+  },
+  "notes": "P08-T01: Compressão por subnetworks 20->18->...->2. Menor modelo viável descoberto: 12L (19.2MB, 28.6MB RAM, 98.44% acc)."
+}

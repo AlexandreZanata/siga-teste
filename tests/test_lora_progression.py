@@ -96,8 +96,8 @@ def test_selection_and_freezing_of_best_configuration():
 
 
 def test_publish_lora_curves_and_gain_proof(tmp_path: Path):
-    # Executa a geração e publicação sem logar duplicatas se log_run=False
-    report = publish_lora_curves(log_run=False)
+    # Executa a geração e publicação sem poluir relatórios ou run tracking
+    report = publish_lora_curves(log_run=False, save_report=False)
 
     assert report["benchmark"] == "SIGA-Bench Holdout"
     assert len(report["dataset_progression"]) == 5

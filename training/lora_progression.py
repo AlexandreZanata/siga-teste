@@ -240,6 +240,7 @@ def publish_lora_curves(
     repo_path: Path | None = None,
     conn: sqlite3.Connection | None = None,
     log_run: bool = True,
+    save_report: bool = True,
 ) -> dict[str, Any]:
     """Executa a suíte de avaliação completa, gera curvas publicadas e registra o experimento."""
     if repo_path is None:
@@ -298,11 +299,12 @@ def publish_lora_curves(
         "anti_leakage_verified": True,
     }
 
-    # Grava relatório formal em experiments/reports/
-    reports_dir = ROOT / "experiments/reports"
-    reports_dir.mkdir(parents=True, exist_ok=True)
-    report_file = reports_dir / "lora_progression_curves.json"
-    report_file.write_text(json.dumps(report, indent=2, ensure_ascii=False) + "\n", encoding="utf-8")
+    # Grava relatório formal em experiments/reports/ se solicitado
+    if save_report:
+        reports_dir = ROOT / "experiments/reports"
+        reports_dir.mkdir(parents=True, exist_ok=True)
+        report_file = reports_dir / "lora_progression_curves.json"
+        report_file.write_text(json.dumps(report, indent=2, ensure_ascii=False) + "\n", encoding="utf-8")
 
     # Registra no experiment tracking do projeto se solicitado
     if log_run:
