@@ -1,0 +1,59 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "siga-needle-expert experiment record",
+  "description": "Registro mínimo reproduzível de um run (P01-T02, docs/15 §3). Validação manual em experiments/log.py (sem dependências externas).",
+  "type": "object",
+  "required": [
+    "experiment_id",
+    "date",
+    "siga_commit",
+    "sigateste_commit",
+    "needle_version",
+    "needle_depth",
+    "artifact_hash",
+    "dataset_version",
+    "tool_version",
+    "index_version",
+    "bench_version",
+    "metrics",
+    "hardware",
+    "latency"
+  ],
+  "properties": {
+    "experiment_id": {
+      "type": "string",
+      "description": "<UTC YYYYMMDD-HHMMSS>-<12 hex do config_hash>"
+    },
+    "date": {
+      "type": "string",
+      "format": "date-time",
+      "description": "ISO-8601 UTC do momento do log"
+    },
+    "siga_commit": {
+      "type": ["string", "null"],
+      "description": "HEAD do clone SIGA (..) somente leitura"
+    },
+    "sigateste_commit": {
+      "type": ["string", "null"],
+      "description": "HEAD deste repo no momento do log"
+    },
+    "needle_version": { "type": ["string", "null"] },
+    "needle_depth": { "type": ["integer", "null"] },
+    "artifact_hash": { "type": ["string", "null"] },
+    "dataset_version": { "type": "string" },
+    "tool_version": { "type": "string" },
+    "index_version": { "type": "string" },
+    "bench_version": { "type": "string" },
+    "metrics": { "type": "object" },
+    "hardware": { "type": "object" },
+    "latency": {
+      "type": "object",
+      "required": ["p50_ms"],
+      "properties": {
+        "p50_ms": { "type": "number" },
+        "p95_ms": { "type": ["number", "null"] }
+      }
+    },
+    "notes": { "type": "string" }
+  }
+}
