@@ -1,0 +1,31 @@
+{
+  "experiment_id": "20260918-151605-fbd6c9402f9d",
+  "date": "2026-09-18T15:16:05+00:00",
+  "siga_commit": null,
+  "sigateste_commit": "f6ad2e82234e5bc82cd98caaf26ac85a88f9851d",
+  "needle_version": null,
+  "needle_depth": null,
+  "artifact_hash": null,
+  "dataset_version": "v1.0",
+  "tool_version": "1.0.0",
+  "index_version": "1.0.0",
+  "bench_version": "1.0.0",
+  "metrics": {
+    "n100_no_tool_acc": 1.0,
+    "n500_no_tool_acc": 1.0,
+    "n100_hallucination_rate": 0.0,
+    "n500_hallucination_rate": 0.0,
+    "n500_total": 500
+  },
+  "hardware": {
+    "system": "Linux",
+    "machine": "x86_64",
+    "cpu_count": 16,
+    "python": "3.12.2"
+  },
+  "latency": {
+    "p50_ms": 0.0,
+    "p95_ms": null
+  },
+  "notes": "P06-T02: Curva dataset-size iniciada (100 -> 500 gold records) com multi-teacher selection."
+}

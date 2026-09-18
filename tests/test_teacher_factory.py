@@ -110,7 +110,15 @@ def _setup_fixture(tmp_path: Path) -> tuple[Path, sqlite3.Connection]:
 
 def test_task_factory_generates_all_categories():
     categories = generate_all_categories()
-    expected = {"locate", "trace", "impact", "history", "ambiguous", "mutation"}
+    expected = {
+        "locate",
+        "trace",
+        "impact",
+        "history",
+        "ambiguous",
+        "mutation",
+        "hard_negatives",
+    }
     assert set(categories.keys()) == expected
 
     # 1. locate

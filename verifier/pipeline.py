@@ -39,7 +39,15 @@ def verify_candidate(
         errors.append("Contaminação com SHA do benchmark detectada")
 
     # 2. Casos off-topic e no-tool: verificador checa ausência de chamadas
-    if task_type in ("off-topic", "no-tool"):
+    no_tool_types = (
+        "off-topic",
+        "no-tool",
+        "ambiguous-incomplete",
+        "insufficient",
+        "refusal",
+        "clarification_needed",
+    )
+    if task_type in no_tool_types or candidate.get("tools") == []:
         has_no_calls = len(steps) == 0 or (len(steps) == 1 and steps[0].get("action") in ("none", ""))
         checks.append({"name": "no_tool_compliance", "passed": has_no_calls})
         if not has_no_calls:

@@ -7,11 +7,16 @@ Fábrica de geração de tarefas canônicas por categoria:
 - history: histórico Git, diffs e co-alterações (CHANGED_WITH)
 - ambiguous: ambíguas, off-topic, no-tool, insuficientes
 - mutation: mutações de código (condição, validação, import, annotation, SQL, JSP)
+- hard_negatives: off-topic, ferramenta semelhante, args parecidos, homônimos, módulos vizinhos, incompletas
 """
 
 from typing import Any
 
 from task_factory.ambiguous import generate_ambiguous_tasks
+from task_factory.hard_negatives import (
+    generate_hard_negative_tasks,
+    generate_off_topic_tasks,
+)
 from task_factory.history import generate_history_tasks
 from task_factory.impact import generate_impact_tasks
 from task_factory.locate import generate_locate_tasks
@@ -28,6 +33,7 @@ def generate_all_categories() -> dict[str, list[dict[str, Any]]]:
         "history": generate_history_tasks(),
         "ambiguous": generate_ambiguous_tasks(),
         "mutation": generate_mutation_tasks(),
+        "hard_negatives": generate_hard_negative_tasks(),
     }
 
 
@@ -39,4 +45,6 @@ __all__ = [
     "generate_history_tasks",
     "generate_ambiguous_tasks",
     "generate_mutation_tasks",
+    "generate_hard_negative_tasks",
+    "generate_off_topic_tasks",
 ]

@@ -1,0 +1,73 @@
+{
+  "curve": "dataset_size_progression",
+  "points": [
+    {
+      "n": 100,
+      "metrics": {
+        "total_records": 100,
+        "no_tool_accuracy": 1.0,
+        "no_tool_candidates": 7,
+        "no_tool_correct": 7,
+        "hallucination_rate": 0.0,
+        "tool_records": 93,
+        "anti_leakage_passed": true,
+        "avg_steps": 1.03,
+        "teacher_distribution": {
+          "unknown": 100
+        },
+        "category_distribution": {
+          "locate-controller": 8,
+          "locate-symbol": 6,
+          "locate-file": 5,
+          "locate-entity": 5,
+          "locate-jsp": 6,
+          "locate-migration": 3,
+          "locate-test": 2,
+          "trace-flow": 20,
+          "impact-analysis": 15,
+          "git-history": 13,
+          "context-capsule": 5,
+          "locate-trace-context": 5,
+          "off-topic": 7
+        },
+        "split_distribution": {
+          "unknown": 100
+        }
+      }
+    },
+    {
+      "n": 500,
+      "metrics": {
+        "total_records": 500,
+        "no_tool_accuracy": 1.0,
+        "no_tool_candidates": 70,
+        "no_tool_correct": 70,
+        "hallucination_rate": 0.0,
+        "tool_records": 430,
+        "anti_leakage_passed": true,
+        "avg_steps": 1.0,
+        "teacher_distribution": {
+          "muse": 430,
+          "deepseek": 70
+        },
+        "category_distribution": {
+          "locate": 150,
+          "trace": 75,
+          "impact": 75,
+          "history": 60,
+          "hard_negative": 140
+        },
+        "split_distribution": {
+          "train": 350,
+          "valid": 150
+        }
+      }
+    }
+  ],
+  "delta": {
+    "scale_factor": 5.0,
+    "no_tool_accuracy_preserved": true,
+    "zero_hallucination_maintained": true,
+    "categories_expanded": false
+  }
+}

@@ -11,9 +11,19 @@ from teachers.generator import (
     generate_multi_teacher_candidates,
     load_teacher_prompt,
 )
+from teachers.selection import (
+    build_canonical_gold_record,
+    process_task_to_gold,
+    score_candidate,
+    select_shortest_correct,
+)
 
 __all__ = [
     "load_teacher_prompt",
     "generate_candidate_for_teacher",
     "generate_multi_teacher_candidates",
+    "score_candidate",
+    "select_shortest_correct",
+    "build_canonical_gold_record",
+    "process_task_to_gold",
 ]

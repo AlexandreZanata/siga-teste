@@ -1,0 +1,32 @@
+{
+  "dataset_version": "v1.0",
+  "total_generated": 500,
+  "total_verified": 500,
+  "total_rejected": 0,
+  "acceptance_rate": 1.0,
+  "metrics": {
+    "total_records": 500,
+    "no_tool_accuracy": 1.0,
+    "no_tool_candidates": 70,
+    "no_tool_correct": 70,
+    "hallucination_rate": 0.0,
+    "tool_records": 430,
+    "anti_leakage_passed": true,
+    "avg_steps": 1.0,
+    "teacher_distribution": {
+      "muse": 430,
+      "deepseek": 70
+    },
+    "category_distribution": {
+      "locate": 150,
+      "trace": 75,
+      "impact": 75,
+      "history": 60,
+      "hard_negative": 140
+    },
+    "split_distribution": {
+      "train": 350,
+      "valid": 150
+    }
+  }
+}

@@ -47,12 +47,28 @@ def generate_candidate_for_teacher(
     timestamp = datetime.now(timezone.utc).isoformat()
     prompt_ver = PROMPT_VERSIONS[teacher]
 
-    # Casos off-topic ou no-tool: todos os teachers concordam com answers vazias
-    if category == "ambiguous" and subcategory in ("off-topic", "no-tool"):
+    # Casos off-topic, no-tool ou insuficientes: sem chamada de ferramentas
+    is_no_tool = (
+        task.get("expected_tools") == []
+        or (
+            category in ("ambiguous", "hard_negative")
+            and subcategory in ("off-topic", "no-tool", "ambiguous-incomplete", "insufficient")
+        )
+    )
+    if is_no_tool:
+        final_str = (
+            "OFF_TOPIC"
+            if subcategory == "off-topic"
+            else "CLARIFICATION_NEEDED"
+            if subcategory in ("ambiguous-incomplete", "insufficient")
+            else "NO_TOOL"
+        )
         reasoning = (
             f"'{query[:30]}' -> fora do escopo do repositório SIGA (off-topic)"
             if subcategory == "off-topic"
-            else f"'{query[:30]}' -> interação conversacional sem chamada de ferramenta"
+            else f"'{query[:30]}' -> parâmetros insuficientes (pedir esclarecimento)"
+            if subcategory in ("ambiguous-incomplete", "insufficient")
+            else f"'{query[:30]}' -> interação sem chamada de ferramenta"
         )
         return {
             "id": f"{task_id}-{teacher}",
@@ -62,30 +78,56 @@ def generate_candidate_for_teacher(
             "timestamp": timestamp,
             "query": query,
             "reasoning": reasoning,
-            "task_type": subcategory,
+            "task_type": subcategory or category,
             "tools": [],
             "answers": [],
             "steps": [],
-            "final": "OFF_TOPIC" if subcategory == "off-topic" else "NO_TOOL",
+            "final": final_str,
             "source": f"teacher:{teacher}",
         }
 
-    # Seleciona tool primária e formata argumentos grounded
-    tool_name, base_args = select_tool(query)
+    # Seleciona tool primária e argumentos (respeitando especificações da tarefa se houver)
+    expected_tools = task.get("expected_tools")
+    if expected_tools and expected_tools[0]:
+        tool_name = expected_tools[0]
+        base_args = dict(task.get("args", {}))
+        if not base_args:
+            _, fallback_args = select_tool(query)
+            base_args = fallback_args
+    else:
+        tool_name, base_args = select_tool(query)
 
-    # Estilos de cada professor para reasoning e parâmetros
+    # Estilos e trajetórias de cada professor:
+    # DeepSeek: analítico, direto (1 passo canônico)
+    # Gemini: arquitetural, contextual (pode propor validação preliminar em 2 passos para tarefas de contexto/trace)
+    # Muse: minimalista e rápido (1 passo compacto)
     if teacher == "deepseek":
-        # Estilo analítico: derivação estrita direta
-        reasoning = f"'{target or query[:30]}' -> {list(base_args.keys())[0]}"
+        reasoning = f"'{target or query[:30]}' -> {tool_name} ({list(base_args.keys())[0] if base_args else 'direto'})"
         steps = [{"observation": query, "action": tool_name, "args": base_args}]
+        tools_used = [tool_name]
+        answers = [{"name": tool_name, "arguments": base_args}]
     elif teacher == "gemini":
-        # Estilo arquitetural: ênfase no componente
         reasoning = f"'{target or query[:30]}' -> {tool_name} (análise arquitetural)"
-        steps = [{"observation": query, "action": tool_name, "args": base_args}]
+        # Para tarefas de contexto ou trace, Gemini propõe um passo exploratório preliminar
+        if tool_name in ("siga_context", "siga_trace") and target:
+            steps = [
+                {"observation": query, "action": "siga_locate", "args": {"query": target, "limit": 3}},
+                {"observation": f"Alvo {target} localizado", "action": tool_name, "args": base_args},
+            ]
+            tools_used = ["siga_locate", tool_name]
+            answers = [
+                {"name": "siga_locate", "arguments": {"query": target, "limit": 3}},
+                {"name": tool_name, "arguments": base_args},
+            ]
+        else:
+            steps = [{"observation": query, "action": tool_name, "args": base_args}]
+            tools_used = [tool_name]
+            answers = [{"name": tool_name, "arguments": base_args}]
     else:  # muse
-        # Estilo conciso: minimalista
         reasoning = f"'{target or query[:20]}' -> ação rápida"
         steps = [{"observation": query, "action": tool_name, "args": base_args}]
+        tools_used = [tool_name]
+        answers = [{"name": tool_name, "arguments": base_args}]
 
     return {
         "id": f"{task_id}-{teacher}",
@@ -96,8 +138,8 @@ def generate_candidate_for_teacher(
         "query": query,
         "reasoning": reasoning,
         "task_type": category,
-        "tools": [tool_name],
-        "answers": [{"name": tool_name, "arguments": base_args}],
+        "tools": tools_used,
+        "answers": answers,
         "steps": steps,
         "final": f"COMPLETED_{tool_name}",
         "source": f"teacher:{teacher}",
