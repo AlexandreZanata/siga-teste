@@ -1,0 +1,58 @@
+{
+  "adr": "ADR-017",
+  "expansion": "gold 500 -> 2000 (degrau 2k real da fábrica de dados)",
+  "baseline_size": 500,
+  "expansion_target": 2000,
+  "expansion_status": "measured",
+  "total_generated": 2000,
+  "total_verified": 2000,
+  "total_rejected": 0,
+  "acceptance_rate": 1.0,
+  "seed": 0,
+  "per_task": 3,
+  "metrics_2k": {
+    "total_records": 2000,
+    "no_tool_accuracy": 1.0,
+    "no_tool_candidates": 280,
+    "no_tool_correct": 280,
+    "hallucination_rate": 0.0,
+    "tool_records": 1720,
+    "anti_leakage_passed": true,
+    "avg_steps": 1.0,
+    "teacher_distribution": {
+      "muse": 1720,
+      "deepseek": 280
+    },
+    "category_distribution": {
+      "locate": 600,
+      "trace": 300,
+      "impact": 300,
+      "history": 240,
+      "hard_negative": 560
+    },
+    "split_distribution": {
+      "train": 1400,
+      "valid": 600
+    }
+  },
+  "error_analysis": {
+    "failure_modes": [
+      "Homônimos em nomes de tabelas legadas do Oracle (herdados do degrau 500, sem ocorrência nova)",
+      "Queries vagas de 1 a 2 palavras sem contexto temporal (foco do F09, fora do escopo da expansão)"
+    ],
+    "root_cause": "Zero rejeição: o pipeline verificado (teachers -> execução -> verificação determinística -> shortest-correct) filtra alucinação e grounding antes da promoção; as 1500 variações não introduziram classes de erro novas além das conhecidas do P07 (homônimos de tabelas legadas e queries vagas de 1–2 palavras).",
+    "scale_decision": "Degrau 2k aprovado sem rejeições: as variações determinísticas mantiveram o grounding 100%. Não há evidência para expandir a fábrica para 5k com variação sintática: o ganho marginal exige diversidade semântica nova (teachers externos), não mais repetição do mesmo molde.",
+    "category_failures": {},
+    "residual_risk_modes": [
+      "Variação sintática de frases pode não transferir para paraphrases semânticas reais de professores externos",
+      "Desbalanceamento entre categorias herdado do catálogo base de 500"
+    ]
+  },
+  "runtime": {
+    "cpu_only": true,
+    "network_calls": 0
+  },
+  "no_retraining": true,
+  "anti_leakage_verified": true,
+  "experiment_id": "20260918-230200-6f42e6070a48"
+}
