@@ -1,5 +1,14 @@
 {
   "branch": "desenvolvimento",
+  "holdout": {
+    "categories": [
+      "commit-localization"
+    ],
+    "file": "holdout.jsonl",
+    "per_window": 120,
+    "seed": 42,
+    "size": 311
+  },
   "notes": "seed P04-T01: 9 commits reais do slice; T1/T2 congelados antes de qualquer LoRA",
   "splits": {
     "test": [

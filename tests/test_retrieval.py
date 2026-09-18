@@ -12,6 +12,7 @@ from pathlib import Path
 import pytest
 
 from retrieval import outline, search
+from retrieval.baseline import naive_locate, terms
 
 SIGA = Path(__file__).resolve().parent.parent.parent
 
@@ -57,6 +58,21 @@ def test_find_references_word_boundary():
     refs = search.find_references(SIGA, "ExTramiteBL", limit=10)
     assert refs
     assert all(Path(r["file"]).is_file() for r in refs)
+
+
+def test_naive_locate_terms_and_anchor():
+    assert terms("Remove currentView fantasma em assinar_mov_login_senha_gravar") == [
+        "remove",
+        "currentview",
+        "fantasma",
+        "assinar",
+        "login",
+        "senha",
+        "gravar",
+    ]
+    top5 = naive_locate(SIGA, "Evita JSP inexistente após assinar com senha")
+    assert any(p.endswith("ExSpringMovimentacaoController.java") for p in top5)
+    assert all(Path(p).is_file() for p in top5)
 
 
 def test_file_outline_without_source():
