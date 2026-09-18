@@ -1,0 +1,168 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "siga-expert-mcp",
+  "description": "Contrato MCP fino do SIGA Needle Expert (P10-T01, ADR-020 em docs/12). 5 métodos espelhando as tools semânticas; cliente externo nunca importa o core.",
+  "type": "object",
+  "required": ["methods"],
+  "properties": {
+    "methods": {
+      "type": "object",
+      "required": ["siga.locate", "siga.trace", "siga.impact", "siga.history", "siga.context"],
+      "additionalProperties": false,
+      "properties": {
+        "siga.locate": {
+          "description": "Localiza arquivos/símbolos/componentes de uma funcionalidade (espelha tools.siga_locate).",
+          "type": "object",
+          "required": ["parameters"],
+          "properties": {
+            "parameters": {
+              "type": "object",
+              "required": ["query"],
+              "additionalProperties": false,
+              "properties": {
+                "query": {
+                  "type": "string",
+                  "description": "Span da tarefa descrevendo a funcionalidade a localizar."
+                },
+                "kind": {
+                  "type": "string",
+                  "enum": ["file", "symbol", "controller", "entity", "jsp", "migration", "test"],
+                  "description": "Tipo opcional de componente a filtrar."
+                },
+                "limit": {
+                  "type": "integer",
+                  "minimum": 1,
+                  "default": 10
+                },
+                "repo": {
+                  "type": "string",
+                  "description": "Raiz do repositório (default: resolução padrão do servidor)."
+                }
+              }
+            }
+          }
+        },
+        "siga.trace": {
+          "description": "Traça o fluxo endpoint→controller→BL→entidade→persistência→view (espelha tools.siga_trace).",
+          "type": "object",
+          "required": ["parameters"],
+          "properties": {
+            "parameters": {
+              "type": "object",
+              "required": ["symbol"],
+              "additionalProperties": false,
+              "properties": {
+                "symbol": {
+                  "type": "string",
+                  "description": "Símbolo real obtido de passo anterior (grounding obrigatório)."
+                },
+                "depth": {
+                  "type": "integer",
+                  "minimum": 1,
+                  "maximum": 3,
+                  "default": 2
+                },
+                "repo": {
+                  "type": "string",
+                  "description": "Raiz do repositório (default: resolução padrão do servidor)."
+                }
+              }
+            }
+          }
+        },
+        "siga.impact": {
+          "description": "Efeitos de modificar arquivo/classe/método (espelha tools.siga_impact).",
+          "type": "object",
+          "required": ["parameters"],
+          "properties": {
+            "parameters": {
+              "type": "object",
+              "required": ["target"],
+              "additionalProperties": false,
+              "properties": {
+                "target": {
+                  "type": "string",
+                  "description": "Símbolo ou caminho real a inspecionar."
+                },
+                "hops": {
+                  "type": "integer",
+                  "minimum": 1,
+                  "default": 1
+                },
+                "repo": {
+                  "type": "string",
+                  "description": "Raiz do repositório (default: resolução padrão do servidor)."
+                }
+              }
+            }
+          }
+        },
+        "siga.history": {
+          "description": "Histórico Git, commits e co-alterações (espelha tools.siga_history).",
+          "type": "object",
+          "required": ["parameters"],
+          "properties": {
+            "parameters": {
+              "type": "object",
+              "anyOf": [
+                {"required": ["target"]},
+                {"required": ["query"]}
+              ],
+              "additionalProperties": false,
+              "properties": {
+                "target": {
+                  "type": "string",
+                  "description": "Símbolo ou arquivo alvo."
+                },
+                "query": {
+                  "type": "string",
+                  "description": "Texto para buscar nas mensagens de commit."
+                },
+                "since": {
+                  "type": "string",
+                  "description": "Data limite inicial."
+                },
+                "limit": {
+                  "type": "integer",
+                  "minimum": 1,
+                  "default": 10
+                },
+                "repo": {
+                  "type": "string",
+                  "description": "Raiz do repositório (default: resolução padrão do servidor)."
+                }
+              }
+            }
+          }
+        },
+        "siga.context": {
+          "description": "Cápsula de contexto mínima para a IA grande (espelha tools.siga_context).",
+          "type": "object",
+          "required": ["parameters"],
+          "properties": {
+            "parameters": {
+              "type": "object",
+              "required": ["symbols", "task"],
+              "additionalProperties": false,
+              "properties": {
+                "symbols": {
+                  "type": "array",
+                  "items": {"type": "string"},
+                  "description": "Lista de símbolos âncora reais."
+                },
+                "task": {
+                  "type": "string",
+                  "description": "Descrição verbatim da tarefa."
+                },
+                "repo": {
+                  "type": "string",
+                  "description": "Raiz do repositório (default: resolução padrão do servidor)."
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}
