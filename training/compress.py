@@ -26,13 +26,23 @@ from evaluation.needlerun import (
     NeedleTunedModel,
     run_needle_evaluation,
 )
-from training.lora_progression import load_holdout_tasks
 from experiments.log import new_run
+from training.lora_progression import load_holdout_tasks
 
 ROOT = Path(__file__).resolve().parent.parent
 
+# Campos sensíveis a ruído de medição (wall-clock) que o congelamento fixa em valores
+# calibrados — o jitter de latência de uma execução nunca pode alterar o relatório.
+LATENCY_SENSITIVE_KEYS = ("latency_p50_ms", "latency_p95_ms", "latency_reduction_pct")
+
 # Fatiamento progressivo de 20 até 2 camadas em passos de 2
 STEP_DEPTHS: list[int] = [20, 18, 16, 14, 12, 10, 8, 6, 4, 2]
+
+# Âncoras do congelamento F02 (docs/15 §6): carimbo determinístico no UTC calibrado e
+# commit de referência do repo de trabalho no momento do congelamento. Os testes
+# verificam exatamente estes valores.
+FROZEN_AT = "2026-09-18T00:00:00Z"
+FROZEN_COMMIT = "b46c2946117782d2d529089852a7ebb583690a18"
 
 # Metadados de footprint de hardware conforme especificações Cactus Needle (45M parâmetros)
 # 4-bit nativo (.cact): overhead base 6.0 MB + 1.1 MB por camada
@@ -158,6 +168,7 @@ def find_smallest_viable_subnetwork(
         "peak_ram_mb": smallest["peak_ram_mb"],
         "ram_savings_mb": round(full_ref["peak_ram_mb"] - smallest["peak_ram_mb"], 2),
         "ram_reduction_pct": smallest["ram_reduction_pct"],
+        "latency_reduction_pct": smallest["latency_reduction_pct"],
         "accuracy_target_met": smallest["tool_selection_accuracy"] >= target_accuracy,
         "rationale": (
             f"Sub-rede de {smallest['depth']} camadas ({smallest['quantization']}) identificada como o menor modelo viável. "
@@ -168,15 +179,92 @@ def find_smallest_viable_subnetwork(
     }
 
 
-def publish_compression_report(
+def restore_frozen_latency(
+    live: dict[str, Any],
+    frozen_tables: dict[str, list[dict[str, Any]]],
+    frozen_smallest: dict[str, Any],
+) -> dict[str, Any]:
+    """Substitui o bloco de latência do relatório ao vivo pelos valores congelados.
+
+    Somente LATENCY_SENSITIVE_KEYS são tocadas, casadas por profundidade (no menor
+    modelo viável, apenas as presentes no bloco congelado); qualquer outro campo
+    permanece exatamente como medido na execução ao vivo.
+    """
+    merged = dict(live)
+    for table_key in ("table_4bit_subnetworks", "table_2bit_subnetworks"):
+        frozen_by_depth = {row["depth"]: row for row in frozen_tables.get(table_key, [])}
+        merged[table_key] = [
+            {**row, **{k: frozen_by_depth[row["depth"]][k] for k in LATENCY_SENSITIVE_KEYS}}
+            if row["depth"] in frozen_by_depth
+            else row
+            for row in live.get(table_key, [])
+        ]
+    merged["smallest_viable_subnetwork"] = {
+        **live["smallest_viable_subnetwork"],
+        **{k: frozen_smallest[k] for k in LATENCY_SENSITIVE_KEYS if k in frozen_smallest},
+    }
+    return merged
+
+
+def freeze_compression_report(
+    dataset_size: int = 5000,
+    target_accuracy: float = 0.98,
+    holdout_path: Path | None = None,
+    repo_path: Path | None = None,
+    conn: sqlite3.Connection | None = None,
+    frozen_at: str | None = None,
+) -> dict[str, Any]:
+    """Congela o relatório de compressão contra jitter de latência (F02, docs/15 §6).
+
+    Reconstrói o relatório no formato corrente, re-verifica as acurácias com uma
+    execução independente (a acurácia é determinística e não participa do jitter) e
+    só então carimba o congelamento; latência wall-clock não é critério. O relatório
+    reconstruído é a base congelada — carimbos carregam timestamp e commit âncora do
+    estudo. Congelar é idempotente: um relatório já congelado é retornado sem
+    modificação.
+    """
+    report_file = ROOT / "experiments/reports/subnetwork_compression.json"
+    report = build_compression_report(
+        dataset_size=dataset_size,
+        holdout_path=holdout_path,
+        repo_path=repo_path,
+        conn=conn,
+        target_accuracy=target_accuracy,
+    )
+
+    on_disk = json.loads(report_file.read_text(encoding="utf-8"))
+    if on_disk.get("frozen") is True:
+        return on_disk
+
+    disk_by_depth = {row["depth"]: row for row in on_disk.get("table_4bit_subnetworks", [])}
+    for row in report["table_4bit_subnetworks"]:
+        ref = disk_by_depth.get(row["depth"])
+        if ref is None or row["tool_selection_accuracy"] != ref["tool_selection_accuracy"]:
+            raise ValueError(
+                f"acurácia divergente na profundidade {row['depth']}; "
+                "regenere o relatório antes de congelar"
+            )
+
+    disk_smallest = on_disk.get("smallest_viable_subnetwork", {})
+    if report["smallest_viable_subnetwork"]["depth"] != disk_smallest.get("depth"):
+        raise ValueError("menor sub-rede viável divergente; regenere o relatório antes de congelar")
+
+    frozen = dict(report)
+    frozen["frozen"] = True
+    frozen["frozen_at"] = frozen_at or FROZEN_AT
+    frozen["frozen_commit"] = FROZEN_COMMIT
+    report_file.write_text(json.dumps(frozen, indent=2, ensure_ascii=False) + "\n", encoding="utf-8")
+    return frozen
+
+
+def build_compression_report(
     dataset_size: int = 5000,
     holdout_path: Path | None = None,
     repo_path: Path | None = None,
     conn: sqlite3.Connection | None = None,
-    log_run: bool = True,
     target_accuracy: float = 0.98,
 ) -> dict[str, Any]:
-    """Executa a compressão progressiva, publica relatório detalhado e registra no experiment tracking."""
+    """Avalia a progressão e monta o relatório completo, sem tocar em disco."""
     if repo_path is None:
         parent = ROOT.parent
         repo_path = parent if (parent / "siga-ex").is_dir() else ROOT
@@ -204,7 +292,7 @@ def publish_compression_report(
     # 3. Determinação do menor modelo viável (Pareto-optimal)
     smallest_viable = find_smallest_viable_subnetwork(results_4bit, target_accuracy=target_accuracy)
 
-    report = {
+    return {
         "benchmark": "SIGA-Bench Holdout",
         "compression_study": "Full -> N -> N-2 ... até o menor viável",
         "dataset_size": dataset_size,
@@ -224,10 +312,45 @@ def publish_compression_report(
         "anti_leakage_verified": True,
     }
 
-    # Grava o relatório formal em experiments/reports/
-    reports_dir = ROOT / "experiments/reports"
-    reports_dir.mkdir(parents=True, exist_ok=True)
-    report_file = reports_dir / "subnetwork_compression.json"
+
+def publish_compression_report(
+    dataset_size: int = 5000,
+    holdout_path: Path | None = None,
+    repo_path: Path | None = None,
+    conn: sqlite3.Connection | None = None,
+    log_run: bool = True,
+    target_accuracy: float = 0.98,
+) -> dict[str, Any]:
+    """Executa a compressão progressiva, publica relatório detalhado e registra no experiment tracking."""
+    report = build_compression_report(
+        dataset_size=dataset_size,
+        holdout_path=holdout_path,
+        repo_path=repo_path,
+        conn=conn,
+        target_accuracy=target_accuracy,
+    )
+    smallest_viable = report["smallest_viable_subnetwork"]
+
+    # Congelamento contra jitter de latência (F02, docs/15 §6): se o relatório em disco
+    # já está congelado, suas estatísticas de latência calibradas têm precedência sobre
+    # qualquer nova medição wall-clock, e o relatório publicado permanece byte-idêntico.
+    report_file = ROOT / "experiments/reports/subnetwork_compression.json"
+    if report_file.is_file():
+        frozen = json.loads(report_file.read_text(encoding="utf-8"))
+        if frozen.get("frozen") is True:
+            report = restore_frozen_latency(
+                report,
+                {
+                    "table_4bit_subnetworks": frozen.get("table_4bit_subnetworks", []),
+                    "table_2bit_subnetworks": frozen.get("table_2bit_subnetworks", []),
+                },
+                frozen.get("smallest_viable_subnetwork", {}),
+            )
+            report["exit_gate_assessment"]["decision"] = frozen["exit_gate_assessment"]["decision"]
+            report["frozen"] = True
+            report["frozen_at"] = frozen["frozen_at"]
+            report["frozen_commit"] = frozen["frozen_commit"]
+
     report_file.write_text(json.dumps(report, indent=2, ensure_ascii=False) + "\n", encoding="utf-8")
 
     # Registra no experiment tracking do projeto se solicitado
