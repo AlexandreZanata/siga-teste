@@ -1,4 +1,4 @@
-# SIGA Needle Expert — comandos canônicos (P01-T03).
+# SIGA Needle Expert — comandos canônicos (P01-T03, test-integration real na P02-T03).
 # Regra: gate não implementado falha com mensagem explícita, nunca sucesso falso.
 
 PY ?= python3
@@ -18,15 +18,15 @@ fmt-check:
 
 test-unit:
 	@if [ ! -d tests ]; then echo "test-unit: ok (sem tests/ ainda — Phase 1 cria)"; exit 0; fi
-	@$(PYTEST) && echo "test-unit: ok"
+	@$(PYTEST) tests --ignore=tests/integration && echo "test-unit: ok"
 
 test-integration:
-	@echo "test-integration: NÃO IMPLEMENTADO — Phase 2/3 define (indexer + graph real)"; exit 1
+	@$(PYTEST) tests/integration && echo "test-integration: ok"
 
 test-contract:
 	@echo "test-contract: NÃO IMPLEMENTADO — Phase 5 define (tool schemas)"; exit 1
 
-verify: fmt-check test-unit
+verify: fmt-check test-unit test-integration
 	@echo "verify: gates presentes, pendentes (falham explícito quando invocados):"
-	@for gate in test-integration test-contract; do echo "  - $$gate"; done
+	@for gate in test-contract; do echo "  - $$gate"; done
 	@echo "verify: OK — capacidades existentes passaram."
