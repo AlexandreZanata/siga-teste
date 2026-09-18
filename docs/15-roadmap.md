@@ -41,7 +41,7 @@ P00 planejamento (este commit) → P01 toolchain+boundaries+tracking+CI → P02 
 
 ## 3. Definition of Done (V1 slice)
 
-`make verify` em checkout limpo; bench isolado com 19 métricas; 7 baselines comparadas; curvas 100→10k; subnetwork mínima; `task_success >= X` com tokens/custo <<; sem segredo, sem contaminação, sem TODO sem ID. Completo em `.local/MASTER_PLAN.md` (Definição final de pronto).
+`make verify` em checkout limpo; bench isolado com 19 métricas; 7 baselines comparadas; curvas 100→10k; subnetwork mínima; `task_success >= X` com tokens/custo <<; sem segredo, sem contaminação, sem TODO sem ID (verificado em P11-T02 por `scripts/final_audit.py`). Completo em `.local/MASTER_PLAN.md` (Definição final de pronto).
 
 ## 4. Primeiras 20 tasks de engenharia (pós-P00)
 
@@ -50,3 +50,12 @@ E01–E03 (P01): boundaries `tests/test_boundaries.py`; `experiments/log.py`; CI
 ## 5. Explicitamente NÃO construir ainda
 
 Embeddings/RAG; Neo4j/K8s/microservices; dataset >2k antes das curvas; clientes acoplados; telemetria de uso; 2-bit shipped (só Cactus Platform); reescrita de JSP/SQL pelo nano; portal/checkout/billing (fora do domínio).
+
+## 6. Pós-slice (P11-T02, 2026-09-18) — milestones cumpridos, próximos 20, NOT-build
+
+Milestones P00–P11 cumpridos com gate: 18 docs; toolchain+CI verde; indexer+graph+incremental; baseline determinístico; bench 311 isolado; 5 tools+simulador+100 golds; factory 500 golds; LoRA+curvas (sweet spot 2k–5k); subnetwork 12L 4-bit; cápsula texto −11,37% vs JSON; 3 braços (GO condicional); MCP desacoplado; on-policy 0,9841→1,0. Evidência em `experiments/reports/` + `experiments/runs/` (ver `scripts/final_audit.py`).
+
+Próximos 20 tasks concretos (pós-V1, cada um com gate próprio antes de escalar):
+F01 fallback puro-Python do `search_text` sem `rg` (robustez CI/offline); F02 congelar `subnetwork_compression.json` contra jitter de latência; F03 fixture SIGA mínima no CI p/ testes hoje pulados (16+5+2 skips); F04 baseline small-coder tradicional (fecha baseline 7); F05 spike RAG/embeddings vs graph (candidato a baseline 3); F06 expansão 2k com error analysis (degrau ADR-017); F07 comparação Tree-sitter vs JavaParser/JDT (gatilho P02); F08 co-change sem chamada direta (lacunas `1a47b862`/`fecfd9ce`); F09 queries vagas 1–2 palavras (recall hoje ~0); F10 edição real ponta a ponta (além de localização); F11 julgamento de reescrita JSP/SQL; F12 traces longos: sub-recuperação da cápsula (risco ADR-008); F13 monitoramento do gatilho ADR-009 (tuned vs determinístico por janela); F14 MCP com auth + rate limit antes de qualquer exposição; F15 val-loss tracking infra p/ próximos LoRAs; F16 SLOs de hardware (P50/P95/RAM por profundidade); F17 proteção de branch `main` (exigir PR + CI verde); F18 sync `docs/`→wiki p/ IAs externas; F19 decisão 2-bit Cactus com números; F20 revalidar GO com edição real (critério docs/17 estendido).
+
+NOT-build atualizado (continua proibido sem ADR + gate): distribuir pesos; acoplar clientes ao core; dataset >10k; servir 2-bit; telemetria de uso; MCP público sem auth; reescrita JSP/SQL pelo nano; portal/checkout/billing.
