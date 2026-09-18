@@ -1,0 +1,53 @@
+{
+  "benchmark": "SIGA-Bench Holdout",
+  "baseline_id": "3-large-rag",
+  "spike_status": "measured",
+  "runtime": {
+    "cpu_only": true,
+    "network_calls": 0
+  },
+  "embedding_dim": 512,
+  "total_tasks": 311,
+  "tasks_available": 311,
+  "arms": {
+    "A-embeddings": {
+      "method": "hashing-TF embeddings (CPU, dim=512, coseno)",
+      "recall": {
+        "top1": 0.0306,
+        "top3": 0.0727,
+        "top5": 0.0867
+      },
+      "context_tokens": {
+        "mean": 15.3,
+        "p95": 27.0
+      }
+    },
+    "B-terms-graph": {
+      "method": "naive_locate terms (retrieval/baseline.py, o braço graph do P09)",
+      "recall": {
+        "top1": 0.0976,
+        "top3": 0.1959,
+        "top5": 0.2417
+      },
+      "context_tokens": {
+        "mean": 15.2,
+        "p95": 27.0
+      }
+    },
+    "C-fusion": {
+      "method": "fusão rank-médio A+B",
+      "recall": {
+        "top1": 0.0751,
+        "top3": 0.1746,
+        "top5": 0.2415
+      },
+      "context_tokens": {
+        "mean": 15.3,
+        "p95": 27.0
+      }
+    }
+  },
+  "decision_vs_not_build": "NOT-build mantido (docs/15 §5): o braço B determinístico (graph/terms) não é superado pelo spike de embeddings no recall@5, e a fusão não agrega ganho consistente; RAG de produção continua proibido sem ADR.",
+  "anti_leakage_verified": true,
+  "experiment_id": "20260918-213857-55479ba327c0"
+}
