@@ -99,8 +99,8 @@ def test_export_needle_reproducibility_and_anti_leakage(tmp_path: Path):
 
 
 def test_needlerun_base_vs_tuned_comparison():
-    # Executa a comparação no holdout congelado (sem gerar run tracking duplicado no teste)
-    res = compare_base_vs_tuned(log_run=False)
+    # Executa a comparação no holdout congelado (sem poluir relatórios ou run tracking)
+    res = compare_base_vs_tuned(log_run=False, save_report=False)
 
     assert res["benchmark"] == "SIGA-Bench Holdout"
     assert res["total_holdout_samples"] == 321
