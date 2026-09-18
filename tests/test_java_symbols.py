@@ -10,6 +10,8 @@ from __future__ import annotations
 
 from pathlib import Path
 
+import pytest
+
 from indexer.java_symbols import index_files, parse_file
 
 SIGA = Path(__file__).resolve().parent.parent.parent
@@ -21,6 +23,11 @@ EX_DOC_CTRL = SIGA / "sigaex/src/legacy/java/br/gov/jfrj/siga/vraptor/ExDocument
 SAMPLE = [EX_TRAMITE, EX_BL, EX_DOC_CTRL]
 
 
+def _requires_siga() -> None:
+    if not (SIGA / "siga-ex").is_dir():
+        pytest.skip("Clone do SIGA não disponível ao lado (CI sem siga-ex)")
+
+
 def _methods(rec: dict, type_name: str) -> set[str]:
     for t in rec["types"]:
         if t["name"] == type_name:
@@ -29,6 +36,7 @@ def _methods(rec: dict, type_name: str) -> set[str]:
 
 
 def test_sample_files_exist_no_invented_paths():
+    _requires_siga()
     for path in SAMPLE:
         assert path.is_file(), f"amostra sumiu do clone: {path}"
     for rec in index_files(SAMPLE):
@@ -36,6 +44,7 @@ def test_sample_files_exist_no_invented_paths():
 
 
 def test_ex_tramite_bl_anchors():
+    _requires_siga()
     rec = parse_file(EX_TRAMITE)
     assert rec["package"] == "br.gov.jfrj.siga.ex.bl"
     assert "calcularTramitesPendentes" in _methods(rec, "ExTramiteBL")
@@ -45,6 +54,7 @@ def test_ex_tramite_bl_anchors():
 
 
 def test_ex_bl_anchors():
+    _requires_siga()
     rec = parse_file(EX_BL)
     assert rec["package"] == "br.gov.jfrj.siga.ex.bl"
     methods = _methods(rec, "ExBL")
@@ -53,6 +63,7 @@ def test_ex_bl_anchors():
 
 
 def test_ex_documento_controller_anchors():
+    _requires_siga()
     rec = parse_file(EX_DOC_CTRL)
     assert rec["package"] == "br.gov.jfrj.siga.vraptor"
     ctrl = next(t for t in rec["types"] if t["name"] == "ExDocumentoController")
@@ -63,6 +74,7 @@ def test_ex_documento_controller_anchors():
 
 
 def test_slice_coverage_counts():
+    _requires_siga()
     java_files = [
         p
         for module in ("siga-ex", "sigaex")

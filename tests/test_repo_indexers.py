@@ -9,6 +9,8 @@ from __future__ import annotations
 import subprocess
 from pathlib import Path
 
+import pytest
+
 from indexer import git_history, jsp_symbols, maven_modules, sql_tables
 
 SIGA = Path(__file__).resolve().parent.parent.parent
@@ -19,7 +21,13 @@ WEBAPP = SIGA / "sigaex/src/main/webapp"
 EXIBE = WEBAPP / "WEB-INF/page/exDocumento/exibe.jsp"
 
 
+def _requires_siga() -> None:
+    if not (SIGA / "siga-ex").is_dir():
+        pytest.skip("Clone do SIGA não disponível ao lado (CI sem siga-ex)")
+
+
 def test_ex_documento_table_and_migration():
+    _requires_siga()
     assert sql_tables.entity_table(EX_DOCUMENTO) == "siga.ex_documento"
     rec = sql_tables.parse_migration(V104)
     assert rec["version"] == "104"
@@ -29,6 +37,7 @@ def test_ex_documento_table_and_migration():
 
 
 def test_ex_documento_jsps_and_include():
+    _requires_siga()
     refs = jsp_symbols.find_referencing(WEBAPP, "ExDocumento")
     assert str(EXIBE) in refs
     assert len(refs) >= 3
@@ -38,6 +47,7 @@ def test_ex_documento_jsps_and_include():
 
 
 def test_maven_modules_active_and_commented():
+    _requires_siga()
     rec = maven_modules.parse_root_pom(SIGA / "pom.xml", repo_root=SIGA)
     names = [m["name"] for m in rec["modules"]]
     assert len(names) == 24
@@ -57,6 +67,7 @@ def _git(*args: str, cwd: Path) -> None:
 
 
 def test_git_readonly_contract_on_real_clone():
+    _requires_siga()
     commits = git_history.recent_commits(SIGA, limit=5)
     assert len(commits) >= 1
     assert len(commits[0]["sha"]) == 40

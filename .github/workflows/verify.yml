@@ -24,6 +24,9 @@ jobs:
           python-version: "3.12"
           cache: "pip"
 
+      - name: Install system deps (ripgrep)
+        run: sudo apt-get update && sudo apt-get install -y ripgrep
+
       - name: Install toolchain
         run: pip install -e ".[dev]"
 

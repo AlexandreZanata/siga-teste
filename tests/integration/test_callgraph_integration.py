@@ -18,6 +18,11 @@ from retrieval.callgraph import find_callers, impact_recall, method_callees, sta
 SIGA = Path(__file__).resolve().parent.parent.parent.parent
 EX_TRAMITE = SIGA / "siga-ex/src/main/java/br/gov/jfrj/siga/ex/bl/ExTramiteBL.java"
 
+
+def _requires_siga() -> None:
+    if not (SIGA / "siga-ex").is_dir():
+        pytest.skip("Clone do SIGA não disponível ao lado (CI sem siga-ex)")
+
 ANCHOR_CALLEES = {"contemAlgumTramite", "equivaleENaoENulo", "igual", "getApensos", "hasRecebimento"}
 
 # (sha, recall medido em 2026-09-18 no desenvolvimento)
@@ -29,16 +34,19 @@ IMPACT_CASES = [
 
 
 def test_callees_ast_match_anchors():
+    _requires_siga()
     callees = method_callees(EX_TRAMITE, "calcularTramitesPendentes")
     assert ANCHOR_CALLEES <= callees
 
 
 def test_callees_reject_unknown_method():
+    _requires_siga()
     with pytest.raises(ValueError):
         method_callees(EX_TRAMITE, "metodoQueNaoExiste")
 
 
 def test_callers_include_structural_callers():
+    _requires_siga()
     files = {hit["file"] for hit in find_callers(SIGA, "calcularTramitesPendentes")}
     assert any(f.endswith("ExMobil.java") for f in files)
     assert any(f.endswith("ExBL.java") for f in files)
@@ -46,6 +54,7 @@ def test_callers_include_structural_callers():
 
 
 def test_static_impact_is_grounded():
+    _requires_siga()
     impact = static_impact(SIGA, str(EX_TRAMITE))
     assert impact["target"].endswith("ExTramiteBL.java")
     assert "ExTramiteBL" in impact["symbols"]
@@ -55,6 +64,7 @@ def test_static_impact_is_grounded():
 
 
 def test_impact_recall_on_real_commits():
+    _requires_siga()
     recalls = []
     for sha, expected in IMPACT_CASES:
         result = impact_recall(SIGA, sha)
