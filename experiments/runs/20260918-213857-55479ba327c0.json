@@ -1,0 +1,30 @@
+{
+  "experiment_id": "20260918-213857-55479ba327c0",
+  "date": "2026-09-18T21:38:57+00:00",
+  "siga_commit": "48610bd6504692ad3f2e99ef318beb84e2668fd6",
+  "sigateste_commit": "317eff9b1a904317d346b42398cfd721ee55afb5",
+  "needle_version": "baseline3-spike",
+  "needle_depth": null,
+  "artifact_hash": null,
+  "dataset_version": "v1.0",
+  "tool_version": "1.0.0",
+  "index_version": "1.0.0",
+  "bench_version": "1.0.0",
+  "metrics": {
+    "A_top5": 0.0867,
+    "B_top5": 0.2417,
+    "C_top5": 0.2415,
+    "B_mean_context_tokens": 15.2
+  },
+  "hardware": {
+    "system": "Linux",
+    "machine": "x86_64",
+    "cpu_count": 16,
+    "python": "3.12.2"
+  },
+  "latency": {
+    "p50_ms": 0.0,
+    "p95_ms": null
+  },
+  "notes": "F05: spike RAG/embeddings vs graph no holdout congelado; CPU-only, hashing TF, sem dependência nova (docs/15 §6)."
+}
