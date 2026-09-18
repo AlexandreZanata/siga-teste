@@ -1,0 +1,24 @@
+{
+  "branch": "desenvolvimento",
+  "notes": "seed P04-T01: 9 commits reais do slice; T1/T2 congelados antes de qualquer LoRA",
+  "splits": {
+    "test": [
+      "48610bd6504692ad3f2e99ef318beb84e2668fd6",
+      "477b61cf5cf69117e1702209eb99e32e0131496a",
+      "e532c47855fcb7368ea7f4f317a130c0890d2a21"
+    ],
+    "train": [
+      "e8e8e24cd74997dc02eb4f236da5b351657738a3",
+      "0bfd71078db005217a2b073601b62423acbdf14a",
+      "43fb375b69607e81f0cf5fd70631e561c696f7e9"
+    ],
+    "valid": [
+      "7978d3b0d21a749294de73e972e9059098329f40",
+      "9695dda7365d1f40b45bb4960898a24c743b5321",
+      "9f61216460bd1613f817bbec47ee5aea391cab06"
+    ]
+  },
+  "t1": "2020-01-01",
+  "t2": "2024-01-01",
+  "version": 1
+}
