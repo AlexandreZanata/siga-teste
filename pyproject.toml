@@ -6,6 +6,11 @@ readme = "README.md"
 requires-python = ">=3.11"
 license = { text = "AGPL-3.0-or-later" }
 authors = [{ name = "SIGA Needle Expert" }]
+dependencies = [
+  # P02-T01 + ADR-010 (docs/05): parser Java tolerante, sem JVM no runtime.
+  "tree-sitter==0.25.2",
+  "tree-sitter-java==0.23.5",
+]
 
 [project.optional-dependencies]
 dev = ["pytest>=8", "ruff>=0.6"]
