@@ -1,0 +1,29 @@
+{
+  "experiment_id": "20260918-233542-5cfd3bdc22de",
+  "date": "2026-09-18T23:35:42+00:00",
+  "siga_commit": "48610bd6504692ad3f2e99ef318beb84e2668fd6",
+  "sigateste_commit": "e78bcf5219e7eb9ef8c82cf9ce13d3cb3326287c",
+  "needle_version": null,
+  "needle_depth": null,
+  "artifact_hash": null,
+  "dataset_version": "slice-anchors",
+  "tool_version": "siga-indexer-v1",
+  "index_version": "tree-sitter-java-0.23",
+  "bench_version": "siga-bench-v1",
+  "metrics": {
+    "ts_parse_rate": 1.0,
+    "jl_parse_rate": 1.0,
+    "mean_symbol_agreement": 1.0
+  },
+  "hardware": {
+    "system": "Linux",
+    "machine": "x86_64",
+    "cpu_count": 16,
+    "python": "3.12.2"
+  },
+  "latency": {
+    "p50_ms": 0.0,
+    "p95_ms": null
+  },
+  "notes": "F07: gatilho P02/ADR-010 executado com números; veredito no relatório."
+}
