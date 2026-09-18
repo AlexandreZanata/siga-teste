@@ -7,6 +7,8 @@ Zero hallucination: todo path retornado existe em disco.
 
 from __future__ import annotations
 
+import shutil
+import subprocess
 from pathlib import Path
 
 import pytest
@@ -95,3 +97,50 @@ def test_file_outline_without_source():
     main = next(t for t in rec["types"] if t["name"] == "ExTramiteBL")
     assert "calcularTramitesPendentes" in main["methods"]
     assert any(n["name"] == "Pendencias" for n in main["nested"])
+
+
+def _seed_repo(root: Path) -> Path:
+    (root / "ServicoExemplo.java").write_text(
+        "package br.gov.exemplo;\npublic class ServicoExemplo {\n    public void executar() {}\n}\n",
+        encoding="utf-8",
+    )
+    (root / "sub").mkdir(exist_ok=True)
+    (root / "sub" / "Outro.java").write_text("public class Outro {}\n", encoding="utf-8")
+    (root / "nota.txt").write_text("ServicoExemplo citado aqui\n", encoding="utf-8")
+    subprocess.run(["git", "-C", str(root), "init", "-q"], check=True)
+    subprocess.run(["git", "-C", str(root), "add", "."], check=True)
+    subprocess.run(
+        ["git", "-C", str(root), "-c", "user.name=t", "-c", "user.email=t@e", "commit", "-qm", "seed"],
+        check=True,
+    )
+    return root
+
+
+def test_search_text_fallback_without_rg(monkeypatch: pytest.MonkeyPatch, tmp_path: Path):
+    repo = _seed_repo(tmp_path)
+    monkeypatch.setattr(shutil, "which", lambda _: None)
+    hits = search.search_text(repo, "ServicoExemplo")
+    names = [Path(hit["file"]).name for hit in hits]
+    assert "ServicoExemplo.java" in names
+    assert "nota.txt" in names
+    assert all(Path(hit["file"]).is_file() for hit in hits)
+    assert all(hit["lines"] for hit in hits)
+    java_hit = next(hit for hit in hits if hit["file"].endswith("ServicoExemplo.java"))
+    assert java_hit["lines"] == [2]
+
+
+def test_search_text_fallback_glob_filtering(monkeypatch: pytest.MonkeyPatch, tmp_path: Path):
+    repo = _seed_repo(tmp_path)
+    monkeypatch.setattr(shutil, "which", lambda _: None)
+    hits = search.search_text(repo, "class", globs=["sub/**"])
+    assert [Path(hit["file"]).name for hit in hits] == ["Outro.java"]
+
+
+def test_search_text_fallback_parity_with_rg(tmp_path: Path):
+    if shutil.which("rg") is None:
+        pytest.skip("rg ausente: paridade só faz sentido com rg presente")
+    repo = _seed_repo(tmp_path)
+    expected = {(hit["file"], tuple(hit["lines"])) for hit in search.search_text(repo, "ServicoExemplo")}
+    assert expected, "rg deveria achar ServicoExemplo no repo sintético"
+    got = {(hit["file"], tuple(hit["lines"])) for hit in search._search_python(repo, "ServicoExemplo")}
+    assert got == expected

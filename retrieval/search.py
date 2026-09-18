@@ -1,18 +1,22 @@
-"""Busca determinística (P03-T01, ADR-012 em docs/05).
+"""Busca determinística (P03-T01, ADR-012 em docs/05; fallback F01).
 
 ripgrep sobre o checkout real (verdade atual) + `git ls-files` para
-arquivos + FTS do graph para símbolos. Tudo retornado existe em disco:
-zero hallucination de path por construção. Só stdlib + rg no PATH.
+arquivos + FTS do graph para símbolos. Sem `rg` no PATH, cai para varredura
+puro-Python literal com o mesmo contrato. Tudo retornado existe em disco:
+zero hallucination de path por construção. Só stdlib.
 """
 
 from __future__ import annotations
 
 import fnmatch
 import json
+import shutil
 import subprocess
 from pathlib import Path
 
 SLICE_MODULES = ("siga-ex/", "sigaex/")
+
+FALLBACK_MAX_BYTES = 8 * 1024 * 1024
 
 
 def _repo(repo: str | Path) -> Path:
@@ -25,8 +29,10 @@ def search_text(
     globs: list[str] | None = None,
     limit: int = 20,
 ) -> list[dict]:
-    """Matches literais via `rg --json -F` (case-sensitive). Retorna [{file, lines[]}]."""
+    """Matches literais case-sensitive. Com `rg` usa `rg --json -F`; sem `rg`, fallback puro-Python. Retorna [{file, lines[]}]."""
     root = _repo(repo)
+    if shutil.which("rg") is None:
+        return _search_python(root, pattern, globs=globs, limit=limit)
     cmd = ["rg", "--json", "-F", "--no-messages", pattern, "."]
     for glob in globs or []:
         cmd += ["--glob", glob]
@@ -43,6 +49,62 @@ def search_text(
         path = str(root / rel)
         lineno = event["data"]["line_number"]
         hits.setdefault(path, set()).add(lineno)
+    ranked = sorted(hits, key=lambda f: (_rank_file(f, pattern), f))
+    return [{"file": f, "lines": sorted(hits[f])} for f in ranked[:limit]]
+
+
+def _glob_match(rel_posix: str, globs: list[str] | None) -> bool:
+    """Aproximação documentada de `rg --glob`: fnmatch + prefixo `**/` opcional."""
+    if not globs:
+        return True
+    for glob in globs:
+        if fnmatch.fnmatch(rel_posix, glob):
+            return True
+        if glob.startswith("**/") and fnmatch.fnmatch(rel_posix, glob[3:]):
+            return True
+    return False
+
+
+def _list_files(root: Path) -> list[str]:
+    """Relativos posix dos arquivos candidatos (`git ls-files`, ou rglob sem `.git`)."""
+    try:
+        out = subprocess.run(
+            ["git", "-C", str(root), "ls-files"],
+            capture_output=True,
+            text=True,
+            check=True,
+            timeout=120,
+        )
+        return [line for line in out.stdout.splitlines() if line.strip()]
+    except (subprocess.SubprocessError, OSError):
+        return [
+            p.relative_to(root).as_posix()
+            for p in sorted(root.rglob("*"))
+            if p.is_file() and ".git" not in p.parts and "__pycache__" not in p.parts
+        ]
+
+
+def _search_python(
+    root: Path,
+    pattern: str,
+    globs: list[str] | None = None,
+    limit: int = 20,
+) -> list[dict]:
+    """Varredura literal linha a linha (fallback sem `rg`): mesmo contrato e ranking."""
+    hits: dict[str, set[int]] = {}
+    for rel in _list_files(root):
+        if not _glob_match(rel, globs):
+            continue
+        path = root / rel
+        try:
+            if path.stat().st_size > FALLBACK_MAX_BYTES:
+                continue
+            text = path.read_text(encoding="utf-8", errors="replace")
+        except OSError:
+            continue
+        for lineno, line in enumerate(text.splitlines(), 1):
+            if pattern in line:
+                hits.setdefault(str(path), set()).add(lineno)
     ranked = sorted(hits, key=lambda f: (_rank_file(f, pattern), f))
     return [{"file": f, "lines": sorted(hits[f])} for f in ranked[:limit]]
 
