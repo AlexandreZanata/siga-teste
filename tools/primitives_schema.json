@@ -1,0 +1,425 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "siga-needle-expert deterministic primitives",
+  "description": "Schemas JSON congelados das 13 primitivas determinísticas internas (P05-T01, docs/06 ADR-013).",
+  "primitives": {
+    "repo_tree": {
+      "description": "Árvore determinística de diretórios e arquivos a partir de git ls-files.",
+      "parameters": {
+        "type": "object",
+        "required": ["repo"],
+        "properties": {
+          "repo": {
+            "type": "string",
+            "description": "Caminho raiz do repositório"
+          },
+          "subpath": {
+            "type": "string",
+            "default": "",
+            "description": "Subcaminho relativo dentro do repositório"
+          },
+          "max_depth": {
+            "type": "integer",
+            "minimum": 1,
+            "default": 2,
+            "description": "Profundidade máxima de diretórios a inspecionar"
+          }
+        },
+        "additionalProperties": false
+      },
+      "returns": {
+        "type": "object",
+        "required": ["root", "subpath", "directories", "files"],
+        "properties": {
+          "root": {"type": "string"},
+          "subpath": {"type": "string"},
+          "directories": {
+            "type": "array",
+            "items": {"type": "string"}
+          },
+          "files": {
+            "type": "array",
+            "items": {"type": "string"}
+          }
+        },
+        "additionalProperties": false
+      }
+    },
+    "find_file": {
+      "description": "Busca determinística de arquivos rastreados cujo nome contenha o padrão.",
+      "parameters": {
+        "type": "object",
+        "required": ["repo", "pattern"],
+        "properties": {
+          "repo": {"type": "string"},
+          "pattern": {"type": "string"},
+          "limit": {
+            "type": "integer",
+            "minimum": 1,
+            "default": 20
+          }
+        },
+        "additionalProperties": false
+      },
+      "returns": {
+        "type": "array",
+        "items": {"type": "string"}
+      }
+    },
+    "find_symbol": {
+      "description": "Busca de símbolos no índice do grafo (FTS5 com fallback SQL LIKE).",
+      "parameters": {
+        "type": "object",
+        "required": ["name"],
+        "properties": {
+          "name": {"type": "string"},
+          "limit": {
+            "type": "integer",
+            "minimum": 1,
+            "default": 20
+          }
+        },
+        "additionalProperties": false
+      },
+      "returns": {
+        "type": "array",
+        "items": {
+          "type": "object",
+          "required": ["name", "kind"],
+          "properties": {
+            "name": {"type": "string"},
+            "kind": {"type": "string"},
+            "file": {"type": ["string", "null"]}
+          },
+          "additionalProperties": false
+        }
+      }
+    },
+    "find_references": {
+      "description": "Ocorrências de referência textual a símbolo no código via ripgrep.",
+      "parameters": {
+        "type": "object",
+        "required": ["repo", "symbol"],
+        "properties": {
+          "repo": {"type": "string"},
+          "symbol": {"type": "string"},
+          "globs": {
+            "type": ["array", "null"],
+            "items": {"type": "string"}
+          },
+          "limit": {
+            "type": "integer",
+            "minimum": 1,
+            "default": 20
+          }
+        },
+        "additionalProperties": false
+      },
+      "returns": {
+        "type": "array",
+        "items": {
+          "type": "object",
+          "required": ["file", "lines"],
+          "properties": {
+            "file": {"type": "string"},
+            "lines": {
+              "type": "array",
+              "items": {"type": "integer"}
+            }
+          },
+          "additionalProperties": false
+        }
+      }
+    },
+    "find_callers": {
+      "description": "Chamadores estáticos de um símbolo no repositório via ripgrep.",
+      "parameters": {
+        "type": "object",
+        "required": ["repo", "symbol"],
+        "properties": {
+          "repo": {"type": "string"},
+          "symbol": {"type": "string"},
+          "globs": {
+            "type": ["array", "null"],
+            "items": {"type": "string"}
+          },
+          "limit": {
+            "type": "integer",
+            "minimum": 1,
+            "default": 50
+          }
+        },
+        "additionalProperties": false
+      },
+      "returns": {
+        "type": "array",
+        "items": {
+          "type": "object",
+          "required": ["file", "lines"],
+          "properties": {
+            "file": {"type": "string"},
+            "lines": {
+              "type": "array",
+              "items": {"type": "integer"}
+            }
+          },
+          "additionalProperties": false
+        }
+      }
+    },
+    "find_callees": {
+      "description": "Métodos invocados por um método Java a partir da AST Tree-sitter.",
+      "parameters": {
+        "type": "object",
+        "required": ["java_path", "method_name"],
+        "properties": {
+          "java_path": {"type": "string"},
+          "method_name": {"type": "string"}
+        },
+        "additionalProperties": false
+      },
+      "returns": {
+        "type": "array",
+        "items": {"type": "string"}
+      }
+    },
+    "search_text": {
+      "description": "Busca textual determinística por padrão via ripgrep.",
+      "parameters": {
+        "type": "object",
+        "required": ["repo", "pattern"],
+        "properties": {
+          "repo": {"type": "string"},
+          "pattern": {"type": "string"},
+          "globs": {
+            "type": ["array", "null"],
+            "items": {"type": "string"}
+          },
+          "limit": {
+            "type": "integer",
+            "minimum": 1,
+            "default": 20
+          }
+        },
+        "additionalProperties": false
+      },
+      "returns": {
+        "type": "array",
+        "items": {
+          "type": "object",
+          "required": ["file", "lines"],
+          "properties": {
+            "file": {"type": "string"},
+            "lines": {
+              "type": "array",
+              "items": {"type": "integer"}
+            }
+          },
+          "additionalProperties": false
+        }
+      }
+    },
+    "read_symbol": {
+      "description": "Leitura de nó de símbolo e suas conexões no grafo SQLite.",
+      "parameters": {
+        "type": "object",
+        "required": ["name"],
+        "properties": {
+          "name": {"type": "string"},
+          "file": {"type": ["string", "null"]}
+        },
+        "additionalProperties": false
+      },
+      "returns": {
+        "type": ["object", "null"],
+        "required": ["name", "kind", "file", "incoming", "outgoing"],
+        "properties": {
+          "name": {"type": "string"},
+          "kind": {"type": "string"},
+          "file": {"type": ["string", "null"]},
+          "incoming": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "required": ["type", "name", "kind"],
+              "properties": {
+                "type": {"type": "string"},
+                "name": {"type": "string"},
+                "kind": {"type": "string"},
+                "file": {"type": ["string", "null"]}
+              },
+              "additionalProperties": false
+            }
+          },
+          "outgoing": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "required": ["type", "name", "kind"],
+              "properties": {
+                "type": {"type": "string"},
+                "name": {"type": "string"},
+                "kind": {"type": "string"},
+                "file": {"type": ["string", "null"]}
+              },
+              "additionalProperties": false
+            }
+          }
+        },
+        "additionalProperties": false
+      }
+    },
+    "get_file_outline": {
+      "description": "Outline estrutural de arquivo Java extraído via Tree-sitter.",
+      "parameters": {
+        "type": "object",
+        "required": ["file"],
+        "properties": {
+          "file": {"type": "string"}
+        },
+        "additionalProperties": false
+      },
+      "returns": {
+        "type": "object",
+        "required": ["file", "types"],
+        "properties": {
+          "file": {"type": "string"},
+          "package": {"type": ["string", "null"]},
+          "imports_count": {"type": "integer"},
+          "types": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "required": ["kind", "name"],
+              "properties": {
+                "kind": {"type": "string"},
+                "name": {"type": "string"},
+                "annotations": {
+                  "type": "array",
+                  "items": {"type": "string"}
+                },
+                "extends": {"type": ["string", "null"]},
+                "implements": {
+                  "type": "array",
+                  "items": {"type": "string"}
+                },
+                "methods": {
+                  "type": "array",
+                  "items": {"type": "string"}
+                },
+                "constructors": {
+                  "type": "array",
+                  "items": {"type": "string"}
+                },
+                "fields": {
+                  "type": "array",
+                  "items": {"type": "string"}
+                },
+                "nested": {"type": "array"}
+              },
+              "additionalProperties": false
+            }
+          }
+        },
+        "additionalProperties": false
+      }
+    },
+    "git_history": {
+      "description": "Histórico de commits somente leitura com autor, data e arquivos tocados.",
+      "parameters": {
+        "type": "object",
+        "required": ["repo"],
+        "properties": {
+          "repo": {"type": "string"},
+          "path": {"type": ["string", "null"]},
+          "limit": {
+            "type": "integer",
+            "minimum": 1,
+            "default": 20
+          }
+        },
+        "additionalProperties": false
+      },
+      "returns": {
+        "type": "array",
+        "items": {
+          "type": "object",
+          "required": ["sha", "subject", "date", "author", "files"],
+          "properties": {
+            "sha": {"type": "string"},
+            "subject": {"type": "string"},
+            "date": {"type": "string"},
+            "author": {"type": "string"},
+            "files": {
+              "type": "array",
+              "items": {"type": "string"}
+            }
+          },
+          "additionalProperties": false
+        }
+      }
+    },
+    "git_diff": {
+      "description": "Diff unificado somente leitura entre commits ou com o commit pai.",
+      "parameters": {
+        "type": "object",
+        "required": ["repo", "commit"],
+        "properties": {
+          "repo": {"type": "string"},
+          "commit": {"type": "string"},
+          "path": {"type": ["string", "null"]},
+          "parent": {"type": ["string", "null"]}
+        },
+        "additionalProperties": false
+      },
+      "returns": {
+        "type": "object",
+        "required": ["commit", "diff"],
+        "properties": {
+          "commit": {"type": "string"},
+          "parent": {"type": ["string", "null"]},
+          "path": {"type": ["string", "null"]},
+          "diff": {"type": "string"}
+        },
+        "additionalProperties": false
+      }
+    },
+    "find_related_tests": {
+      "description": "Arquivos de teste relacionados que referenciam um símbolo.",
+      "parameters": {
+        "type": "object",
+        "required": ["repo", "symbol"],
+        "properties": {
+          "repo": {"type": "string"},
+          "symbol": {"type": "string"},
+          "limit": {
+            "type": "integer",
+            "minimum": 1,
+            "default": 20
+          }
+        },
+        "additionalProperties": false
+      },
+      "returns": {
+        "type": "array",
+        "items": {"type": "string"}
+      }
+    },
+    "find_migration": {
+      "description": "Arquivos de migração SQL que tocam uma tabela via grafo ou varredura.",
+      "parameters": {
+        "type": "object",
+        "required": ["repo", "table"],
+        "properties": {
+          "repo": {"type": "string"},
+          "table": {"type": "string"}
+        },
+        "additionalProperties": false
+      },
+      "returns": {
+        "type": "array",
+        "items": {"type": "string"}
+      }
+    }
+  }
+}
