@@ -1,0 +1,34 @@
+{
+  "experiment_id": "20260918-162715-3d1380094788",
+  "date": "2026-09-18T16:27:15+00:00",
+  "siga_commit": "48610bd6504692ad3f2e99ef318beb84e2668fd6",
+  "sigateste_commit": "34b48792f162f3446f63cb507d8c8267ff2d9ea8",
+  "needle_version": null,
+  "needle_depth": null,
+  "artifact_hash": null,
+  "dataset_version": "holdout-v1",
+  "tool_version": "siga-context-v2",
+  "index_version": "tree-sitter-java-0.23",
+  "bench_version": "siga-bench-v1",
+  "metrics": {
+    "baseline_mean_tokens": 139791.2,
+    "json_mean_tokens": 561.5,
+    "text_mean_tokens": 497.6,
+    "effective_token_reduction_text": 0.9964,
+    "effective_token_reduction_json": 0.996,
+    "text_vs_json_savings_pct": 11.37,
+    "task_success_delta": 0.0,
+    "pt_br_fragmentation_ratio": 1.81
+  },
+  "hardware": {
+    "system": "Linux",
+    "machine": "x86_64",
+    "cpu_count": 16,
+    "python": "3.12.2"
+  },
+  "latency": {
+    "p50_ms": 0.0,
+    "p95_ms": null
+  },
+  "notes": "P09-T01: Comparação empírica de formatos JSON vs Texto Compacto no SIGA-Bench holdout"
+}

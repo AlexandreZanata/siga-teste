@@ -1,4 +1,4 @@
-"""Tool semântica siga_context (P05-T02, ADR-013 em docs/06).
+"""Tool semântica siga_context (P05-T02, ADR-013 em docs/06, P09-T01).
 
 Ação: Produz a cápsula final mínima para a IA grande a partir de símbolos validados.
 Args:
@@ -15,6 +15,7 @@ from pathlib import Path
 import sqlite3
 from typing import Any
 
+from context.capsule import build_context_capsule, count_tokens
 from tools import primitives
 
 
@@ -76,6 +77,15 @@ def siga_context(
             except Exception:
                 pass
 
+    # Constrói cápsula estruturada rica da Phase 09
+    rich_capsule = build_context_capsule(
+        task=task,
+        repo=root,
+        conn=conn,
+        symbols=symbols,
+        files=sorted(files),
+    )
+
     # Monta a cápsula textual compacta para o prompt da IA grande
     capsule_lines: list[str] = [
         f"# CONTEXT CAPSULE — {task.strip()}",
@@ -101,10 +111,10 @@ def siga_context(
             if t.get("fields"):
                 capsule_lines.append(f"    fields: {', '.join(t['fields'][:10])}")
 
-    if tests:
+    if tests or rich_capsule.tests:
         capsule_lines.append("")
         capsule_lines.append("## RELEVANT TESTS")
-        for t in sorted(tests):
+        for t in sorted(tests | set(rich_capsule.tests)):
             try:
                 rel_t = str(Path(t).relative_to(root))
             except ValueError:
@@ -112,16 +122,24 @@ def siga_context(
             capsule_lines.append(f"- {rel_t}")
 
     capsule_text = "\n".join(capsule_lines)
-    # Estimativa de tokens: ~1 token para cada 4 caracteres
-    estimated_tokens = len(capsule_text) // 4
+    estimated_tokens = count_tokens(capsule_text)
 
     return {
         "task": task,
         "symbols": symbols,
         "files": sorted(files),
         "outlines": outlines,
-        "related_tests": sorted(tests),
+        "related_tests": sorted(tests | set(rich_capsule.tests)),
         "relations": relations,
+        "primary_symbols": rich_capsule.primary_symbols,
+        "flow": rich_capsule.flow,
+        "domain": rich_capsule.domain,
+        "persistence": rich_capsule.persistence,
+        "views": rich_capsule.views,
+        "migrations": rich_capsule.migrations,
+        "snippets": [s.to_dict() for s in rich_capsule.snippets],
         "capsule_text": capsule_text,
+        "capsule_json": rich_capsule.to_json(compact=True),
+        "compact_text": rich_capsule.to_compact_text(),
         "token_estimate": estimated_tokens,
     }

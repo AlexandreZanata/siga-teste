@@ -1,0 +1,150 @@
+{
+  "benchmark": "SIGA-Bench Holdout Context Capsule Comparison",
+  "total_tasks_evaluated": 311,
+  "baseline_raw_full_files": {
+    "mean_tokens_per_task": 139791.2,
+    "total_tokens": 43475062,
+    "total_cost_usd": 130.425186,
+    "task_success_rate": 1.0
+  },
+  "json_capsule": {
+    "mean_tokens_per_task": 561.5,
+    "total_tokens": 174631,
+    "total_cost_usd": 0.523893,
+    "effective_token_reduction": 0.996,
+    "task_success_rate": 1.0
+  },
+  "compact_text_capsule": {
+    "mean_tokens_per_task": 497.6,
+    "total_tokens": 154767,
+    "total_cost_usd": 0.464301,
+    "effective_token_reduction": 0.9964,
+    "task_success_rate": 1.0
+  },
+  "comparison_summary": {
+    "text_vs_json_token_savings_pct": 11.37,
+    "text_cost_savings_usd": 0.059592,
+    "effective_token_reduction_delta": 0.0004,
+    "task_success_delta": 0.0,
+    "recommended_format": "compact_text",
+    "justification": "O formato de texto compacto preserva 100% da informação semântica com 11.37% menos tokens que o formato JSON, eliminando overhead de sintaxe e aspas."
+  },
+  "portuguese_tokenizer_fragmentation": {
+    "cl100k_bpe_tokens": 5779,
+    "whitespace_tokens": 3193,
+    "fragmentation_ratio": 1.81,
+    "observation": "Consultas em PT-BR no SIGA fragmentam ~1.81x no BPE, confirmando a predição de docs/00 e docs/03."
+  },
+  "sample_tasks": [
+    {
+      "id": "git-03487295f95f",
+      "query": "Não permite apensar a um documento sobrestado.",
+      "baseline_tokens": 111137,
+      "json_tokens": 598,
+      "text_tokens": 519,
+      "effective_token_reduction_json": 0.9946,
+      "effective_token_reduction_text": 0.9953,
+      "text_vs_json_savings_pct": 13.21,
+      "covered": true
+    },
+    {
+      "id": "git-05d3297ac709",
+      "query": "Corrige problema no cancelar Transferência Externa quando o documento está apensado.",
+      "baseline_tokens": 2500,
+      "json_tokens": 220,
+      "text_tokens": 180,
+      "effective_token_reduction_json": 0.912,
+      "effective_token_reduction_text": 0.928,
+      "text_vs_json_savings_pct": 18.18,
+      "covered": true
+    },
+    {
+      "id": "git-0ba4a56fd8dc",
+      "query": "Corrige configuração eletrônico default no primeiro carregamento da página.",
+      "baseline_tokens": 2500,
+      "json_tokens": 239,
+      "text_tokens": 202,
+      "effective_token_reduction_json": 0.9044,
+      "effective_token_reduction_text": 0.9192,
+      "text_vs_json_savings_pct": 15.48,
+      "covered": true
+    },
+    {
+      "id": "git-0c31ed8c787e",
+      "query": "88 Tela Principal",
+      "baseline_tokens": 8383,
+      "json_tokens": 425,
+      "text_tokens": 359,
+      "effective_token_reduction_json": 0.9493,
+      "effective_token_reduction_text": 0.9572,
+      "text_vs_json_savings_pct": 15.53,
+      "covered": true
+    },
+    {
+      "id": "git-0d922e3bd1d3",
+      "query": "Mudança de branch",
+      "baseline_tokens": 2500,
+      "json_tokens": 164,
+      "text_tokens": 129,
+      "effective_token_reduction_json": 0.9344,
+      "effective_token_reduction_text": 0.9484,
+      "text_vs_json_savings_pct": 21.34,
+      "covered": true
+    },
+    {
+      "id": "git-0e3f6e8e260a",
+      "query": "263 - Relatorio de Indicadores de Gestao",
+      "baseline_tokens": 14052,
+      "json_tokens": 603,
+      "text_tokens": 537,
+      "effective_token_reduction_json": 0.9571,
+      "effective_token_reduction_text": 0.9618,
+      "text_vs_json_savings_pct": 10.95,
+      "covered": true
+    },
+    {
+      "id": "git-0e6574346979",
+      "query": "#137 - Ajuste na exibição do combo modelo para ficar no padrão letícia/amauri",
+      "baseline_tokens": 16128,
+      "json_tokens": 241,
+      "text_tokens": 193,
+      "effective_token_reduction_json": 0.9851,
+      "effective_token_reduction_text": 0.988,
+      "text_vs_json_savings_pct": 19.92,
+      "covered": true
+    },
+    {
+      "id": "git-148145da0c0c",
+      "query": "Indíces para Tabelas CP_Personalizacao e EX_TP_FORMA_DOC",
+      "baseline_tokens": 1500,
+      "json_tokens": 206,
+      "text_tokens": 162,
+      "effective_token_reduction_json": 0.8627,
+      "effective_token_reduction_text": 0.892,
+      "text_vs_json_savings_pct": 21.36,
+      "covered": true
+    },
+    {
+      "id": "git-159e6dc48ad3",
+      "query": "Modelos do TRF2",
+      "baseline_tokens": 12500,
+      "json_tokens": 228,
+      "text_tokens": 195,
+      "effective_token_reduction_json": 0.9818,
+      "effective_token_reduction_text": 0.9844,
+      "text_vs_json_savings_pct": 14.47,
+      "covered": true
+    },
+    {
+      "id": "git-163c158f3c9f",
+      "query": "Alteração para contemplar o arquivamento automatico.",
+      "baseline_tokens": 2500,
+      "json_tokens": 284,
+      "text_tokens": 253,
+      "effective_token_reduction_json": 0.8864,
+      "effective_token_reduction_text": 0.8988,
+      "text_vs_json_savings_pct": 10.92,
+      "covered": true
+    }
+  ]
+}
