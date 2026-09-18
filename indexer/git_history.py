@@ -39,9 +39,24 @@ def files_in_commit(repo: str | Path, sha: str) -> list[str]:
     return sorted(line for line in out.splitlines() if line.strip())
 
 
-def cochange_partners(repo: str | Path, path: str, limit_commits: int = 200) -> list[dict]:
-    """Arquivos que mais co-ocorrem com `path` nos commits (fonte de CHANGED_WITH)."""
-    log = _run(repo, "log", f"-{limit_commits}", "--format=%H", "--name-only")
+def cochange_partners(
+    repo: str | Path,
+    path: str,
+    limit_commits: int = 200,
+    before_sha: str | None = None,
+) -> list[dict]:
+    """Arquivos que mais co-ocorrem com `path` nos commits (fonte de CHANGED_WITH).
+
+    Com `before_sha`, varre estritamente o histórico ANTERIOR ao commit
+    (`{before_sha}^`; sem pai — commit raiz — devolve []). Sem ele, varre a
+    partir do HEAD. A forma exclusiva existe para medir recall sem vazar o
+    próprio commit avaliado.
+    """
+    rev = [f"{before_sha}^"] if before_sha else []
+    try:
+        log = _run(repo, "log", f"-{limit_commits}", "--format=%H", "--name-only", *rev)
+    except subprocess.CalledProcessError:
+        return []
     counts: Counter[str] = Counter()
     current: list[str] = []
     touched = 0

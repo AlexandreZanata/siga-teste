@@ -7,6 +7,7 @@ Tudo determinístico; tudo retornado existe em disco.
 
 from __future__ import annotations
 
+import subprocess
 from pathlib import Path
 
 from indexer.java_symbols import parse_file
@@ -72,10 +73,20 @@ def related_tests(repo: str | Path, symbol: str, limit: int = 20) -> list[str]:
     return [h["file"] for h in hits]
 
 
-def static_impact(repo: str | Path, target: str | Path, depth: int = 1) -> dict:
+def static_impact(
+    repo: str | Path,
+    target: str | Path,
+    depth: int = 1,
+    with_cochange: bool = False,
+    before_sha: str | None = None,
+    cochange_limit: int = 5,
+) -> dict:
     """Impacto estático 1-hop de um arquivo .java: callers, depends_on, testes.
 
-    `target` é path de arquivo. Retorna paths reais + imports.
+    `target` é path de arquivo. Retorna paths reais + imports. Com
+    `with_cochange`, soma parceiros históricos de co-alteração
+    (`CHANGED_WITH`, chave `cochange`); `before_sha` restringe o histórico a
+    antes do commit (sem vazar o avaliado).
     """
     _ = depth  # V1: só 1-hop; depth>1 adiado p/ P05 (siga_impact)
     path = str(target)
@@ -89,12 +100,33 @@ def static_impact(repo: str | Path, target: str | Path, depth: int = 1) -> dict:
     tests = []
     for symbol in symbols:
         tests.extend(t for t in related_tests(repo, symbol) if t != path)
+    cochange: list[str] = []
+    if with_cochange:
+        from indexer import git_history
+
+        root = Path(repo)
+        try:
+            rel = str(Path(path).relative_to(root))
+        except ValueError:
+            rel = path
+        try:
+            partners = git_history.cochange_partners(repo, rel, before_sha=before_sha)
+        except (subprocess.SubprocessError, OSError):
+            partners = []
+        cochange = sorted(
+            {
+                str(root / partner["path"])
+                for partner in partners[: max(cochange_limit, 0)]
+                if (root / partner["path"]).is_file()
+            }
+        )
     return {
         "target": path,
         "symbols": symbols,
         "callers": callers,
         "depends_on": file_imports(path),
         "related_tests": sorted(set(tests)),
+        "cochange": cochange,
     }
 
 
@@ -126,6 +158,45 @@ def impact_recall(repo: str | Path, commit_sha: str) -> dict:
         "others": sorted(others),
         "covered": sorted(covered),
         "recall": len(covered) / len(others) if others else 1.0,
+    }
+
+
+def impact_recall_with_cochange(repo: str | Path, commit_sha: str, cochange_limit: int = 5) -> dict:
+    """Recall estático + parceiros de co-alteração estritamente ANTERIORES ao commit.
+
+    Mesma âncora e mesmos `others` de `impact_recall`; o conjunto alcançado
+    soma `cochange` medido só com `{commit_sha}^` (nunca o próprio commit —
+    prever o commit a partir dele mesmo seria leakage). `recall_static`
+    preserva a medida antiga para comparação honesta.
+    """
+    from indexer.git_history import files_in_commit
+
+    files = [f for f in files_in_commit(repo, commit_sha) if f.endswith(".java")]
+    in_slice = [f for f in files if f.startswith(SLICE_MODULES)]
+    if len(in_slice) < 2:
+        return {"sha": commit_sha, "skipped": True, "reason": "<2 java do slice"}
+    root = Path(repo)
+    anchor = str(root / in_slice[0])
+    others = {str(root / f) for f in in_slice[1:]}
+    impact = static_impact(repo, anchor, with_cochange=True, before_sha=commit_sha, cochange_limit=cochange_limit)
+    reached = (
+        set(impact["callers"])
+        | {
+            str(root / (dotted.replace(".", "/") + ".java")) for dotted in impact["depends_on"]
+        }
+        | set(impact["cochange"])
+    )
+    covered = {f for f in others if f in reached or _references(root, f, impact["symbols"])}
+    static = impact_recall(repo, commit_sha)
+    return {
+        "sha": commit_sha,
+        "skipped": False,
+        "anchor": anchor,
+        "others": sorted(others),
+        "covered": sorted(covered),
+        "recall": len(covered) / len(others) if others else 1.0,
+        "recall_static": static.get("recall"),
+        "cochange": impact["cochange"],
     }
 
 
