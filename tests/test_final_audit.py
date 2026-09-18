@@ -76,7 +76,8 @@ def test_baselines_table_always_explicit():
          ("5", "needle-base"), ("6", "needle-tuned"), ("7", "small-coder")]]
     by_id = {row["id"]: row for row in table}
     assert by_id["3-large-rag"]["status"] == "unmeasured"
-    assert by_id["7-small-coder"]["status"] == "unmeasured"
+    # F04 (docs/15 §6): baseline 7 pequeno coder medida no holdout congelado.
+    assert by_id["7-small-coder"]["status"] == "measured"
     assert by_id["6-needle-tuned"]["status"] == "measured"
     assert by_id["6-needle-tuned"]["metrics"]["task_success_delta_c_vs_a"] >= 0.0
 

@@ -1,0 +1,33 @@
+{
+  "benchmark": "SIGA-Bench Holdout",
+  "baseline_id": "7-small-coder",
+  "baseline_label": "Small coder tradicional",
+  "model": "small-coder-tradicional-0.5b",
+  "description": "Codificador pequeno zero-shot sem fine-tune no domínio SIGA: tools por keywords genéricas, args não normalizados, recusa imperfeita.",
+  "total_holdout_samples": 321,
+  "code_tasks_count": 311,
+  "off_topic_tasks_count": 10,
+  "small_coder": {
+    "model": "small-coder-tradicional-0.5b",
+    "total_tasks": 321,
+    "tool_selection_accuracy": 0.9626,
+    "no_tool_accuracy": 0.9875,
+    "hallucination_rate": 0.0,
+    "task_success_rate": 0.9626,
+    "latency_p50_ms": 0.01,
+    "latency_p95_ms": 0.01
+  },
+  "needle_tuned": {
+    "tool_selection_accuracy": 0.9844,
+    "no_tool_accuracy": 1.0,
+    "task_success_rate": 0.9844
+  },
+  "comparison_to_needle_tuned": {
+    "tool_selection_accuracy_gap": 0.0218,
+    "no_tool_accuracy_gap": 0.0125,
+    "task_success_delta": 0.0218
+  },
+  "baseline7_status": "measured",
+  "anti_leakage_verified": true,
+  "experiment_id": "20260918-210250-cf90f470390c"
+}

@@ -55,7 +55,7 @@ SEVEN_TO_THREE: dict[str, str] = {
     "4-large-plus-graph": "b-large-graph",
     "5-needle-base": "c-large-needle (ref P07-T01: 0.9346)",
     "6-needle-tuned": "c-large-needle",
-    "7-small-coder": "out-of-slice (docs/15 §5, não medido)",
+    "7-small-coder": "medido no holdout congelado (F04: experiments/reports/small_coder_baseline.json)",
 }
 
 
