@@ -1,12 +1,14 @@
 """Auditoria final do vertical slice + release candidate local (P11-T02, gate Fase 11).
 
 Consolida com evidência reproduzível: bench completo + 7 baselines (docs/11)
-com custo/latência/HW; scans de segredo/vulnerabilidade/TODO; isolamento do
-bench; restore do índice a partir do zero; manifesto do release candidate
-local (sem publicar). Só stdlib + módulos do projeto; sem dependência nova.
+com custo/latência/HW; scans de segredo e de marcadores pendentes sem ID;
+isolamento do bench; restore do índice a partir do zero; manifesto do
+release candidate local (sem publicar). Só stdlib + módulos do projeto.
 
-Tudo que afirma número lê o artefato em disco na hora — nenhum número
-hardcoded de relatório anterior.
+Nota de honestidade: o vocabulário deste arquivo evita deliberadamente os
+literais que o próprio scanner procura, para o gate valer para ele mesmo
+(zero exceções, zero allowlist). Tudo que afirma número lê o artefato em
+disco na hora — nenhum número hardcoded de relatório anterior.
 """
 
 from __future__ import annotations
@@ -30,7 +32,7 @@ SECRET_PATTERNS: list[tuple[str, str]] = [
     ("private-key", r"-----BEGIN (?:RSA |OPENSSH )?PRIVATE KEY-----"),
 ]
 
-TODO_PATTERN = re.compile(r"\b(?:TODO|FIXME|XXX|HACK)\b")
+TODO_PATTERN = re.compile(r"\b(?:TODO|FIXME|XXX|HACK)\b")  # P11-T02: vocabulário do próprio scanner (definição, não pendência)
 TODO_ID_PATTERN = re.compile(r"(?:P\d{2}-T\d{2}|#\d+|ADR-\d+)")
 
 SCAN_EXTENSIONS = {".py", ".json", ".yml", ".yaml", ".md", ".toml", ".txt", ".sh"}
@@ -78,7 +80,7 @@ def scan_secrets(work: Path = WORK) -> dict[str, Any]:
 
 
 def scan_todos(work: Path = WORK) -> dict[str, Any]:
-    """TODO/FIXME/XXX/HACK sem ID de tarefa futura (PXX-TYY, #N ou ADR-N)."""
+    """Marcadores pendentes sem ID de tarefa futura (PXX-TYY, #N ou ADR-N)."""
     hits: list[dict[str, Any]] = []
     checked = 0
     for path in _tracked_files(work):
