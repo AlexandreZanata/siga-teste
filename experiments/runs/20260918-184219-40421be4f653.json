@@ -1,0 +1,31 @@
+{
+  "experiment_id": "20260918-184219-40421be4f653",
+  "date": "2026-09-18T18:42:19+00:00",
+  "siga_commit": "48610bd6504692ad3f2e99ef318beb84e2668fd6",
+  "sigateste_commit": "ebfb973f6a900bcaae745619e51569857a8f095f",
+  "needle_version": "2.0-45M-subnetwork-12L-onpolicy",
+  "needle_depth": 12,
+  "artifact_hash": null,
+  "dataset_version": "onpolicy-loop-01",
+  "tool_version": "siga-onpolicy-v1",
+  "index_version": "tree-sitter-java-0.23",
+  "bench_version": "siga-bench-v1",
+  "metrics": {
+    "base_accuracy": 0.9841,
+    "patched_accuracy": 1.0,
+    "holdout_delta": 0.0159,
+    "target_gain": 1.0,
+    "target_records": 5
+  },
+  "hardware": {
+    "system": "Linux",
+    "machine": "x86_64",
+    "cpu_count": 16,
+    "python": "3.12.2"
+  },
+  "latency": {
+    "p50_ms": 0.0,
+    "p95_ms": null
+  },
+  "notes": "P11-T01: on-policy loop loop-01 com failure mining e active learning."
+}
