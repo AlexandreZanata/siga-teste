@@ -450,15 +450,37 @@ def find_related_tests(repo: str | Path, symbol: str, limit: int = 20) -> list[s
     return callgraph.related_tests(repo, symbol, limit=limit)
 
 
+_SQL_TABLES_CACHE: dict[Path, dict[str, list[str]]] = {}
+_SQL_FILES_CACHE: dict[Path, list[Path]] = {}
+
+
+def _sql_tables_cached(path: Path) -> dict[str, list[str]]:
+    """tables_in_sql por arquivo, cacheado (conteúdo imutável durante o processo)."""
+    cached = _SQL_TABLES_CACHE.get(path)
+    if cached is None:
+        try:
+            cached = sql_tables.tables_in_sql(
+                path.read_text(encoding="utf-8", errors="replace")
+            )
+        except Exception:
+            cached = {"writes": [], "reads": []}
+        _SQL_TABLES_CACHE[path] = cached
+    return cached
+
+
+def _sql_files_cached(root: Path) -> list[Path]:
+    """Lista de *.sql do repositório, cacheada por raiz (árvore imutável no processo)."""
+    cached = _SQL_FILES_CACHE.get(root)
+    if cached is None:
+        cached = sorted(p for p in root.glob("**/*.sql") if ".git" not in p.parts)
+        _SQL_FILES_CACHE[root] = cached
+    return cached
+
+
 def _table_in_sql_file(path: Path, table: str) -> bool:
-    try:
-        tables = sql_tables.tables_in_sql(
-            path.read_text(encoding="utf-8", errors="replace")
-        )
-        all_tables = [t.lower() for t in tables["writes"] + tables["reads"]]
-        return table.lower() in all_tables
-    except Exception:
-        return False
+    tables = _sql_tables_cached(path)
+    all_tables = [t.lower() for t in tables["writes"] + tables["reads"]]
+    return table.lower() in all_tables
 
 
 def find_migration(
@@ -484,14 +506,16 @@ def find_migration(
             pass
 
     root = Path(repo)
+    all_sql = _sql_files_cached(root)
+    migration_dir_sql = [
+        p for p in all_sql if "db" in p.parts and "migration" in p.parts and p.parts.index("migration") == p.parts.index("db") + 1
+    ]
     hits: list[str] = []
-    for sql_path in sorted(root.glob("**/db/migration/*.sql")):
+    for sql_path in migration_dir_sql:
         if _table_in_sql_file(sql_path, table):
             hits.append(str(sql_path))
     if not hits:
-        for sql_path in sorted(root.glob("**/*.sql")):
-            if ".git" in sql_path.parts:
-                continue
+        for sql_path in all_sql:
             if _table_in_sql_file(sql_path, table):
                 hits.append(str(sql_path))
     return sorted(set(hits))

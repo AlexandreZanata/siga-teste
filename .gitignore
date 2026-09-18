@@ -18,6 +18,7 @@ models/*.bin
 models/*.safetensors
 datasets/raw/
 datasets/verified/*.jsonl
+datasets/rejected/*_2k.jsonl
 *.sqlite
 *.duckdb
 

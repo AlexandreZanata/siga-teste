@@ -1,0 +1,31 @@
+{
+  "experiment_id": "20260918-230200-6f42e6070a48",
+  "date": "2026-09-18T23:02:00+00:00",
+  "siga_commit": "48610bd6504692ad3f2e99ef318beb84e2668fd6",
+  "sigateste_commit": "de60034356ff73f39ed679555f07de72f98843c6",
+  "needle_version": "factory-2k",
+  "needle_depth": null,
+  "artifact_hash": null,
+  "dataset_version": "v1.0",
+  "tool_version": "1.0.0",
+  "index_version": "1.0.0",
+  "bench_version": "1.0.0",
+  "metrics": {
+    "total_verified": 2000,
+    "total_rejected": 0,
+    "acceptance_rate": 1.0,
+    "no_tool_accuracy": 1.0,
+    "hallucination_rate": 0.0
+  },
+  "hardware": {
+    "system": "Linux",
+    "machine": "x86_64",
+    "cpu_count": 16,
+    "python": "3.12.2"
+  },
+  "latency": {
+    "p50_ms": 0.0,
+    "p95_ms": null
+  },
+  "notes": "F06: degrau 2k real da fábrica (500 -> 2000) com error analysis escrita (ADR-017); pipeline verificado do P06 reutilizado; sem re-treino; anti-leakage verificado."
+}

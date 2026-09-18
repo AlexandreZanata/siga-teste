@@ -17,6 +17,7 @@ import json
 from pathlib import Path
 import sqlite3
 import subprocess
+from functools import lru_cache
 
 from indexer import java_symbols, maven_modules
 from retrieval import search
@@ -55,9 +56,14 @@ def check_symbol(conn: sqlite3.Connection, symbol: str) -> bool:
     return row is not None
 
 
-def check_grep(repo: Path, pattern: str, globs: list[str] | None = None) -> bool:
-    """Verifica via ripgrep se o padrão textual existe no repositório."""
-    hits = search.search_text(repo, pattern, globs=globs, limit=1)
+@lru_cache(maxsize=8192)
+def check_grep(repo: Path, pattern: str, globs: tuple[str, ...] | None = None) -> bool:
+    """Verifica via ripgrep se o padrão textual existe no repositório.
+
+    Pura em (repo, pattern, globs) e com repositório imutável durante o processo:
+    cache LRU evita re-varrer o repo inteiro para padrões repetidos.
+    """
+    hits = search.search_text(repo, pattern, globs=list(globs) if globs else None, limit=1)
     return len(hits) > 0
 
 
