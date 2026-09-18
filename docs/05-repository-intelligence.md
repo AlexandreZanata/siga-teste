@@ -16,6 +16,10 @@ Slice V1 (`siga-ex` 6.3M + `sigaex` 22M de `src/`; 506 + 270 Java; 597 JSPs em `
 - **Risks:** call graph impreciso em polimorfismo VRaptor/Spring.
 - **Validate:** P02 mede precisão de símbolos/callers em amostra etiquetada de `ExBL.java`, `ExTramiteBL.java`, `ExDocumentoController.java`; gatilho de troca documentado.
 
+## Veredito F07 — gatilho executado, Tree-sitter permanece (2026-09-18)
+
+Comparação `scripts/compare_java_parsers.py` (Tree-sitter vs `javalang==0.13.0`, mesma classe do JavaParser, sem JVM) em 52 arquivos do slice (3 âncoras + 50 amostra): parse 1,0/1,0, package 1,0, acordo de símbolos 1,0, latência média 1,98ms vs 18,13ms. JDT/JavaParser-jar rejeitados para V1 (JVM + classpath Maven). Diferença real: tolerância — Tree-sitter extrai tipos de arquivo quebrado, javalang levanta `JavaSyntaxError`. Evidência em `experiments/reports/java_parser_comparison.json`. Gatilho de troca segue armado: só dispara se javalang salvar parse que o Tree-sitter perca.
+
 ## ADR-011 — Store: SQLite (WAL) como padrão; DuckDB sob avaliação
 
 - **Decision:** SQLite em WAL p/ nodes/edges + FTS5 p/ busca textual; DuckDB avaliado na P02 apenas para agregações analíticas (centralidade, co-change).

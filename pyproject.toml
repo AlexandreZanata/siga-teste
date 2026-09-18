@@ -10,6 +10,8 @@ dependencies = [
   # P02-T01 + ADR-010 (docs/05): parser Java tolerante, sem JVM no runtime.
   "tree-sitter==0.25.2",
   "tree-sitter-java==0.23.5",
+  # F07 + AGENTS.md V1-permitidas: comparador classe-JavaParser sem JVM (gatilho P02/ADR-010).
+  "javalang==0.13.0",
   # P09-T01: tokenizer BPE real para contagem exata e medição de fragmentação PT-BR.
   "tiktoken>=0.7.0",
 ]
