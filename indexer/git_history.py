@@ -34,8 +34,8 @@ def recent_commits(repo: str | Path, limit: int = 20) -> list[dict]:
 
 
 def files_in_commit(repo: str | Path, sha: str) -> list[str]:
-    """Paths tocados por um commit (strings, ordenados)."""
-    out = _run(repo, "diff-tree", "--no-commit-id", "--name-only", "-r", sha)
+    """Paths tocados por um commit (strings, ordenados); --root cobre o commit raiz."""
+    out = _run(repo, "diff-tree", "--no-commit-id", "--name-only", "-r", "--root", sha)
     return sorted(line for line in out.splitlines() if line.strip())
 
 
