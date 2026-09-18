@@ -1,0 +1,144 @@
+{
+  "benchmark": "SIGA-Bench final audit",
+  "holdout_tasks": 311,
+  "manifest_splits": {
+    "test": 3,
+    "train": 3,
+    "valid": 3
+  },
+  "baselines_7": [
+    {
+      "id": "1-large-alone",
+      "status": "measured",
+      "metrics": {
+        "e2e_success": 0.0,
+        "mean_input_tokens": 28.4
+      },
+      "source": "experiments/reports/integration_three_arms.json",
+      "note": ""
+    },
+    {
+      "id": "2-large-ripgrep",
+      "status": "measured",
+      "metrics": {
+        "method": "naive_locate terms+rg (retrieval/baseline.py)"
+      },
+      "source": "retrieval/baseline.py + evaluation/metrics.recall_at_k",
+      "note": ""
+    },
+    {
+      "id": "3-large-rag",
+      "status": "unmeasured",
+      "metrics": {},
+      "source": "docs/15-roadmap.md §5",
+      "note": "Explicitamente NÃO construir ainda (NOT-build); sem número alegado."
+    },
+    {
+      "id": "4-large-graph",
+      "status": "measured",
+      "metrics": {
+        "e2e_success": 0.3891,
+        "mean_input_tokens": 2414.1,
+        "effective_token_reduction_vs_raw": 0.9827
+      },
+      "source": "experiments/reports/integration_three_arms.json",
+      "note": ""
+    },
+    {
+      "id": "5-needle-base",
+      "status": "measured",
+      "metrics": {
+        "tool_selection_accuracy": 0.9346,
+        "task_success_rate": 0.9346
+      },
+      "source": "experiments/reports/baseline_vs_tuned.json",
+      "note": ""
+    },
+    {
+      "id": "6-needle-tuned",
+      "status": "measured",
+      "metrics": {
+        "tool_selection_accuracy": 0.9657,
+        "task_success_rate": 0.9657,
+        "onpolicy_patched_accuracy": 1.0,
+        "capsule_effective_token_reduction_text": 0.9964,
+        "three_arm_effective_token_reduction": 0.9934,
+        "task_success_delta_c_vs_a": 0.3923
+      },
+      "source": "experiments/reports/baseline_vs_tuned.json + onpolicy_loop.json + capsule_format_comparison.json + integration_three_arms.json",
+      "note": ""
+    },
+    {
+      "id": "7-small-coder",
+      "status": "unmeasured",
+      "metrics": {},
+      "source": "docs/11 ADR-019",
+      "note": "Fora do slice; sem número alegado."
+    }
+  ],
+  "unmeasured_baselines": [
+    "3-large-rag",
+    "7-small-coder"
+  ],
+  "missing_reports": [],
+  "recommendation": {
+    "status": "GO condicional",
+    "rationale": "(c)=1.0 >= (a)=0.0 com redução=0.9934 (>0.90) e (c) vs (b)=0.3891 sem queda: executar o slice, sem escalar pesos/distribuição.",
+    "inputs": {
+      "a_success": 0.0,
+      "b_success": 0.3891,
+      "c_success": 1.0,
+      "reduction": 0.9934
+    }
+  },
+  "scans": {
+    "secrets": {
+      "checked_files": 140,
+      "hits": [],
+      "clean": true
+    },
+    "todos": {
+      "checked_files": 140,
+      "hits": [],
+      "clean": true
+    }
+  },
+  "bench_isolation": {
+    "manifest_version": 1,
+    "bench_shas": 9,
+    "isolated": true
+  },
+  "index_restore": {
+    "files_indexed": 3,
+    "nodes": 741,
+    "edges": 738,
+    "trace_ok": true,
+    "latency_ms": 55.334
+  },
+  "environment": {
+    "system": "Linux",
+    "machine": "x86_64",
+    "cpu_count": 16,
+    "python": "3.12.2",
+    "packages": {
+      "tree-sitter": "0.25.2",
+      "tree-sitter-java": "0.23.5",
+      "tiktoken": "0.13.0",
+      "pytest": "9.0.3",
+      "ruff": "0.15.18"
+    },
+    "siga_commit": "48610bd6504692ad3f2e99ef318beb84e2668fd6",
+    "sigateste_commit": "1c8357806b4a22132dd26392f5fb3f7fd7d02a33"
+  },
+  "release_candidate": {
+    "published": false,
+    "bundle_recipe": [
+      "pip install -e .[dev]",
+      "python scripts/final_audit.py",
+      "make verify"
+    ],
+    "note": "Candidato local e reproduzível (env + índice restaurável); nenhum artefato publicado."
+  },
+  "audit_latency_ms": 371.611,
+  "gates_ok": true
+}

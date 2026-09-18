@@ -1,0 +1,33 @@
+{
+  "benchmark": "SIGA-Bench Holdout",
+  "loop_id": "loop-01",
+  "student": "needle-tuned-5000-d12",
+  "total_pool": 314,
+  "base_accuracy": 0.9841,
+  "failures_mined": 5,
+  "regions": [
+    "commit-localization+siga_context",
+    "commit-localization+siga_impact",
+    "commit-localization+siga_trace"
+  ],
+  "budget": 8,
+  "allocation": {
+    "commit-localization+siga_impact": 5,
+    "commit-localization+siga_context": 2,
+    "commit-localization+siga_trace": 1
+  },
+  "target_records": 5,
+  "patch": {
+    "commit-localization+siga_context": "siga_locate",
+    "commit-localization+siga_impact": "siga_locate",
+    "commit-localization+siga_trace": "siga_locate"
+  },
+  "patched_accuracy": 1.0,
+  "holdout_delta": 0.0159,
+  "target_gain": 1.0,
+  "residual_patched_region_failures": 0,
+  "no_regression": true,
+  "anti_leakage_verified": true,
+  "leakage_scope": "content-only (query/trajectory/answers/reasoning/teachers_consulted); repo_commit e timestamp são ponteiros de provenance excluídos da varredura — ver _leakage_texts",
+  "target_file": "datasets/onpolicy/target_batch_loop-01.jsonl"
+}

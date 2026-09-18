@@ -23,3 +23,23 @@
 ## Alternativas consideradas (resumo)
 
 Controlador por regras+reranker (plano B, ADR-009); embeddings/RAG (adiado p/ depois da P03, ADR-012); Neo4j/K8s (rejeitados na V1, ADR-011/`docs/01 §7`); tool única `jump` (fusão trace+locate rejeitada — golds distintos, `docs/06 §2`).
+
+## Veredito final (P11-T02, 2026-09-18) — cada pergunta com número
+
+1. Needle melhor? Não provado; GO condicional do slice, alternativas vivas (`integration_three_arms`: c=0,3923 vs b=0,3891 vs a=0,0).
+2. Graph resolve? Recall@5 exato 0,15 (P04); basename 0,3891 (P09).
+3. Onde Needle agrega? Seleção de tool + léxico PT-BR misto: 5 falhas→0 no on-policy (P11-T01).
+4. Latência? Needle P50 ~0,02ms; large simulado domina; cápsula −62,07% tokens vs graph (P09).
+5. Tarefas do nano? Locate vago, homônimos, parar/compactar (lacunas P03: `1a47b862`, `fecfd9ce`).
+6. 100% determinísticas? Leitura/callers/diff/history/outline/busca/incremental (inalterado).
+7. Grounding? Alucinação 0,0% tuned, no-tool 100% (P07/P08).
+8. Tools compatíveis? `suppressed_calls` ≈ 0 por schema (P05).
+9. Menor dataset? Sweet spot 2k–5k; 10k overfit leve (P07, ADR-017).
+10. Menor subnetwork? 12L 4-bit 19,2MB/28,6MB RAM retendo 98,44% (P08; hipótese 4L refutada neste domínio).
+11. Quando 100M desnecessário? Quando P03 resolve sem LLM (recall acima).
+12. Dezenas de MB? Sim: 19,2MB disco / 28,6MB RAM (P08).
+13. Melhor baseline sem treino? Needle base 0,9346 tool acc (P07).
+14. Anti-leakage? Splits + prefixo + teste por build; 1 falso-positivo documentado e escopado (P11-T01 `_leakage_texts`).
+15. Economia real? Redução 0,9934 + delta +0,3923 vs large-alone (P09).
+16. Atualizar? Incremental medido, trace 3-hop P50 40,61ms (P02).
+17. Jamais nos pesos? Confirmado: fatos no graph+retrieval, padrões nos pesos (ADR-001).
