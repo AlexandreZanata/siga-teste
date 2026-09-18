@@ -1,0 +1,31 @@
+{
+  "experiment_id": "20260918-152632-af670778ba88",
+  "date": "2026-09-18T15:26:32+00:00",
+  "siga_commit": "48610bd6504692ad3f2e99ef318beb84e2668fd6",
+  "sigateste_commit": "89edfeea4c24d4dfa2946fe842d09c1c11d408b6",
+  "needle_version": "2.0-45M",
+  "needle_depth": null,
+  "artifact_hash": null,
+  "dataset_version": "v1.0",
+  "tool_version": "1.0.0",
+  "index_version": "1.0.0",
+  "bench_version": "1.0.0",
+  "metrics": {
+    "base_tool_acc": 0.9346,
+    "tuned_tool_acc": 0.9657,
+    "base_no_tool_acc": 0.9688,
+    "tuned_no_tool_acc": 1.0,
+    "task_success_delta": 0.0311
+  },
+  "hardware": {
+    "system": "Linux",
+    "machine": "x86_64",
+    "cpu_count": 16,
+    "python": "3.12.2"
+  },
+  "latency": {
+    "p50_ms": 0.03,
+    "p95_ms": 0.05
+  },
+  "notes": "P07-T01: Comparação formal Needle Base sem fine-tune vs Tuned no Holdout sem contaminação."
+}

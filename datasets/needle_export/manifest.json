@@ -1,0 +1,14 @@
+{
+  "export_version": "v1.0",
+  "source_canonical": "datasets/canonical/v1/canonical.jsonl",
+  "total_records": 500,
+  "train_records": 350,
+  "val_records": 150,
+  "hashes": {
+    "needle_train": "f8b988ef9c5fa182d13202718b183662db4cfcbdc305acecc28eba20ae77871d",
+    "needle_val": "702e8b261453299edbb12a6f80a4b9ed215fc9175f8f854ac7f7a106625f21d0",
+    "needle_full": "7d0ee4acdb054b4e351fd14ff49596429ca46c2c6ae03fd3dec43dac1433d158"
+  },
+  "format": "cactus-needle-v2",
+  "anti_leakage_verified": true
+}

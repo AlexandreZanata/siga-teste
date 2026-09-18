@@ -1,0 +1,33 @@
+{
+  "benchmark": "SIGA-Bench Holdout",
+  "total_holdout_samples": 321,
+  "code_tasks_count": 311,
+  "off_topic_tasks_count": 10,
+  "needle_base": {
+    "model": "needle-base-45m",
+    "total_tasks": 321,
+    "tool_selection_accuracy": 0.9346,
+    "no_tool_accuracy": 0.9688,
+    "hallucination_rate": 0.0,
+    "task_success_rate": 0.9346,
+    "latency_p50_ms": 0.03,
+    "latency_p95_ms": 0.05
+  },
+  "needle_tuned": {
+    "model": "needle-tuned-siga-45m",
+    "total_tasks": 321,
+    "tool_selection_accuracy": 0.9657,
+    "no_tool_accuracy": 1.0,
+    "hallucination_rate": 0.0,
+    "task_success_rate": 0.9657,
+    "latency_p50_ms": 0.03,
+    "latency_p95_ms": 0.05
+  },
+  "deltas": {
+    "tool_selection_accuracy_gain": 0.0311,
+    "no_tool_accuracy_gain": 0.0312,
+    "hallucination_reduction": 0.0,
+    "task_success_delta": 0.0311
+  },
+  "anti_leakage_verified": true
+}
