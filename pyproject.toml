@@ -10,6 +10,8 @@ dependencies = [
   # P02-T01 + ADR-010 (docs/05): parser Java tolerante, sem JVM no runtime.
   "tree-sitter==0.25.2",
   "tree-sitter-java==0.23.5",
+  # P09-T01: tokenizer BPE real para contagem exata e medição de fragmentação PT-BR.
+  "tiktoken>=0.7.0",
 ]
 
 [project.optional-dependencies]
@@ -18,6 +20,27 @@ dev = ["pytest>=8", "ruff>=0.6"]
 [build-system]
 requires = ["setuptools>=68"]
 build-backend = "setuptools.build_meta"
+
+[tool.setuptools.packages.find]
+where = ["."]
+include = [
+  "context*",
+  "datasets*",
+  "evaluation*",
+  "experiments*",
+  "graph*",
+  "indexer*",
+  "inference*",
+  "mcp*",
+  "models*",
+  "retrieval*",
+  "task_factory*",
+  "teachers*",
+  "tools*",
+  "training*",
+  "verifier*",
+]
+exclude = ["tests*", "docs*"]
 
 [tool.ruff]
 target-version = "py311"
