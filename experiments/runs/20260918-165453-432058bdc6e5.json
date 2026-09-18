@@ -1,0 +1,32 @@
+{
+  "experiment_id": "20260918-165453-432058bdc6e5",
+  "date": "2026-09-18T16:54:53+00:00",
+  "siga_commit": "48610bd6504692ad3f2e99ef318beb84e2668fd6",
+  "sigateste_commit": "7f587fb76ec7457f4853a6d08564aa3011773056",
+  "needle_version": "2.0-45M-subnetwork-12L",
+  "needle_depth": 12,
+  "artifact_hash": null,
+  "dataset_version": "holdout-v1",
+  "tool_version": "siga-integration-v1",
+  "index_version": "tree-sitter-java-0.23",
+  "bench_version": "siga-bench-v1",
+  "metrics": {
+    "a_success": 0.0,
+    "b_success": 0.3891,
+    "c_success": 0.3923,
+    "effective_token_reduction_c": 0.9934,
+    "task_success_delta_c_vs_a": 0.3923,
+    "c_vs_b_savings_pct": 62.07
+  },
+  "hardware": {
+    "system": "Linux",
+    "machine": "x86_64",
+    "cpu_count": 16,
+    "python": "3.12.2"
+  },
+  "latency": {
+    "p50_ms": 710.715,
+    "p95_ms": 862.262
+  },
+  "notes": "P09-T02: e2e large-alone vs large+graph vs large+Needle no holdout"
+}

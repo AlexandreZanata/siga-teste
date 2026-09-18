@@ -1,0 +1,681 @@
+{
+  "benchmark": "SIGA-Bench Holdout e2e 3 bracos",
+  "slice": "siga-ex + sigaex (docs/17 §1)",
+  "total_tasks_evaluated": 311,
+  "seven_baselines_mapping": {
+    "1-large-alone": "a-large-alone",
+    "2-large-plus-ripgrep": "b-large-graph",
+    "3-large-plus-rag": "b-large-graph (future, NOT-build docs/15 §5)",
+    "4-large-plus-graph": "b-large-graph",
+    "5-needle-base": "c-large-needle (ref P07-T01: 0.9346)",
+    "6-needle-tuned": "c-large-needle",
+    "7-small-coder": "out-of-slice (docs/15 §5, não medido)"
+  },
+  "needle_config": {
+    "model": "needle-tuned-5000-d12",
+    "dataset_size": 5000,
+    "depth": 12,
+    "note": "menor viavel P08-T01 (12L 4-bit, 98.44% routing)"
+  },
+  "pricing": {
+    "input_usd_per_1k": 0.003,
+    "output_usd_per_1k": 0.015
+  },
+  "latency_model": {
+    "large_ms_per_input_token": 0.08,
+    "large_ms_per_output_token": 4.0,
+    "note": "simulacao deterministica local, sem chamada externa"
+  },
+  "raw_full_files_baseline": {
+    "mean_tokens_per_task": 139791.2,
+    "total_tokens": 43475062,
+    "total_cost_usd": 130.425186
+  },
+  "arms": {
+    "a-large-alone": {
+      "mean_input_tokens": 28.4,
+      "total_input_tokens": 8819,
+      "mean_output_tokens": 1.0,
+      "total_cost_usd": 0.031122,
+      "latency": {
+        "p50_ms": 6.08,
+        "p95_ms": 7.68
+      },
+      "ttff": {
+        "p50_ms": 6.08,
+        "p95_ms": 7.68
+      },
+      "e2e_success": 0.0
+    },
+    "b-large-graph": {
+      "mean_input_tokens": 2414.1,
+      "total_input_tokens": 750771,
+      "mean_output_tokens": 118.26,
+      "total_cost_usd": 2.803998,
+      "latency": {
+        "p50_ms": 787.742,
+        "p95_ms": 959.878
+      },
+      "ttff": {
+        "p50_ms": 89.544,
+        "p95_ms": 235.862
+      },
+      "e2e_success": 0.3891
+    },
+    "c-large-needle": {
+      "mean_input_tokens": 915.6,
+      "total_input_tokens": 284765,
+      "mean_output_tokens": 118.26,
+      "total_cost_usd": 1.40598,
+      "latency": {
+        "p50_ms": 710.715,
+        "p95_ms": 862.262
+      },
+      "ttff": {
+        "p50_ms": 140.536,
+        "p95_ms": 292.921
+      },
+      "e2e_success": 0.3923,
+      "tool_selection_accuracy": 0.9839
+    }
+  },
+  "comparison": {
+    "effective_token_reduction_b_vs_raw": 0.9827,
+    "effective_token_reduction_c_vs_raw": 0.9934,
+    "c_vs_b_token_savings_pct": 62.07,
+    "task_success_delta_c_vs_a": 0.3923,
+    "task_success_delta_c_vs_b": 0.0032,
+    "task_success_delta_b_vs_a": 0.3891
+  },
+  "decision": {
+    "status": "GO condicional do slice: (c) >= (a) com tokens<< e (c) > (b) em cápsula/seleção",
+    "go_tokens": true,
+    "go_success": true,
+    "go_beats_b": true,
+    "rationale": "(c) success=0.3923 vs (a)=0.0 (delta=0.3923); (c) vs (b)=0.3891 (delta=0.0032); reducao (c) vs raw=0.9934 (tokens<< exige >0.90); (c) vs (b) economiza 62.07% tokens com tool_acc=0.9839."
+  },
+  "sample_tasks": [
+    {
+      "id": "git-03487295f95f",
+      "query": "Não permite apensar a um documento sobrestado.",
+      "ground_truth_files": [
+        "siga-ex/src/main/java/br/gov/jfrj/siga/ex/bl/ExBL.java"
+      ],
+      "raw_full_tokens": 111137,
+      "a": {
+        "input_tokens": 21,
+        "output_tokens": 1,
+        "cost_usd": 7.8e-05,
+        "latency_ms": 5.68,
+        "ttff_ms": 5.68,
+        "predicted_files": [],
+        "success": 0.0
+      },
+      "b": {
+        "input_tokens": 2049,
+        "output_tokens": 147,
+        "cost_usd": 0.008352,
+        "latency_ms": 851.212,
+        "ttff_ms": 99.292,
+        "retrieval_ms": 99.292,
+        "predicted_files": [
+          "siga-ex/src/main/java/br/gov/jfrj/siga/ex/bl/ExBL.java",
+          "sigaex/src/legacy/java/br/gov/jfrj/siga/vraptor/ExMovimentacaoController.java",
+          "sigaex/src/main/java/br/gov/jfrj/siga/ex/api/v1/DocumentosSiglaApensarPost.java",
+          "sigaex/src/main/java/br/gov/jfrj/siga/ex/api/v1/DocumentosSiglaDesapensarPost.java",
+          "sigaex/src/main/java/br/gov/jfrj/siga/ex/api/v1/DocumentosSiglaDessobrestarPost.java"
+        ],
+        "success": 1.0,
+        "recall": 1.0,
+        "exact_recall": 1.0
+      },
+      "c": {
+        "input_tokens": 1028,
+        "output_tokens": 147,
+        "cost_usd": 0.005289,
+        "latency_ms": 816.691,
+        "ttff_ms": 146.451,
+        "retrieval_ms": 99.292,
+        "needle_ms": 0.056,
+        "capsule_ms": 47.103,
+        "predicted_tool": "siga_locate",
+        "tool_correct": 1.0,
+        "predicted_files": [
+          "siga-ex/src/main/java/br/gov/jfrj/siga/ex/bl/ExBL.java",
+          "sigaex/src/legacy/java/br/gov/jfrj/siga/vraptor/ExMovimentacaoController.java",
+          "sigaex/src/main/java/br/gov/jfrj/siga/ex/api/v1/DocumentosSiglaApensarPost.java",
+          "sigaex/src/main/java/br/gov/jfrj/siga/ex/api/v1/DocumentosSiglaDesapensarPost.java",
+          "sigaex/src/main/java/br/gov/jfrj/siga/ex/api/v1/DocumentosSiglaDessobrestarPost.java"
+        ],
+        "success": 1.0,
+        "recall": 1.0,
+        "exact_recall": 1.0
+      }
+    },
+    {
+      "id": "git-05d3297ac709",
+      "query": "Corrige problema no cancelar Transferência Externa quando o documento está apensado.",
+      "ground_truth_files": [
+        "siga-ex/src/br/gov/jfrj/siga/ex/bl/ExBL.java"
+      ],
+      "raw_full_tokens": 2500,
+      "a": {
+        "input_tokens": 29,
+        "output_tokens": 1,
+        "cost_usd": 0.000102,
+        "latency_ms": 6.32,
+        "ttff_ms": 6.32,
+        "predicted_files": [],
+        "success": 0.0
+      },
+      "b": {
+        "input_tokens": 2976,
+        "output_tokens": 128,
+        "cost_usd": 0.010848,
+        "latency_ms": 940.397,
+        "ttff_ms": 190.317,
+        "retrieval_ms": 190.317,
+        "predicted_files": [
+          "siga-ex/src/main/java/br/gov/jfrj/siga/ex/bl/ExBL.java",
+          "siga-ex/src/main/java/br/gov/jfrj/siga/ex/ExDocumento.java",
+          "siga-ex/src/main/java/br/gov/jfrj/siga/ex/vo/ExMovimentacaoVO.java",
+          "siga-ex/src/main/java/br/gov/jfrj/siga/ex/logic/ExPodeReceberEletronico.java",
+          "siga-ex/src/main/java/br/gov/jfrj/siga/ex/vo/ExDocumentoVO.java"
+        ],
+        "success": 1.0,
+        "recall": 1.0,
+        "exact_recall": 0.0
+      },
+      "c": {
+        "input_tokens": 975,
+        "output_tokens": 128,
+        "cost_usd": 0.004845,
+        "latency_ms": 824.376,
+        "ttff_ms": 234.376,
+        "retrieval_ms": 190.317,
+        "needle_ms": 0.06,
+        "capsule_ms": 43.999,
+        "predicted_tool": "siga_locate",
+        "tool_correct": 1.0,
+        "predicted_files": [
+          "siga-ex/src/main/java/br/gov/jfrj/siga/ex/bl/ExBL.java",
+          "siga-ex/src/main/java/br/gov/jfrj/siga/ex/ExDocumento.java",
+          "siga-ex/src/main/java/br/gov/jfrj/siga/ex/vo/ExMovimentacaoVO.java",
+          "siga-ex/src/main/java/br/gov/jfrj/siga/ex/logic/ExPodeReceberEletronico.java",
+          "siga-ex/src/main/java/br/gov/jfrj/siga/ex/vo/ExDocumentoVO.java"
+        ],
+        "success": 1.0,
+        "recall": 1.0,
+        "exact_recall": 0.0
+      }
+    },
+    {
+      "id": "git-0ba4a56fd8dc",
+      "query": "Corrige configuração eletrônico default no primeiro carregamento da página.",
+      "ground_truth_files": [
+        "sigaex/src/main/java/br/gov/jfrj/webwork/action/ExDocumentoAction.java"
+      ],
+      "raw_full_tokens": 2500,
+      "a": {
+        "input_tokens": 28,
+        "output_tokens": 1,
+        "cost_usd": 9.9e-05,
+        "latency_ms": 6.24,
+        "ttff_ms": 6.24,
+        "predicted_files": [],
+        "success": 0.0
+      },
+      "b": {
+        "input_tokens": 1177,
+        "output_tokens": 117,
+        "cost_usd": 0.005286,
+        "latency_ms": 709.921,
+        "ttff_ms": 147.761,
+        "retrieval_ms": 147.761,
+        "predicted_files": [
+          "siga-ex/src/main/java/br/gov/jfrj/siga/ex/bl/ExBL.java",
+          "siga-ex/src/main/resources/br/gov/jfrj/siga/ex/util/copiaftl.ftl",
+          "siga-ex/src/main/resources/br/gov/jfrj/siga/ex/util/default.ftl",
+          "siga-ex/src/main/java/br/gov/jfrj/siga/ex/model/enm/ExTipoDeConfiguracao.java",
+          "sigaex/src/main/webapp/WEB-INF/page/exDocumento/edita.jsp"
+        ],
+        "success": 0.0,
+        "recall": 0.0,
+        "exact_recall": 0.0
+      },
+      "c": {
+        "input_tokens": 1139,
+        "output_tokens": 117,
+        "cost_usd": 0.005172,
+        "latency_ms": 740.944,
+        "ttff_ms": 181.824,
+        "retrieval_ms": 147.761,
+        "needle_ms": 0.046,
+        "capsule_ms": 34.017,
+        "predicted_tool": "siga_locate",
+        "tool_correct": 1.0,
+        "predicted_files": [
+          "siga-ex/src/main/java/br/gov/jfrj/siga/ex/bl/ExBL.java",
+          "siga-ex/src/main/resources/br/gov/jfrj/siga/ex/util/copiaftl.ftl",
+          "siga-ex/src/main/resources/br/gov/jfrj/siga/ex/util/default.ftl",
+          "siga-ex/src/main/java/br/gov/jfrj/siga/ex/model/enm/ExTipoDeConfiguracao.java",
+          "sigaex/src/main/webapp/WEB-INF/page/exDocumento/edita.jsp"
+        ],
+        "success": 0.0,
+        "recall": 0.0,
+        "exact_recall": 0.0
+      }
+    },
+    {
+      "id": "git-0c31ed8c787e",
+      "query": "88 Tela Principal",
+      "ground_truth_files": [
+        "siga-ex/src/main/java/br/gov/jfrj/siga/ex/bl/Mesa.java",
+        "siga-vraptor-module/src/main/resources/META-INF/tags/cabecalho.tag",
+        "sigaex/src/main/webapp/WEB-INF/page/exMesa/lista.jsp"
+      ],
+      "raw_full_tokens": 8383,
+      "a": {
+        "input_tokens": 15,
+        "output_tokens": 1,
+        "cost_usd": 6e-05,
+        "latency_ms": 5.2,
+        "ttff_ms": 5.2,
+        "predicted_files": [],
+        "success": 0.0
+      },
+      "b": {
+        "input_tokens": 1711,
+        "output_tokens": 115,
+        "cost_usd": 0.006858,
+        "latency_ms": 619.578,
+        "ttff_ms": 22.698,
+        "retrieval_ms": 22.698,
+        "predicted_files": [
+          "siga-ex/src/main/java/br/gov/jfrj/siga/ex/bl/ExBL.java",
+          "siga-ex/src/main/java/br/gov/jfrj/siga/ex/vo/ExDocumentoVO.java",
+          "siga-ex/src/main/resources/db/migration/SIGA_UTF8_V1_0__Description.sql",
+          "sigaex/src/main/resources/br/gov/jfrj/siga/ex/api/v1/swagger.yaml",
+          "sigaex/src/main/webapp/WEB-INF/page/exMovimentacao/aAssinar.jsp"
+        ],
+        "success": 0.0,
+        "recall": 0.0,
+        "exact_recall": 0.0
+      },
+      "c": {
+        "input_tokens": 884,
+        "output_tokens": 115,
+        "cost_usd": 0.004377,
+        "latency_ms": 618.421,
+        "ttff_ms": 87.701,
+        "retrieval_ms": 22.698,
+        "needle_ms": 0.036,
+        "capsule_ms": 64.967,
+        "predicted_tool": "siga_locate",
+        "tool_correct": 1.0,
+        "predicted_files": [
+          "siga-ex/src/main/java/br/gov/jfrj/siga/ex/bl/ExBL.java",
+          "siga-ex/src/main/java/br/gov/jfrj/siga/ex/vo/ExDocumentoVO.java",
+          "siga-ex/src/main/resources/db/migration/SIGA_UTF8_V1_0__Description.sql",
+          "sigaex/src/main/resources/br/gov/jfrj/siga/ex/api/v1/swagger.yaml",
+          "sigaex/src/main/webapp/WEB-INF/page/exMovimentacao/aAssinar.jsp"
+        ],
+        "success": 0.0,
+        "recall": 0.0,
+        "exact_recall": 0.0
+      }
+    },
+    {
+      "id": "git-0d922e3bd1d3",
+      "query": "Mudança de branch",
+      "ground_truth_files": [
+        "sigaex/WebContent/paginas/expediente/anexa.jsp"
+      ],
+      "raw_full_tokens": 2500,
+      "a": {
+        "input_tokens": 14,
+        "output_tokens": 1,
+        "cost_usd": 5.7e-05,
+        "latency_ms": 5.12,
+        "ttff_ms": 5.12,
+        "predicted_files": [],
+        "success": 0.0
+      },
+      "b": {
+        "input_tokens": 699,
+        "output_tokens": 129,
+        "cost_usd": 0.004032,
+        "latency_ms": 597.066,
+        "ttff_ms": 25.146,
+        "retrieval_ms": 25.146,
+        "predicted_files": [
+          "siga-ex/src/main/java/br/gov/jfrj/siga/ex/bl/ExAcesso.java",
+          "siga-ex/src/main/resources/db/migration/SIGA_UTF8_V1_0__Description.sql",
+          "sigaex/src/main/webapp/paginas/expediente/modelos/RecebimentoDaSegundaViaDacarteiraDeIdentificacaoFuncional.jsp",
+          "sigaex/src/main/webapp/paginas/expediente/modelos/ajudaCusto.jsp",
+          "sigaex/src/main/webapp/paginas/expediente/modelos/auxilioTransporte.jsp"
+        ],
+        "success": 0.0,
+        "recall": 0.0,
+        "exact_recall": 0.0
+      },
+      "c": {
+        "input_tokens": 465,
+        "output_tokens": 129,
+        "cost_usd": 0.00333,
+        "latency_ms": 648.989,
+        "ttff_ms": 95.789,
+        "retrieval_ms": 25.146,
+        "needle_ms": 0.039,
+        "capsule_ms": 70.604,
+        "predicted_tool": "siga_locate",
+        "tool_correct": 1.0,
+        "predicted_files": [
+          "siga-ex/src/main/java/br/gov/jfrj/siga/ex/bl/ExAcesso.java",
+          "siga-ex/src/main/resources/db/migration/SIGA_UTF8_V1_0__Description.sql",
+          "sigaex/src/main/webapp/paginas/expediente/modelos/RecebimentoDaSegundaViaDacarteiraDeIdentificacaoFuncional.jsp",
+          "sigaex/src/main/webapp/paginas/expediente/modelos/ajudaCusto.jsp",
+          "sigaex/src/main/webapp/paginas/expediente/modelos/auxilioTransporte.jsp"
+        ],
+        "success": 0.0,
+        "recall": 0.0,
+        "exact_recall": 0.0
+      }
+    },
+    {
+      "id": "git-0e3f6e8e260a",
+      "query": "263 - Relatorio de Indicadores de Gestao",
+      "ground_truth_files": [
+        "sigaex/src/main/java/br/gov/jfrj/siga/ex/relatorio/dinamico/relatorios/RelDocumentosProduzidos.java",
+        "sigaex/src/main/java/br/gov/jfrj/siga/vraptor/ExRelatorioController.java",
+        "sigaex/src/main/webapp/WEB-INF/page/exRelatorio/relIndicadoresGestao.jsp",
+        "sigaex/src/main/webapp/paginas/menus/menu.jsp"
+      ],
+      "raw_full_tokens": 14052,
+      "a": {
+        "input_tokens": 22,
+        "output_tokens": 1,
+        "cost_usd": 8.1e-05,
+        "latency_ms": 5.76,
+        "ttff_ms": 5.76,
+        "predicted_files": [],
+        "success": 0.0
+      },
+      "b": {
+        "input_tokens": 2205,
+        "output_tokens": 123,
+        "cost_usd": 0.00846,
+        "latency_ms": 708.282,
+        "ttff_ms": 39.882,
+        "retrieval_ms": 39.882,
+        "predicted_files": [
+          "sigaex/src/legacy/java/br/gov/jfrj/siga/vraptor/ExRelatorioController.java",
+          "sigaex/src/main/java/br/gov/jfrj/siga/ex/spring/ExSpringRelatorioController.java",
+          "siga-ex/src/main/java/br/gov/jfrj/siga/ex/util/PublicacaoDJEBL.java",
+          "siga-ex/src/main/java/com/aryjr/nheengatu/pdf/HTML2PDFParser.java",
+          "siga-ex/src/main/java/com/aryjr/nheengatu/pdf/PDFDocument.java"
+        ],
+        "success": 1.0,
+        "recall": 0.25,
+        "exact_recall": 0.0
+      },
+      "c": {
+        "input_tokens": 1075,
+        "output_tokens": 123,
+        "cost_usd": 0.00507,
+        "latency_ms": 704.991,
+        "ttff_ms": 126.991,
+        "retrieval_ms": 39.882,
+        "needle_ms": 0.044,
+        "capsule_ms": 87.065,
+        "predicted_tool": "siga_locate",
+        "tool_correct": 1.0,
+        "predicted_files": [
+          "sigaex/src/legacy/java/br/gov/jfrj/siga/vraptor/ExRelatorioController.java",
+          "sigaex/src/main/java/br/gov/jfrj/siga/ex/spring/ExSpringRelatorioController.java",
+          "siga-ex/src/main/java/br/gov/jfrj/siga/ex/util/PublicacaoDJEBL.java",
+          "siga-ex/src/main/java/com/aryjr/nheengatu/pdf/HTML2PDFParser.java",
+          "siga-ex/src/main/java/com/aryjr/nheengatu/pdf/PDFDocument.java"
+        ],
+        "success": 1.0,
+        "recall": 0.25,
+        "exact_recall": 0.0
+      }
+    },
+    {
+      "id": "git-0e6574346979",
+      "query": "#137 - Ajuste na exibição do combo modelo para ficar no padrão letícia/amauri",
+      "ground_truth_files": [
+        "siga/src/main/webapp/javascript/hierarchy-select/hierarchy-select.css",
+        "siga/src/main/webapp/javascript/hierarchy-select/hierarchy-select.js",
+        "sigaex/src/main/webapp/WEB-INF/page/exDocumento/edita.jsp"
+      ],
+      "raw_full_tokens": 16128,
+      "a": {
+        "input_tokens": 34,
+        "output_tokens": 1,
+        "cost_usd": 0.000117,
+        "latency_ms": 6.72,
+        "ttff_ms": 6.72,
+        "predicted_files": [],
+        "success": 0.0
+      },
+      "b": {
+        "input_tokens": 1776,
+        "output_tokens": 125,
+        "cost_usd": 0.007203,
+        "latency_ms": 785.796,
+        "ttff_ms": 143.716,
+        "retrieval_ms": 143.716,
+        "predicted_files": [
+          "siga-ex/src/main/resources/br/gov/jfrj/siga/ex/util/copiaftl.ftl",
+          "siga-ex/src/main/resources/br/gov/jfrj/siga/ex/util/default.ftl",
+          "siga-ex/src/main/java/br/gov/jfrj/siga/ex/bl/ExBL.java",
+          "siga-ex/src/main/java/br/gov/jfrj/siga/ex/model/enm/ExTipoDeConfiguracao.java",
+          "sigaex/src/legacy/java/br/gov/jfrj/siga/vraptor/ExDocumentoController.java"
+        ],
+        "success": 0.0,
+        "recall": 0.0,
+        "exact_recall": 0.0
+      },
+      "c": {
+        "input_tokens": 1204,
+        "output_tokens": 125,
+        "cost_usd": 0.005487,
+        "latency_ms": 786.527,
+        "ttff_ms": 190.207,
+        "retrieval_ms": 143.716,
+        "needle_ms": 0.051,
+        "capsule_ms": 46.44,
+        "predicted_tool": "siga_locate",
+        "tool_correct": 1.0,
+        "predicted_files": [
+          "siga-ex/src/main/resources/br/gov/jfrj/siga/ex/util/copiaftl.ftl",
+          "siga-ex/src/main/resources/br/gov/jfrj/siga/ex/util/default.ftl",
+          "siga-ex/src/main/java/br/gov/jfrj/siga/ex/bl/ExBL.java",
+          "siga-ex/src/main/java/br/gov/jfrj/siga/ex/model/enm/ExTipoDeConfiguracao.java",
+          "sigaex/src/legacy/java/br/gov/jfrj/siga/vraptor/ExDocumentoController.java"
+        ],
+        "success": 0.0,
+        "recall": 0.0,
+        "exact_recall": 0.0
+      }
+    },
+    {
+      "id": "git-148145da0c0c",
+      "query": "Indíces para Tabelas CP_Personalizacao e EX_TP_FORMA_DOC",
+      "ground_truth_files": [
+        "siga-cp/src/main/resources/db/migration/CORPORATIVO_UTF8_V50_0__idx_CpPersonalizacao_Pessoa.sql",
+        "siga-ex/src/main/resources/db/migration/SIGA_UTF8_V57_0__Indice para Tabela Ex Tp Forma Doc.sql"
+      ],
+      "raw_full_tokens": 1500,
+      "a": {
+        "input_tokens": 28,
+        "output_tokens": 1,
+        "cost_usd": 9.9e-05,
+        "latency_ms": 6.24,
+        "ttff_ms": 6.24,
+        "predicted_files": [],
+        "success": 0.0
+      },
+      "b": {
+        "input_tokens": 1513,
+        "output_tokens": 114,
+        "cost_usd": 0.006249,
+        "latency_ms": 643.452,
+        "ttff_ms": 66.412,
+        "retrieval_ms": 66.412,
+        "predicted_files": [
+          "siga-ex/src/main/java/br/gov/jfrj/siga/ex/ExClassificacao.java",
+          "siga-ex/src/main/java/br/gov/jfrj/siga/ex/bl/ExBL.java",
+          "siga-ex/src/main/java/com/aryjr/nheengatu/html/Tag.java",
+          "siga-ex/src/main/java/com/aryjr/nheengatu/util/HexadecimalColor.java",
+          "siga-ex/src/main/resources/br/gov/jfrj/siga/ex/util/copiaftl.ftl"
+        ],
+        "success": 0.0,
+        "recall": 0.0,
+        "exact_recall": 0.0
+      },
+      "c": {
+        "input_tokens": 921,
+        "output_tokens": 114,
+        "cost_usd": 0.004473,
+        "latency_ms": 679.65,
+        "ttff_ms": 149.97,
+        "retrieval_ms": 66.412,
+        "needle_ms": 0.042,
+        "capsule_ms": 83.516,
+        "predicted_tool": "siga_locate",
+        "tool_correct": 1.0,
+        "predicted_files": [
+          "siga-ex/src/main/java/br/gov/jfrj/siga/ex/ExClassificacao.java",
+          "siga-ex/src/main/java/br/gov/jfrj/siga/ex/bl/ExBL.java",
+          "siga-ex/src/main/java/com/aryjr/nheengatu/html/Tag.java",
+          "siga-ex/src/main/java/com/aryjr/nheengatu/util/HexadecimalColor.java",
+          "siga-ex/src/main/resources/br/gov/jfrj/siga/ex/util/copiaftl.ftl"
+        ],
+        "success": 0.0,
+        "recall": 0.0,
+        "exact_recall": 0.0
+      }
+    },
+    {
+      "id": "git-159e6dc48ad3",
+      "query": "Modelos do TRF2",
+      "ground_truth_files": [
+        "sigaex/WebContent/paginas/expediente/modelos/ptAfaCurExt.jsp",
+        "sigaex/WebContent/paginas/expediente/modelos/ptCesServ.jsp",
+        "sigaex/WebContent/paginas/expediente/modelos/ptDisDes.jsp",
+        "sigaex/WebContent/paginas/expediente/modelos/ptExcLotDisDes.jsp",
+        "sigaex/WebContent/paginas/expediente/modelos/ptLicSau.jsp"
+      ],
+      "raw_full_tokens": 12500,
+      "a": {
+        "input_tokens": 16,
+        "output_tokens": 1,
+        "cost_usd": 6.3e-05,
+        "latency_ms": 5.28,
+        "ttff_ms": 5.28,
+        "predicted_files": [],
+        "success": 0.0
+      },
+      "b": {
+        "input_tokens": 1895,
+        "output_tokens": 102,
+        "cost_usd": 0.007215,
+        "latency_ms": 602.933,
+        "ttff_ms": 43.333,
+        "retrieval_ms": 43.333,
+        "predicted_files": [
+          "siga-ex/pom.xml",
+          "siga-ex/src/main/java/br/gov/jfrj/itextpdf/Stamp.java",
+          "siga-ex/src/main/java/br/gov/jfrj/siga/ex/AbstractExModelo.java",
+          "siga-ex/src/main/java/br/gov/jfrj/siga/ex/ExConfiguracaoDTO.java",
+          "siga-ex/src/main/java/br/gov/jfrj/siga/ex/bl/ExBL.java"
+        ],
+        "success": 0.0,
+        "recall": 0.0,
+        "exact_recall": 0.0
+      },
+      "c": {
+        "input_tokens": 911,
+        "output_tokens": 102,
+        "cost_usd": 0.004263,
+        "latency_ms": 565.962,
+        "ttff_ms": 85.082,
+        "retrieval_ms": 43.333,
+        "needle_ms": 0.035,
+        "capsule_ms": 41.714,
+        "predicted_tool": "siga_locate",
+        "tool_correct": 1.0,
+        "predicted_files": [
+          "siga-ex/pom.xml",
+          "siga-ex/src/main/java/br/gov/jfrj/itextpdf/Stamp.java",
+          "siga-ex/src/main/java/br/gov/jfrj/siga/ex/AbstractExModelo.java",
+          "siga-ex/src/main/java/br/gov/jfrj/siga/ex/ExConfiguracaoDTO.java",
+          "siga-ex/src/main/java/br/gov/jfrj/siga/ex/bl/ExBL.java"
+        ],
+        "success": 0.0,
+        "recall": 0.0,
+        "exact_recall": 0.0
+      }
+    },
+    {
+      "id": "git-163c158f3c9f",
+      "query": "Alteração para contemplar o arquivamento automatico.",
+      "ground_truth_files": [
+        "sigaex/src/main/java/br/gov/jfrj/siga/vraptor/ExDocumentoController.java"
+      ],
+      "raw_full_tokens": 2500,
+      "a": {
+        "input_tokens": 21,
+        "output_tokens": 1,
+        "cost_usd": 7.8e-05,
+        "latency_ms": 5.68,
+        "ttff_ms": 5.68,
+        "predicted_files": [],
+        "success": 0.0
+      },
+      "b": {
+        "input_tokens": 3605,
+        "output_tokens": 131,
+        "cost_usd": 0.01278,
+        "latency_ms": 861.975,
+        "ttff_ms": 49.575,
+        "retrieval_ms": 49.575,
+        "predicted_files": [
+          "siga-ex/src/main/java/br/gov/jfrj/siga/ex/bl/ExBL.java",
+          "sigaex/src/legacy/java/br/gov/jfrj/siga/vraptor/ExDocumentoController.java",
+          "sigaex/src/legacy/java/br/gov/jfrj/siga/vraptor/ExMovimentacaoController.java",
+          "sigaex/src/main/java/br/gov/jfrj/siga/ex/spring/ExSpringDocumentoController.java",
+          "sigaex/src/main/java/br/gov/jfrj/siga/ex/spring/ExSpringMovimentacaoController.java"
+        ],
+        "success": 1.0,
+        "recall": 1.0,
+        "exact_recall": 0.0
+      },
+      "c": {
+        "input_tokens": 1009,
+        "output_tokens": 131,
+        "cost_usd": 0.004992,
+        "latency_ms": 697.711,
+        "ttff_ms": 92.991,
+        "retrieval_ms": 49.575,
+        "needle_ms": 0.038,
+        "capsule_ms": 43.378,
+        "predicted_tool": "siga_locate",
+        "tool_correct": 1.0,
+        "predicted_files": [
+          "siga-ex/src/main/java/br/gov/jfrj/siga/ex/bl/ExBL.java",
+          "sigaex/src/legacy/java/br/gov/jfrj/siga/vraptor/ExDocumentoController.java",
+          "sigaex/src/legacy/java/br/gov/jfrj/siga/vraptor/ExMovimentacaoController.java",
+          "sigaex/src/main/java/br/gov/jfrj/siga/ex/spring/ExSpringDocumentoController.java",
+          "sigaex/src/main/java/br/gov/jfrj/siga/ex/spring/ExSpringMovimentacaoController.java"
+        ],
+        "success": 1.0,
+        "recall": 1.0,
+        "exact_recall": 0.0
+      }
+    }
+  ]
+}
