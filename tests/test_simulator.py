@@ -45,6 +45,8 @@ def test_gold_trajectories_file_exists_and_valid_schema():
 
 
 def test_simulator_single_step_and_chain():
+    if not (SIGA / "siga-ex").is_dir():
+        pytest.skip("Clone do SIGA não disponível ao lado (CI sem siga-ex)")
     sim = simulator.Simulator()
     step_res = sim.execute_action(
         "siga_locate",

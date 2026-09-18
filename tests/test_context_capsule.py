@@ -225,7 +225,22 @@ def test_siga_context_tool_backward_and_forward_compatibility(tmp_path: Path):
     subprocess.run(["git", "-C", str(tmp_path), "init", "-q"], check=True)
     (tmp_path / "ServicoBL.java").write_text("public class ServicoBL {}", encoding="utf-8")
     subprocess.run(["git", "-C", str(tmp_path), "add", "."], check=True)
-    subprocess.run(["git", "-C", str(tmp_path), "commit", "-q", "-m", "init"], check=True)
+    subprocess.run(
+        [
+            "git",
+            "-C",
+            str(tmp_path),
+            "-c",
+            "user.name=t",
+            "-c",
+            "user.email=t@e",
+            "commit",
+            "-q",
+            "-m",
+            "init",
+        ],
+        check=True,
+    )
     out = siga_context(
         symbols=["ServicoBL"],
         task="Testar integracao da tool com nova capsula",

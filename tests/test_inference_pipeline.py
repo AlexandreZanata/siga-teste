@@ -14,6 +14,8 @@ from __future__ import annotations
 import json
 from pathlib import Path
 
+import pytest
+
 from evaluation.harness import bench_shas, find_leakage, load_manifest
 from experiments.log import validate_record
 from inference.pipeline import (
@@ -25,6 +27,12 @@ from evaluation.needlerun import NeedleTunedModel
 from context.capsule import count_tokens
 
 ROOT = Path(__file__).resolve().parent.parent
+SIGA = ROOT.parent
+
+
+def _requires_siga() -> None:
+    if not (SIGA / "siga-ex").is_dir():
+        pytest.skip("Clone do SIGA não disponível ao lado (CI sem siga-ex)")
 
 
 def test_seven_to_three_mapping_covers_all_baselines():
@@ -37,6 +45,7 @@ def test_seven_to_three_mapping_covers_all_baselines():
 
 
 def test_single_task_arms_are_grounded_and_measured(tmp_path: Path):
+    _requires_siga()
     tasks = [
         json.loads(line)
         for line in (ROOT / "datasets/benchmark/holdout.jsonl").read_text(encoding="utf-8").splitlines()
@@ -61,6 +70,7 @@ def test_single_task_arms_are_grounded_and_measured(tmp_path: Path):
 
 
 def test_compare_three_arms_smoke_no_side_effects():
+    _requires_siga()
     reports_dir = ROOT / "experiments/reports"
     before = set(p.name for p in reports_dir.glob("*.json")) if reports_dir.is_dir() else set()
     res = compare_three_arms(max_tasks=5, log_run=False, save_report=False)
