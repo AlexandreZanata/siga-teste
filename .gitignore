@@ -1,0 +1,38 @@
+# Python
+__pycache__/
+*.py[cod]
+*.egg-info/
+.venv/
+venv/
+.pytest_cache/
+.ruff_cache/
+.mypy_cache/
+dist/
+build/
+*.log
+
+# Dados locais / índices / modelos (nunca commitar pesos ou dumps)
+data/
+index/
+models/*.bin
+models/*.safetensors
+datasets/raw/
+datasets/verified/*.jsonl
+*.sqlite
+*.duckdb
+
+# SIGA clone é externo (../) — nunca copiar código AGPL para cá sem provenance
+# Snippets mínimos só via task_factory com commit SHA + licença registrada.
+
+# Operacional local é ignorado via .local/.gitignore; reforço:
+.local/
+
+# Editores / OS
+.idea/
+.vscode/
+.DS_Store
+Thumbs.db
+
+# Frontend harness (se existir em Phase 9+)
+web/generated/
+node_modules/
