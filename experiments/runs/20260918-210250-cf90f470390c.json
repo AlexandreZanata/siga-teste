@@ -1,0 +1,32 @@
+{
+  "experiment_id": "20260918-210250-cf90f470390c",
+  "date": "2026-09-18T21:02:50+00:00",
+  "siga_commit": "48610bd6504692ad3f2e99ef318beb84e2668fd6",
+  "sigateste_commit": "121cbb49c538c351b25d15d99ac4d124318bb291",
+  "needle_version": "small-coder-tradicional-0.5b",
+  "needle_depth": null,
+  "artifact_hash": null,
+  "dataset_version": "v1.0",
+  "tool_version": "1.0.0",
+  "index_version": "1.0.0",
+  "bench_version": "1.0.0",
+  "metrics": {
+    "small_coder_tool_acc": 0.9626,
+    "small_coder_no_tool_acc": 0.9875,
+    "small_coder_hallucination_rate": 0.0,
+    "small_coder_task_success": 0.9626,
+    "tuned_tool_acc": 0.9844,
+    "tool_selection_accuracy_gap": 0.0218
+  },
+  "hardware": {
+    "system": "Linux",
+    "machine": "x86_64",
+    "cpu_count": 16,
+    "python": "3.12.2"
+  },
+  "latency": {
+    "p50_ms": 0.01,
+    "p95_ms": 0.01
+  },
+  "notes": "F04: baseline 7 small coder tradicional medida no holdout congelado com o mesmo harness das demais baselines (docs/15 §6)."
+}

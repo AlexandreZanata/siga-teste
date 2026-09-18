@@ -41,7 +41,8 @@ def test_seven_to_three_mapping_covers_all_baselines():
     assert SEVEN_TO_THREE["4-large-plus-graph"] == "b-large-graph"
     assert SEVEN_TO_THREE["6-needle-tuned"] == "c-large-needle"
     assert "NOT-build" in SEVEN_TO_THREE["3-large-plus-rag"]
-    assert "out-of-slice" in SEVEN_TO_THREE["7-small-coder"]
+    # F04 (docs/15 §6): baseline 7 medida no holdout congelado.
+    assert "experiments/reports/small_coder_baseline.json" in SEVEN_TO_THREE["7-small-coder"]
 
 
 def test_single_task_arms_are_grounded_and_measured(tmp_path: Path):

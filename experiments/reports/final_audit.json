@@ -70,15 +70,19 @@
     },
     {
       "id": "7-small-coder",
-      "status": "unmeasured",
-      "metrics": {},
-      "source": "docs/11 ADR-019",
-      "note": "Fora do slice; sem número alegado."
+      "status": "measured",
+      "metrics": {
+        "tool_selection_accuracy": 0.9626,
+        "no_tool_accuracy": 0.9875,
+        "task_success_rate": 0.9626,
+        "tool_selection_accuracy_gap_to_needle": 0.0218
+      },
+      "source": "experiments/reports/small_coder_baseline.json",
+      "note": "F04: small coder tradicional medido no holdout congelado (docs/15 §6)."
     }
   ],
   "unmeasured_baselines": [
-    "3-large-rag",
-    "7-small-coder"
+    "3-large-rag"
   ],
   "missing_reports": [],
   "recommendation": {
@@ -93,12 +97,12 @@
   },
   "scans": {
     "secrets": {
-      "checked_files": 140,
+      "checked_files": 149,
       "hits": [],
       "clean": true
     },
     "todos": {
-      "checked_files": 140,
+      "checked_files": 149,
       "hits": [],
       "clean": true
     }
@@ -113,7 +117,7 @@
     "nodes": 741,
     "edges": 738,
     "trace_ok": true,
-    "latency_ms": 55.334
+    "latency_ms": 56.004
   },
   "environment": {
     "system": "Linux",
@@ -128,7 +132,7 @@
       "ruff": "0.15.18"
     },
     "siga_commit": "48610bd6504692ad3f2e99ef318beb84e2668fd6",
-    "sigateste_commit": "1c8357806b4a22132dd26392f5fb3f7fd7d02a33"
+    "sigateste_commit": "121cbb49c538c351b25d15d99ac4d124318bb291"
   },
   "release_candidate": {
     "published": false,
@@ -139,6 +143,6 @@
     ],
     "note": "Candidato local e reproduzível (env + índice restaurável); nenhum artefato publicado."
   },
-  "audit_latency_ms": 371.611,
+  "audit_latency_ms": 364.391,
   "gates_ok": true
 }

@@ -104,7 +104,7 @@ def _load_json(path: Path) -> dict[str, Any] | None:
 
 
 def load_reports(work: Path = WORK) -> dict[str, dict[str, Any] | None]:
-    """Lê os 7 relatórios de fase em disco (ausente = None, nunca inventado)."""
+    """Lê os relatórios de fase em disco (ausente = None, nunca inventado)."""
     reports_dir = work / "experiments/reports"
     return {
         name: _load_json(reports_dir / f"{name}.json")
@@ -116,6 +116,7 @@ def load_reports(work: Path = WORK) -> dict[str, dict[str, Any] | None]:
             "subnetwork_compression",
             "onpolicy_loop",
             "dataset_size_curve",
+            "small_coder_baseline",
         )
     }
 
@@ -135,6 +136,7 @@ def build_baselines_table(reports: dict[str, dict[str, Any] | None]) -> list[dic
     tuned = reports.get("baseline_vs_tuned") or {}
     capsule = reports.get("capsule_format_comparison") or {}
     onpolicy = reports.get("onpolicy_loop") or {}
+    small = reports.get("small_coder_baseline") or {}
     arms = three.get("arms", {}) if isinstance(three.get("arms"), dict) else {}
     comp = three.get("comparison", {}) if isinstance(three.get("comparison"), dict) else {}
 
@@ -169,9 +171,13 @@ def build_baselines_table(reports: dict[str, dict[str, Any] | None]) -> list[dic
              "three_arm_effective_token_reduction": comp.get("effective_token_reduction_c_vs_raw"),
              "task_success_delta_c_vs_a": comp.get("task_success_delta_c_vs_a")},
             "experiments/reports/baseline_vs_tuned.json + onpolicy_loop.json + capsule_format_comparison.json + integration_three_arms.json"),
-        row("7-small-coder", "unmeasured", {},
-            "docs/11 ADR-019",
-            "Fora do slice; sem número alegado."),
+        row("7-small-coder", "measured" if small else "unmeasured",
+            {"tool_selection_accuracy": _get(small, "small_coder", "tool_selection_accuracy"),
+             "no_tool_accuracy": _get(small, "small_coder", "no_tool_accuracy"),
+             "task_success_rate": _get(small, "small_coder", "task_success_rate"),
+             "tool_selection_accuracy_gap_to_needle": _get(small, "comparison_to_needle_tuned", "tool_selection_accuracy_gap")},
+            "experiments/reports/small_coder_baseline.json",
+            "F04: small coder tradicional medido no holdout congelado (docs/15 §6)."),
     ]
 
 
