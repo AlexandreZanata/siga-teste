@@ -45,4 +45,14 @@ Formato por decisão: Decision / Reason / Alternatives / Advantages / Disadvanta
 - **Risks:** overfit ao holdout de localização; mitigado por splits temporais + gate F20.
 - **Validate:** `experiments/reports/final_audit.json` + run final; revalidar no F20 antes de qualquer distribuição.
 
+## ADR-027 — Proteção da `main`: PR obrigatório + CI `verify` verde (F17)
+
+- **Decision:** `main` protegida via branch protection do GitHub: pull request obrigatório (0 aprovações exigidas — mantenedor único; o gate é PR aberto + CI verde), status check `verify` obrigatório para merge, force push e deleção da branch negados; `enforce_admins` desligado, preservando bypass administrativo documentado.
+- **Reason:** a regra disciplinar do `AGENTS.md` (nunca push direto; 1 tarefa = 1 issue = 1 branch = 1 commit = 1 PR) vira **mecanismo**: 17 tarefas consecutivas (F01–F16, P11) já seguiram esse fluxo e o `verify.yml` já roda em `pull_request` desde o P01 — a proteção torna obrigatório o que já era prática, com enforcement no servidor.
+- **Alternatives:** rulesets (mais flexível, desnecessário para 1 branch + 1 check); exigir 1 aprovação humana (inviável em mantenedor único; viraria rubber-stamp); `enforce_admins=true` (bloquearia correção urgente se o CI falhar por infraestrutura).
+- **Advantages:** push direto acidental é rejeitado pelo servidor, não pela disciplina; force-push e deleção impossíveis por credencial comum; histórico linear de PRs com CI auditável por tarefa.
+- **Disadvantages:** bypass administrativo permanece possível (risco residual aceito e registrado); todo merge passa a depender do GitHub Actions.
+- **Risks:** CI vermelho por infraestrutura trava merges — mitigado pelo bypass admin + re-run do workflow; check com nome errado daria proteção falsa — mitigado validando a resposta da API na ativação (`contexts=["verify"]`, mesmo nome do job do `verify.yml`).
+- **Validate:** `gh api` confirma `required_pull_request_reviews` ativo, `required_status_checks.contexts=["verify"]`, `allow_force_pushes=false`, `allow_deletions=false`; o merge do próprio F17 acontece pelo fluxo protegido.
+
 > Novas decisões entram aqui via tarefas com `docs(...): ...` e referência à fase.
