@@ -1,0 +1,30 @@
+{
+  "experiment_id": "20260919-011759-6827f3003bec",
+  "date": "2026-09-19T01:17:59+00:00",
+  "siga_commit": "48610bd6504692ad3f2e99ef318beb84e2668fd6",
+  "sigateste_commit": "90d0cf5a6c04cb8792be0bed7792f5dc94ca082b",
+  "needle_version": "f12-spike",
+  "needle_depth": null,
+  "artifact_hash": null,
+  "dataset_version": "v1.0",
+  "tool_version": "1.0.0",
+  "index_version": "1.0.0",
+  "bench_version": "1.0.0",
+  "metrics": {
+    "A_top5": 0.2374,
+    "B_top5": 0.2398,
+    "C_top5": 0.2398,
+    "C_mean_context_tokens": 15.2
+  },
+  "hardware": {
+    "system": "Linux",
+    "machine": "x86_64",
+    "cpu_count": 16,
+    "python": "3.12.2"
+  },
+  "latency": {
+    "p50_ms": 0.0,
+    "p95_ms": null
+  },
+  "notes": "F12: sub-recuperação da cápsula em traces longos no holdout congelado; CPU-only, sem dependência nova; decisão vs NOT-change (docs/15 §6)."
+}

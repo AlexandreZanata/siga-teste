@@ -1,0 +1,53 @@
+{
+  "benchmark": "SIGA-Bench Holdout",
+  "task_id": "F12-capsule-sub-recovery",
+  "spike_status": "measured",
+  "runtime": {
+    "cpu_only": true,
+    "network_calls": 0
+  },
+  "budget_tokens": 1200.0,
+  "total_tasks": 311,
+  "tasks_available": 311,
+  "arms": {
+    "A-capsule-baseline": {
+      "method": "cápsula padrão do braço (c) do P09 (naive_locate top-5)",
+      "recall": {
+        "top1": 0.06,
+        "top3": 0.1674,
+        "top5": 0.2374
+      },
+      "context_tokens": {
+        "mean": 15.9,
+        "p95": 28.0
+      }
+    },
+    "B-category-recovery": {
+      "method": "trace (grafo, depth=2) + find_referencing → categorias (views/sql/testes) primeiro, depois baseline",
+      "recall": {
+        "top1": 0.0983,
+        "top3": 0.1906,
+        "top5": 0.2398
+      },
+      "context_tokens": {
+        "mean": 15.2,
+        "p95": 27.0
+      }
+    },
+    "C-budget-slice": {
+      "method": "B com teto duro de tokens (budget preservado: views primeiro)",
+      "recall": {
+        "top1": 0.1013,
+        "top3": 0.1852,
+        "top5": 0.2398
+      },
+      "context_tokens": {
+        "mean": 15.2,
+        "p95": 27.0
+      }
+    }
+  },
+  "decision": "ADOPT category recovery: o braço com recovery supera o baseline no recall@5 — promover merge trace→cápsula ao fluxo padrão requer ADR + gate próprio.",
+  "anti_leakage_verified": true,
+  "experiment_id": "20260919-011759-6827f3003bec"
+}
