@@ -1,0 +1,149 @@
+{
+  "benchmark": "SIGA-Bench Holdout",
+  "task_id": "F13-adr009-trigger-monitor",
+  "monitor_status": "measured",
+  "runtime": {
+    "cpu_only": true,
+    "network_calls": 0
+  },
+  "windows": {
+    "needle-tuned-5000-d12": {
+      "train": {
+        "model": "needle-tuned-5000-d12",
+        "total_tasks": 120,
+        "tool_selection_accuracy": 0.9917,
+        "no_tool_accuracy": 1.0,
+        "hallucination_rate": 0.0583,
+        "task_success_rate": 0.9333,
+        "latency_p50_ms": 0.04,
+        "latency_p95_ms": 0.07
+      },
+      "valid": {
+        "model": "needle-tuned-5000-d12",
+        "total_tasks": 120,
+        "tool_selection_accuracy": 0.975,
+        "no_tool_accuracy": 1.0,
+        "hallucination_rate": 0.0167,
+        "task_success_rate": 0.9583,
+        "latency_p50_ms": 0.05,
+        "latency_p95_ms": 0.08
+      },
+      "test": {
+        "model": "needle-tuned-5000-d12",
+        "total_tasks": 71,
+        "tool_selection_accuracy": 0.9859,
+        "no_tool_accuracy": 1.0,
+        "hallucination_rate": 0.0141,
+        "task_success_rate": 0.9718,
+        "latency_p50_ms": 0.05,
+        "latency_p95_ms": 0.07
+      }
+    },
+    "controlador-regras-graph": {
+      "train": {
+        "model": "controlador-regras-graph",
+        "total_tasks": 120,
+        "tool_selection_accuracy": 0.9833,
+        "no_tool_accuracy": 1.0,
+        "hallucination_rate": 0.0583,
+        "task_success_rate": 0.925,
+        "latency_p50_ms": 0.01,
+        "latency_p95_ms": 0.03
+      },
+      "valid": {
+        "model": "controlador-regras-graph",
+        "total_tasks": 120,
+        "tool_selection_accuracy": 0.9417,
+        "no_tool_accuracy": 1.0,
+        "hallucination_rate": 0.0167,
+        "task_success_rate": 0.925,
+        "latency_p50_ms": 0.01,
+        "latency_p95_ms": 0.02
+      },
+      "test": {
+        "model": "controlador-regras-graph",
+        "total_tasks": 71,
+        "tool_selection_accuracy": 0.9718,
+        "no_tool_accuracy": 1.0,
+        "hallucination_rate": 0.0141,
+        "task_success_rate": 0.9577,
+        "latency_p50_ms": 0.01,
+        "latency_p95_ms": 0.02
+      }
+    }
+  },
+  "tasks_per_window": {
+    "train": 120,
+    "valid": 120,
+    "test": 71
+  },
+  "off_topic_block": {
+    "needle-tuned-5000-d12": {
+      "model": "needle-tuned-5000-d12",
+      "total_tasks": 10,
+      "tool_selection_accuracy": 1.0,
+      "no_tool_accuracy": 1.0,
+      "hallucination_rate": 0.0,
+      "task_success_rate": 1.0,
+      "latency_p50_ms": 0.01,
+      "latency_p95_ms": 0.01
+    },
+    "controlador-regras-graph": {
+      "model": "controlador-regras-graph",
+      "total_tasks": 10,
+      "tool_selection_accuracy": 1.0,
+      "no_tool_accuracy": 1.0,
+      "hallucination_rate": 0.0,
+      "task_success_rate": 1.0,
+      "latency_p50_ms": 0.0,
+      "latency_p95_ms": 0.0
+    }
+  },
+  "trigger": {
+    "rule": "tuned <= deterministico (docs/17 §2; ADR-009 validate)",
+    "per_window": {
+      "train": {
+        "tuned_task_success": 0.9333,
+        "rules_task_success": 0.925,
+        "delta_tuned_minus_rules": 0.0083,
+        "trigger": false
+      },
+      "valid": {
+        "tuned_task_success": 0.9583,
+        "rules_task_success": 0.925,
+        "delta_tuned_minus_rules": 0.0333,
+        "trigger": false
+      },
+      "test": {
+        "tuned_task_success": 0.9718,
+        "rules_task_success": 0.9577,
+        "delta_tuned_minus_rules": 0.0141,
+        "trigger": false
+      }
+    },
+    "historical_triggers": [
+      {
+        "window": "train",
+        "trigger": false
+      },
+      {
+        "window": "valid",
+        "trigger": false
+      },
+      {
+        "window": "test",
+        "trigger": false
+      }
+    ],
+    "current_window": "test",
+    "current_triggered": false,
+    "current_delta": 0.0141
+  },
+  "slice_reconciliation": "GO condicional do slice (P09-T02) permanece válido: tuned > determinístico na janela corrente (delta +0.0141); plano B ADR-009 não acionado. Transição de controlador segue decisão humana (ADR-009).",
+  "off_topic_summary": {
+    "tuned_no_tool_accuracy": 1.0,
+    "rules_no_tool_accuracy": 1.0
+  },
+  "anti_leakage_verified": true,
+  "experiment_id": "20260919-014232-8429b35725d9"
+}
