@@ -14,7 +14,7 @@ from pathlib import Path
 import pytest
 
 from retrieval import outline, search
-from retrieval.baseline import naive_locate, terms
+from retrieval.baseline import expanded_terms, naive_locate, terms
 
 SIGA = Path(__file__).resolve().parent.parent.parent
 
@@ -84,6 +84,13 @@ def test_naive_locate_terms_and_anchor():
     top5 = naive_locate(SIGA, "Evita JSP inexistente após assinar com senha")
     assert any(p.endswith("ExSpringMovimentacaoController.java") for p in top5)
     assert all(Path(p).is_file() for p in top5)
+
+
+def test_vague_query_normalization_and_domain_expansion():
+    assert terms("tramitação") == ["tramitacao"]
+    assert expanded_terms("tramitação") == ["tramitacao", "tramitar"]
+    assert expanded_terms("documentos") == ["documentos", "documento"]
+    assert expanded_terms("assinatura") == ["assinatura", "assinar"]
 
 
 def test_file_outline_without_source():

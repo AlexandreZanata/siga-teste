@@ -15,7 +15,7 @@ from pathlib import Path
 import sqlite3
 from typing import Any
 
-from retrieval.baseline import terms as extract_terms
+from retrieval.baseline import expanded_terms as extract_terms
 from tools import primitives
 
 VALID_KINDS = frozenset(
@@ -135,13 +135,15 @@ def siga_locate(
 
         # Busca textual no slice
         for term in query_terms:
-            for hit in primitives.search_text(
-                root,
-                term,
-                globs=["siga-ex/**", "sigaex/**"] if (root / "siga-ex").is_dir() else None,
-                limit=limit,
-            ):
-                add_hit(hit["file"], None, "file", 0.5)
+            text_terms = {term, term.capitalize()}
+            for text_term in text_terms:
+                for hit in primitives.search_text(
+                    root,
+                    text_term,
+                    globs=["siga-ex/**", "sigaex/**"] if (root / "siga-ex").is_dir() else None,
+                    limit=limit,
+                ):
+                    add_hit(hit["file"], None, "file", 0.5)
 
     # Ordenar por score desc, depois por nome do target asc (determinístico)
     ranked = sorted(
