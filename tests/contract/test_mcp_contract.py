@@ -3,6 +3,7 @@
 - `mcp/schema.json` lista exatamente os 5 métodos com params grounding-safe.
 - `mcp/server.py` despacha cada método em repo sintético (sempre no CI).
 - `mcp/client.py` resolve tarefa via stdio sem importar o core (gate da fase).
+- Segurança (F14, ADR-024): auth fail-closed por token (`_siga_auth`), -32001 sem/par token, -32002 ao exceder a taxa; servidor e cliente falham no boot sem token configurado; token nunca ecoado.
 - Privacidade: respostas nunca despejam código bruto além da cápsula mínima.
 - Desacoplamento: core nunca importa cliente; `mcp/` nunca importa cliente.
 - Tarefa real do slice via cliente externo (pula no CI sem o clone do SIGA).
@@ -21,6 +22,9 @@ import pytest
 from mcp import client as mcp_client_module
 from mcp import server as mcp_server_module
 from mcp.client import MCPClient, MCPError
+from mcp.security import RATE_LIMIT_ENV, TOKEN_ENV, TokenNotConfigured
+
+F14_TOKEN = "f14-token-de-contrato"
 
 ROOT = Path(__file__).resolve().parent.parent.parent
 SIGA = ROOT.parent
@@ -142,13 +146,16 @@ def test_server_dispatches_all_methods_on_synthetic_repo(tmp_path: Path):
     with pytest.raises(KeyError):
         mcp_server_module.dispatch("siga.inventada", {}, repo_root=repo)
 
-    bad = mcp_server_module.handle_request({"jsonrpc": "2.0", "id": 7, "method": "siga.locate", "params": {}})
+    bad = mcp_server_module.handle_request(
+        {"jsonrpc": "2.0", "id": 7, "method": "siga.locate", "params": {}, "_siga_auth": F14_TOKEN},
+        token=F14_TOKEN,
+    )
     assert bad["error"]["code"] == -32602
 
 
 def test_external_client_resolves_task_without_importing_core(tmp_path: Path):
     repo = _seed_repo(tmp_path)
-    with MCPClient() as external:
+    with MCPClient(token=F14_TOKEN) as external:
         envelope = external.call("siga.locate", {"query": "ServicoExemplo executar", "repo": str(repo)})
         assert envelope["result"], "cliente externo deve localizar via MCP"
         assert all(Path(hit["file"]).is_file() for hit in envelope["result"] if hit.get("file"))
@@ -217,7 +224,7 @@ def test_decoupling_core_never_imports_clients():
 
 def test_slice_task_via_external_mcp_client():
     _requires_siga()
-    with MCPClient() as external:
+    with MCPClient(token=F14_TOKEN) as external:
         envelope = external.call("siga.locate", {"query": "ExDocumentoController"})
         names = [Path(hit["file"]).name for hit in envelope["result"] if hit.get("file")]
         assert "ExDocumentoController.java" in names, f"cliente MCP deveria localizar o controller: {names[:5]}"
@@ -226,3 +233,61 @@ def test_slice_task_via_external_mcp_client():
             {"symbols": ["ExDocumentoController"], "task": "ExDocumentoController"},
         )
         assert "ExDocumentoController" in capsule["result"]["symbols"]
+
+
+def test_mcp_auth_fail_closed_before_any_dispatch(tmp_path: Path, monkeypatch):
+    """Sem token configurado o servidor não sobe; sem/par token, -32001 antes de tudo."""
+    monkeypatch.delenv(TOKEN_ENV, raising=False)
+    with pytest.raises(TokenNotConfigured):
+        MCPClient(environ={}).start()
+    no_token = mcp_server_module.handle_request(
+        {"jsonrpc": "2.0", "id": 1, "method": "siga.locate", "params": {"query": "ServicoExemplo"}}
+    )
+    assert no_token["error"]["code"] == -32001
+    wrong = mcp_server_module.handle_request(
+        {"jsonrpc": "2.0", "id": 2, "method": "siga.locate", "params": {"query": "ServicoExemplo"}, "_siga_auth": "errado"},
+        token="correto",
+    )
+    assert wrong["error"]["code"] == -32001
+
+
+def test_mcp_auth_end_to_end_over_stdio(tmp_path: Path, monkeypatch):
+    """Caminho feliz com token via ambiente e intruso recusado com -32001."""
+    repo = _seed_repo(tmp_path)
+    monkeypatch.setenv(TOKEN_ENV, F14_TOKEN)
+    with MCPClient() as external:
+        envelope = external.call("siga.locate", {"query": "ServicoExemplo executar", "repo": str(repo)})
+        assert envelope["result"], "cliente autenticado deve operar normalmente"
+    with MCPClient(token="token-errado") as intruso:
+        with pytest.raises(MCPError) as exc:
+            intruso.call("siga.locate", {"query": "ServicoExemplo executar", "repo": str(repo)})
+        assert exc.value.code == -32001
+
+
+def test_mcp_rate_limit_end_to_end_over_stdio(tmp_path: Path, monkeypatch):
+    """Exceder SIGA_MCP_RATE_LIMIT na janela devolve -32002 pelo transporte real."""
+    repo = _seed_repo(tmp_path)
+    monkeypatch.setenv(TOKEN_ENV, F14_TOKEN)
+    monkeypatch.setenv(RATE_LIMIT_ENV, "1")
+    with MCPClient() as external:
+        assert external.call("siga.list_methods")
+        with pytest.raises(MCPError) as exc:
+            external.call("siga.locate", {"query": "ServicoExemplo executar", "repo": str(repo)})
+        assert exc.value.code == -32002
+
+
+def test_mcp_token_is_never_echoed_in_responses():
+    responses = [
+        mcp_server_module.handle_request(
+            {"jsonrpc": "2.0", "id": 1, "method": "siga.list_methods", "_siga_auth": F14_TOKEN},
+            token=F14_TOKEN,
+        ),
+        mcp_server_module.handle_request(
+            {"jsonrpc": "2.0", "id": 2, "method": "siga.list_methods", "_siga_auth": "errado"},
+            token=F14_TOKEN,
+        ),
+        mcp_server_module.handle_request({"jsonrpc": "2.0", "id": 3, "method": "siga.list_methods"}, token=F14_TOKEN),
+        mcp_server_module.handle_request({}, token=F14_TOKEN),
+    ]
+    for response in responses:
+        assert F14_TOKEN not in json.dumps(response, ensure_ascii=False)

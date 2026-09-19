@@ -4,15 +4,24 @@ Demonstra o gate da fase: um agente externo (OpenCode/Codex/Claude/Cursor)
 resolve tarefas do slice falando JSON-RPC 2.0 via stdio com o servidor como
 subprocesso, sem importar o core (`tools`, `inference`, `teachers`,
 `training`, `graph`, `indexer`). Só stdlib.
+
+Segurança (F14, ADR-024): o cliente envia o token por requisição em
+`_siga_auth`, lido de `SIGA_MCP_TOKEN_FILE` (preferido) ou `SIGA_MCP_TOKEN`
+no boot (`start()`); sem token configurado o cliente não inicia (fail-closed,
+espelho do servidor). Recusas de auth chegam como `MCPError` com código
+-32001; rate limit como -32002.
 """
 
 from __future__ import annotations
 
 import json
+import os
 import subprocess
 import sys
 from pathlib import Path
 from typing import Any
+
+from mcp.security import AUTH_FIELD, TOKEN_ENV, TokenNotConfigured, load_required_token
 
 PACKAGE_ROOT = Path(__file__).resolve().parent.parent
 
@@ -33,10 +42,15 @@ class MCPClient:
         server_cmd: list[str] | None = None,
         cwd: str | Path | None = None,
         timeout: int = 180,
+        *,
+        token: str | None = None,
+        environ: dict[str, str] | None = None,
     ) -> None:
         self.server_cmd = list(server_cmd or [sys.executable, "-m", "mcp.server"])
         self.cwd = str(cwd or PACKAGE_ROOT)
         self.timeout = timeout
+        self._token = token
+        self._environ = environ
         self._proc: subprocess.Popen[str] | None = None
         self._next_id = 0
 
@@ -48,12 +62,28 @@ class MCPClient:
         self.close()
 
     def start(self) -> None:
-        """Sobe o servidor como subprocesso (sem importar o core no cliente)."""
+        """Sobe o servidor como subprocesso (sem importar o core no cliente).
+
+        O token é resolvido uma única vez aqui: argumento explícito ou, na
+        falta, `SIGA_MCP_TOKEN_FILE`/`SIGA_MCP_TOKEN` do ambiente. Sem nenhum
+        dos dois, `start()` levanta `TokenNotConfigured` (fail-closed).
+        """
         if self._proc is not None:
             return
+        if self._token is None:
+            self._token = load_required_token(self._environ)
+        # Provisiona o token no ambiente do servidor que este cliente lança
+        # (padrão ssh-agent): o subprocesso nasce autenticado com o mesmo
+        # segredo que este cliente enviará por requisição. Se o operador já
+        # provisionou TOKEN_ENV no ambiente, ele vence (nunca rebaixar um
+        # segredo explícito) — e um cliente com token divergente então
+        # recebe -32001 do servidor do operador.
+        child_env = {**os.environ}
+        child_env.setdefault(TOKEN_ENV, self._token)
         self._proc = subprocess.Popen(
             self.server_cmd,
             cwd=self.cwd,
+            env=child_env,
             stdin=subprocess.PIPE,
             stdout=subprocess.PIPE,
             stderr=subprocess.DEVNULL,
@@ -77,7 +107,15 @@ class MCPClient:
         if self._proc is None or self._proc.stdin is None or self._proc.stdout is None:
             raise MCPError("cliente não iniciado (use `with MCPClient():`)")
         self._next_id += 1
-        request = {"jsonrpc": "2.0", "id": self._next_id, "method": method, "params": params or {}}
+        if self._token is None:
+            raise TokenNotConfigured("cliente sem token (use `with MCPClient():` após start bem-sucedido)")
+        request = {
+            "jsonrpc": "2.0",
+            "id": self._next_id,
+            "method": method,
+            "params": params or {},
+            AUTH_FIELD: self._token,
+        }
         try:
             self._proc.stdin.write(json.dumps(request, ensure_ascii=False) + "\n")
             self._proc.stdin.flush()
