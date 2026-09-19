@@ -1,0 +1,198 @@
+{
+  "benchmark": "GO revalidation with real editing (F20, ADR-030)",
+  "slice": "siga-ex + sigaex (docs/17 §1)",
+  "localization_reference": {
+    "comparison": {
+      "effective_token_reduction_b_vs_raw": 0.9827,
+      "effective_token_reduction_c_vs_raw": 0.9934,
+      "c_vs_b_token_savings_pct": 62.07,
+      "task_success_delta_c_vs_a": 0.3923,
+      "task_success_delta_c_vs_b": 0.0032,
+      "task_success_delta_b_vs_a": 0.3891
+    },
+    "decision": {
+      "status": "GO condicional do slice: (c) >= (a) com tokens<< e (c) > (b) em cápsula/seleção",
+      "go_tokens": true,
+      "go_success": true,
+      "go_beats_b": true,
+      "rationale": "(c) success=0.3923 vs (a)=0.0 (delta=0.3923); (c) vs (b)=0.3891 (delta=0.0032); reducao (c) vs raw=0.9934 (tokens<< exige >0.90); (c) vs (b) economiza 62.07% tokens com tool_acc=0.9839."
+    },
+    "source": "integration_three_arms.json"
+  },
+  "editing_e2e": {
+    "arm": "editing-e2e",
+    "tasks": [
+      {
+        "target": "sigaex/src/main/webapp/WEB-INF/jsp/ajax_vazio.jsp",
+        "query": "revisar ajax_vazio",
+        "locate_hits": 5,
+        "capsule_files": 0,
+        "patch_applied": true,
+        "judge_verdict": "PASS",
+        "judge_checks": {
+          "non_empty": true,
+          "changed": true,
+          "supported_extension": true,
+          "safety_rules": true
+        },
+        "out_of_scope_edit": false,
+        "latency_ms": 290.37
+      },
+      {
+        "target": "sigaex/src/main/webapp/WEB-INF/page/ajax_vazio.jsp",
+        "query": "revisar ajax_vazio",
+        "locate_hits": 5,
+        "capsule_files": 0,
+        "patch_applied": true,
+        "judge_verdict": "PASS",
+        "judge_checks": {
+          "non_empty": true,
+          "changed": true,
+          "supported_extension": true,
+          "safety_rules": true
+        },
+        "out_of_scope_edit": false,
+        "latency_ms": 194.9
+      },
+      {
+        "target": "sigaex/src/main/webapp/WEB-INF/page/exMobil/aFinalizouRotina.jsp",
+        "query": "revisar aFinalizouRotina",
+        "locate_hits": 5,
+        "capsule_files": 0,
+        "patch_applied": true,
+        "judge_verdict": "PASS",
+        "judge_checks": {
+          "non_empty": true,
+          "changed": true,
+          "supported_extension": true,
+          "safety_rules": true
+        },
+        "out_of_scope_edit": false,
+        "latency_ms": 139.41
+      },
+      {
+        "target": "sigaex/src/main/webapp/WEB-INF/page/exMovimentacao/assinatura_erro.jsp",
+        "query": "revisar assinatura_erro",
+        "locate_hits": 5,
+        "capsule_files": 0,
+        "patch_applied": true,
+        "judge_verdict": "PASS",
+        "judge_checks": {
+          "non_empty": true,
+          "changed": true,
+          "supported_extension": true,
+          "safety_rules": true
+        },
+        "out_of_scope_edit": false,
+        "latency_ms": 259.91
+      },
+      {
+        "target": "sigaex/src/main/webapp/WEB-INF/page/exMovimentacao/assinatura_ok.jsp",
+        "query": "revisar assinatura_ok",
+        "locate_hits": 5,
+        "capsule_files": 0,
+        "patch_applied": true,
+        "judge_verdict": "PASS",
+        "judge_checks": {
+          "non_empty": true,
+          "changed": true,
+          "supported_extension": true,
+          "safety_rules": true
+        },
+        "out_of_scope_edit": false,
+        "latency_ms": 203.74
+      },
+      {
+        "target": "sigaex/src/main/webapp/WEB-INF/page/exMovimentacao/atualizarPublicacao.jsp",
+        "query": "revisar atualizarPublicacao",
+        "locate_hits": 5,
+        "capsule_files": 0,
+        "patch_applied": true,
+        "judge_verdict": "PASS",
+        "judge_checks": {
+          "non_empty": true,
+          "changed": true,
+          "supported_extension": true,
+          "safety_rules": true
+        },
+        "out_of_scope_edit": false,
+        "latency_ms": 174.23
+      },
+      {
+        "target": "sigaex/src/main/webapp/WEB-INF/page/ok.jsp",
+        "query": "revisar ok",
+        "locate_hits": 5,
+        "capsule_files": 0,
+        "patch_applied": true,
+        "judge_verdict": "PASS",
+        "judge_checks": {
+          "non_empty": true,
+          "changed": true,
+          "supported_extension": true,
+          "safety_rules": true
+        },
+        "out_of_scope_edit": false,
+        "latency_ms": 104.23
+      },
+      {
+        "target": "sigaex/src/main/webapp/index.jsp",
+        "query": "revisar index",
+        "locate_hits": 5,
+        "capsule_files": 0,
+        "patch_applied": true,
+        "judge_verdict": "PASS",
+        "judge_checks": {
+          "non_empty": true,
+          "changed": true,
+          "supported_extension": true,
+          "safety_rules": true
+        },
+        "out_of_scope_edit": false,
+        "latency_ms": 149.32
+      },
+      {
+        "target": "sigaex/src/main/webapp/paginas/expediente/modelos/inc_quebra_pagina.jsp",
+        "query": "revisar inc_quebra_pagina",
+        "locate_hits": 5,
+        "capsule_files": 0,
+        "patch_applied": true,
+        "judge_verdict": "PASS",
+        "judge_checks": {
+          "non_empty": true,
+          "changed": true,
+          "supported_extension": true,
+          "safety_rules": true
+        },
+        "out_of_scope_edit": false,
+        "latency_ms": 205.4
+      }
+    ],
+    "total_tasks": 9,
+    "judge_pass": 9,
+    "judge_pass_rate": 1.0,
+    "out_of_scope_edits": 0,
+    "latency_p50_ms": 194.9
+  },
+  "decision": {
+    "verdict": "GO",
+    "original_criteria": {
+      "go_success_c_vs_a": true,
+      "go_tokens_reduction_over_090": true,
+      "go_beats_b": true,
+      "pass": true
+    },
+    "editing_gate": {
+      "min_valid_rate": 0.8,
+      "observed_valid_rate": 1.0,
+      "min_tasks": 5,
+      "observed_tasks": 9,
+      "max_out_of_scope": 0,
+      "observed_out_of_scope": 0,
+      "pass": true
+    },
+    "delta_vs_adr023": "ADR-023 emitia GO condicional com ressalva de edição pendente; esta revalidação fecha a ressalva (taxa de edição válida 1.00 em 9 tarefas e2e)."
+  },
+  "clone_untouched_verified": true,
+  "anti_leakage_verified": true,
+  "experiment_id": "20260919-150200-a0c9d12bbe9d"
+}

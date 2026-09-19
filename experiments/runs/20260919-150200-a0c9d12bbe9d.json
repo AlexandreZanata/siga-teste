@@ -1,0 +1,33 @@
+{
+  "experiment_id": "20260919-150200-a0c9d12bbe9d",
+  "date": "2026-09-19T15:02:00+00:00",
+  "siga_commit": "48610bd6504692ad3f2e99ef318beb84e2668fd6",
+  "sigateste_commit": "c7372a4d75c794be8d8d5b5e4dbb822ddebb65c7",
+  "needle_version": null,
+  "needle_depth": null,
+  "artifact_hash": null,
+  "dataset_version": "v1.0",
+  "tool_version": "1.0.0",
+  "index_version": "1.0.0",
+  "bench_version": "1.0.0",
+  "metrics": {
+    "verdict": "GO",
+    "original_criteria_pass": true,
+    "editing_gate_pass": true,
+    "judge_pass_rate": 1.0,
+    "task_success_delta_c_vs_a": 0.3923,
+    "task_success_delta_c_vs_b": 0.0032,
+    "effective_token_reduction_c_vs_raw": 0.9934
+  },
+  "hardware": {
+    "system": "Linux",
+    "machine": "x86_64",
+    "cpu_count": 16,
+    "python": "3.12.2"
+  },
+  "latency": {
+    "p50_ms": 194.9,
+    "p95_ms": null
+  },
+  "notes": "F20: revalidação do GO condicional com edição real e2e (cápsula → patch → juiz em cópia temporária)."
+}
