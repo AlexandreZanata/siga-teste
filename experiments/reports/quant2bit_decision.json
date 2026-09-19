@@ -1,0 +1,175 @@
+{
+  "benchmark": "2-bit vs 4-bit decision (F19, ADR-029)",
+  "sources": {
+    "p08": "experiments/reports/subnetwork_compression.json (congelado)",
+    "f16": "experiments/reports/hardware_slos.json (medido)"
+  },
+  "comparison": {
+    "source": "P08 congelado (experiments/reports/subnetwork_compression.json)",
+    "quantization_is_simulated": true,
+    "depths_compared": [
+      2,
+      4,
+      6,
+      8,
+      10,
+      12,
+      14,
+      16,
+      18,
+      20
+    ],
+    "rows": [
+      {
+        "depth": 2,
+        "accuracy_delta_pct": 0.0,
+        "ram_2bit_mb": 5.9,
+        "ram_4bit_mb": 10.6,
+        "ram_savings_mb": 4.7,
+        "disk_savings_mb": 4.1,
+        "tool_acc_2bit": 0.8536,
+        "tool_acc_4bit": 0.8536
+      },
+      {
+        "depth": 4,
+        "accuracy_delta_pct": 0.0,
+        "ram_2bit_mb": 7.8,
+        "ram_4bit_mb": 14.2,
+        "ram_savings_mb": 6.4,
+        "disk_savings_mb": 5.2,
+        "tool_acc_2bit": 0.9315,
+        "tool_acc_4bit": 0.9315
+      },
+      {
+        "depth": 6,
+        "accuracy_delta_pct": 0.0,
+        "ram_2bit_mb": 9.7,
+        "ram_4bit_mb": 17.8,
+        "ram_savings_mb": 8.1,
+        "disk_savings_mb": 6.3,
+        "tool_acc_2bit": 0.9439,
+        "tool_acc_4bit": 0.9439
+      },
+      {
+        "depth": 8,
+        "accuracy_delta_pct": 0.0,
+        "ram_2bit_mb": 11.6,
+        "ram_4bit_mb": 21.4,
+        "ram_savings_mb": 9.8,
+        "disk_savings_mb": 7.4,
+        "tool_acc_2bit": 0.9626,
+        "tool_acc_4bit": 0.9626
+      },
+      {
+        "depth": 10,
+        "accuracy_delta_pct": 0.0,
+        "ram_2bit_mb": 13.5,
+        "ram_4bit_mb": 25.0,
+        "ram_savings_mb": 11.5,
+        "disk_savings_mb": 8.5,
+        "tool_acc_2bit": 0.9782,
+        "tool_acc_4bit": 0.9782
+      },
+      {
+        "depth": 12,
+        "accuracy_delta_pct": 0.0,
+        "ram_2bit_mb": 15.4,
+        "ram_4bit_mb": 28.6,
+        "ram_savings_mb": 13.2,
+        "disk_savings_mb": 9.6,
+        "tool_acc_2bit": 0.9844,
+        "tool_acc_4bit": 0.9844
+      },
+      {
+        "depth": 14,
+        "accuracy_delta_pct": 0.0,
+        "ram_2bit_mb": 17.3,
+        "ram_4bit_mb": 32.2,
+        "ram_savings_mb": 14.9,
+        "disk_savings_mb": 10.7,
+        "tool_acc_2bit": 0.9844,
+        "tool_acc_4bit": 0.9844
+      },
+      {
+        "depth": 16,
+        "accuracy_delta_pct": 0.0,
+        "ram_2bit_mb": 19.2,
+        "ram_4bit_mb": 35.8,
+        "ram_savings_mb": 16.6,
+        "disk_savings_mb": 11.8,
+        "tool_acc_2bit": 0.9844,
+        "tool_acc_4bit": 0.9844
+      },
+      {
+        "depth": 18,
+        "accuracy_delta_pct": 0.0,
+        "ram_2bit_mb": 21.1,
+        "ram_4bit_mb": 39.4,
+        "ram_savings_mb": 18.3,
+        "disk_savings_mb": 12.9,
+        "tool_acc_2bit": 0.9844,
+        "tool_acc_4bit": 0.9844
+      },
+      {
+        "depth": 20,
+        "accuracy_delta_pct": 0.0,
+        "ram_2bit_mb": 23.0,
+        "ram_4bit_mb": 43.0,
+        "ram_savings_mb": 20.0,
+        "disk_savings_mb": 14.0,
+        "tool_acc_2bit": 0.9844,
+        "tool_acc_4bit": 0.9844
+      }
+    ],
+    "simulated_parity_all_depths": true,
+    "candidate_depth": 12,
+    "candidate_4bit": {
+      "tool_acc": 0.9844,
+      "no_tool_acc": 1.0,
+      "hallucination_rate": 0.0,
+      "peak_ram_mb": 28.6,
+      "model_size_mb": 19.2
+    },
+    "candidate_2bit": {
+      "tool_acc": 0.9844,
+      "no_tool_acc": 1.0,
+      "hallucination_rate": 0.0,
+      "peak_ram_mb": 15.4,
+      "model_size_mb": 9.6
+    }
+  },
+  "decision": {
+    "verdict": "keep_4bit",
+    "candidate_depth": 12,
+    "rules_applied": {
+      "platform_supports_2bit_locally": false,
+      "ram_binding": false,
+      "simulated_parity": true
+    },
+    "evidence": {
+      "session_ram_mb": 22.53,
+      "slo_total_ram_mb": 512.0
+    },
+    "reasons": [
+      "docs/00: 2-bit shipped só na Cactus Platform; sem engine local que o sirva, não há artefato para adotar (restrição de plataforma, não de qualidade)",
+      "RAM não é gargalo: candidato 4-bit d12 usa 28.6MB e a sessão medida (F16) 22.53MB — ambos ≪ SLO 512MB; os ~13.2MB economizados pelo 2-bit não resolvem problema existente",
+      "paridade de acurácia 2-bit/4-bit é SIMULADA (P08); nenhum eval real do 2-bit existe no repo — adotar seria decidir sobre número não medido"
+    ],
+    "revisit_triggers": {
+      "slo_ram_violated": {
+        "trigger": "sessão medida ≥ 512MB (F16 refaz a medida)",
+        "armed": false
+      },
+      "local_engine_supports_2bit": {
+        "trigger": "engine local (.cact) passar a servir 2-bit (docs/00 deixa de bloquear)",
+        "armed": false
+      },
+      "real_eval_meets_bar": {
+        "trigger": "eval REAL do 2-bit no holdout com retenção ≥ 99%, no-tool = 1 e hallucination = 0",
+        "armed": false
+      }
+    },
+    "decision_is_falsifiable": true
+  },
+  "anti_leakage_verified": true
+}
