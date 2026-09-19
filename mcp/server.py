@@ -9,6 +9,12 @@ Cada resposta carrega `{result, provenance{index_version, repo_commit},
 cost{tokens, latency_ms}}` (desenho em docs/12 §1). Privacidade: o servidor
 devolve exatamente o que as tools retornam (candidatos/outlines/cápsula
 mínima); nunca despeja código bruto além dos snippets da cápsula.
+
+Segurança (F14, ADR-024): auth fail-closed por token (`SIGA_MCP_TOKEN_FILE`
+preferido ou `SIGA_MCP_TOKEN`) recebido por requisição em `_siga_auth`,
+verificação em tempo constante e rate limit sliding-window por token
+(`-32001` auth, `-32002` rate). Sem token configurado o servidor não serve
+nenhum método.
 """
 
 from __future__ import annotations
@@ -20,9 +26,20 @@ import time
 from pathlib import Path
 from typing import Any, TextIO
 
+from mcp.security import (
+    AUTH_FIELD,
+    RateLimitExceeded,
+    RateLimiter,
+    TokenNotConfigured,
+    load_required_token,
+    verify_token,
+)
 from tools import siga_context, siga_history, siga_impact, siga_locate, siga_trace
 
 METHODS = ("siga.locate", "siga.trace", "siga.impact", "siga.history", "siga.context")
+
+AUTH_ERROR_CODE = -32001
+RATE_LIMIT_ERROR_CODE = -32002
 
 INDEX_VERSION = "tree-sitter-java-0.23"
 
@@ -113,25 +130,71 @@ def dispatch(method: str, params: dict[str, Any] | None, repo_root: Path | None 
     }
 
 
-def handle_request(request: dict[str, Any], repo_root: Path | None = None) -> dict[str, Any]:
-    """Trata uma requisição JSON-RPC 2.0 e devolve a resposta (sempre com `id`)."""
+def _error_response(req_id: Any, code: int, message: str) -> dict[str, Any]:
+    """Envelope de erro JSON-RPC; nunca ecoa o token recebido."""
+    return {"jsonrpc": "2.0", "id": req_id, "error": {"code": code, "message": message}}
+
+
+def handle_request(
+    request: dict[str, Any],
+    repo_root: Path | None = None,
+    *,
+    token: str | None = None,
+    rate_limiter: RateLimiter | None = None,
+    environ: dict[str, str] | None = None,
+) -> dict[str, Any]:
+    """Trata uma requisição JSON-RPC 2.0 autenticada (F14, ADR-024).
+
+    `token` é o segredo esperado, carregado uma vez no boot via
+    `load_required_token`; o cliente envia o dele por requisição em
+    `AUTH_FIELD`. Fail-closed: sem `token`, toda requisição é recusada com
+    -32001. Exceder a taxa do token devolve -32002. `dispatch()` e o
+    envelope de sucesso permanecem intactos (contrato ADR-020).
+    """
     req_id = request.get("id") if isinstance(request, dict) else None
+    if not token:
+        return _error_response(
+            req_id,
+            AUTH_ERROR_CODE,
+            "servidor sem auth configurada (fail-closed); defina SIGA_MCP_TOKEN_FILE ou SIGA_MCP_TOKEN",
+        )
     if not isinstance(request, dict) or request.get("jsonrpc") != "2.0":
-        return {"jsonrpc": "2.0", "id": req_id, "error": {"code": -32600, "message": "requisição inválida"}}
+        return _error_response(req_id, -32600, "requisição inválida")
+    if not verify_token(token, request.get(AUTH_FIELD)):
+        return _error_response(req_id, AUTH_ERROR_CODE, "token ausente ou inválido")
+    try:
+        (rate_limiter if rate_limiter is not None else RateLimiter.from_env(environ)).check(token)
+    except RateLimitExceeded as err:
+        return _error_response(req_id, RATE_LIMIT_ERROR_CODE, str(err))
     method = request.get("method")
     if method == "siga.list_methods":
         return {"jsonrpc": "2.0", "id": req_id, "result": list(METHODS)}
     try:
         envelope = dispatch(method, request.get("params"), repo_root=repo_root)
     except KeyError as err:
-        return {"jsonrpc": "2.0", "id": req_id, "error": {"code": -32601, "message": str(err)}}
+        return _error_response(req_id, -32601, str(err))
     except (ValueError, TypeError, FileNotFoundError) as err:
-        return {"jsonrpc": "2.0", "id": req_id, "error": {"code": -32602, "message": str(err)}}
+        return _error_response(req_id, -32602, str(err))
     return {"jsonrpc": "2.0", "id": req_id, "result": envelope}
 
 
-def serve(stdin: TextIO = sys.stdin, stdout: TextIO = sys.stdout, repo_root: Path | None = None) -> None:
-    """Loop stdio: uma requisição JSON-RPC por linha, uma resposta por linha."""
+def serve(
+    stdin: TextIO = sys.stdin,
+    stdout: TextIO = sys.stdout,
+    repo_root: Path | None = None,
+    *,
+    token: str | None = None,
+    rate_limiter: RateLimiter | None = None,
+    environ: dict[str, str] | None = None,
+) -> None:
+    """Loop stdio: uma requisição JSON-RPC por linha, uma resposta por linha.
+
+    O token é carregado uma única vez no boot (fail-closed): sem
+    `SIGA_MCP_TOKEN_FILE`/`SIGA_MCP_TOKEN`, `serve` levanta
+    `TokenNotConfigured` e não serve nenhum método.
+    """
+    expected = token if token is not None else load_required_token(environ)
+    limiter = rate_limiter if rate_limiter is not None else RateLimiter.from_env(environ)
     for line in stdin:
         if not line.strip():
             continue
@@ -141,9 +204,14 @@ def serve(stdin: TextIO = sys.stdin, stdout: TextIO = sys.stdout, repo_root: Pat
             stdout.write(json.dumps({"jsonrpc": "2.0", "id": None, "error": {"code": -32700, "message": f"JSON inválido: {err}"}}, ensure_ascii=False) + "\n")
             stdout.flush()
             continue
-        stdout.write(json.dumps(handle_request(request, repo_root=repo_root), ensure_ascii=False, default=str) + "\n")
+        response = handle_request(request, repo_root=repo_root, token=expected, rate_limiter=limiter)
+        stdout.write(json.dumps(response, ensure_ascii=False, default=str) + "\n")
         stdout.flush()
 
 
 if __name__ == "__main__":
-    serve()
+    try:
+        serve()
+    except TokenNotConfigured as err:
+        print(f"mcp.server: {err}", file=sys.stderr)
+        sys.exit(1)

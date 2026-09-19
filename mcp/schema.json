@@ -1,7 +1,7 @@
 {
   "$schema": "http://json-schema.org/draft-07/schema#",
   "title": "siga-expert-mcp",
-  "description": "Contrato MCP fino do SIGA Needle Expert (P10-T01, ADR-020 em docs/12). 5 métodos espelhando as tools semânticas; cliente externo nunca importa o core.",
+  "description": "Contrato MCP fino do SIGA Needle Expert (P10-T01, ADR-020 em docs/12). 5 métodos espelhando as tools semânticas; cliente externo nunca importa o core. Segurança (F14, ADR-024): toda requisição carrega o token em `_siga_auth` (auth fail-closed, -32001) e está sujeita a rate limit por token (-32002); o token nunca é configurado nem ecoado por este schema.",
   "type": "object",
   "required": ["methods"],
   "properties": {
