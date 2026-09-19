@@ -55,4 +55,14 @@ Formato por decisão: Decision / Reason / Alternatives / Advantages / Disadvanta
 - **Risks:** CI vermelho por infraestrutura trava merges — mitigado pelo bypass admin + re-run do workflow; check com nome errado daria proteção falsa — mitigado validando a resposta da API na ativação (`contexts=["verify"]`, mesmo nome do job do `verify.yml`).
 - **Validate:** `gh api` confirma `required_pull_request_reviews` ativo, `required_status_checks.contexts=["verify"]`, `allow_force_pushes=false`, `allow_deletions=false`; o merge do próprio F17 acontece pelo fluxo protegido.
 
+## ADR-028 — Wiki do GitHub como espelho read-only de `docs/` (F18)
+
+- **Decision:** `scripts/sync_wiki.py` copia os `docs/*.md` (00–17 + README, 19 páginas) para a wiki do repositório com `Home.md` gerado contendo provenance (`source_commit` da `main` protegida, `synced_at`, contagem de páginas). O sync é idempotente byte a byte, determinístico (ordem alfabética; README por último), rejeita páginas estranhas ao plano (`Home`/`_Sidebar`/`_Footer` são os únicos nomes reservados) e só acessa rede em `--push` (clone raso + commit identity neutra + push). Sem pesos, checkpoints ou índices na wiki — NOT-build intocado; sem conversão de cross-references (continuam apontando ao repo).
+- **Reason:** IAs externas consultam a wiki antes do repo; sem sync, wiki vazia ≠ `docs/` da `main` — dois pontos de verdade divergentes. Espelho com `source_commit` citável mantém a provenance exigida pelo AGENTS.md também fora do Git.
+- **Alternatives:** GitHub Pages (site extra p/ manter, fora do escopo V1); wiki manual (desatualiza na 1ª edição); converter docs em páginas de app (acopla conteúdo a código).
+- **Advantages:** única fonte de verdade (`docs/` na `main` protegida); wiki pública e fresca p/ agentes externos; idempotência permite cron/manual sem efeito colateral; núcleo puro testável offline.
+- **Disadvantages:** segunda cópia do conteúdo (mitigada: wiki carrega `source_commit` e avisa que o repo é a fonte); cross-references `docs/04 §3` não viram links clicáveis na wiki.
+- **Risks:** wiki com dado desalinhado se o sync ficar para trás — mitigado por `source_commit` visível no Home (defasagem é detectável, não invisível); push da wiki exige SSH/config do operador — fora do núcleo, erro é explícito.
+- **Validate:** 8 testes (determinismo, idempotência byte a byte, espelho igual aos docs, stray pages, modo prepare sem rede, push exige repo); sync real pós-merge com evidência no `PROGRESS.md` (páginas + commit da wiki).
+
 > Novas decisões entram aqui via tarefas com `docs(...): ...` e referência à fase.
