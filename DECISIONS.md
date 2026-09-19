@@ -65,4 +65,14 @@ Formato por decisão: Decision / Reason / Alternatives / Advantages / Disadvanta
 - **Risks:** wiki com dado desalinhado se o sync ficar para trás — mitigado por `source_commit` visível no Home (defasagem é detectável, não invisível); push da wiki exige SSH/config do operador — fora do núcleo, erro é explícito.
 - **Validate:** 8 testes (determinismo, idempotência byte a byte, espelho igual aos docs, stray pages, modo prepare sem rede, push exige repo); sync real pós-merge com evidência no `PROGRESS.md` (páginas + commit da wiki).
 
+## ADR-029 — Servir 4-bit local; 2-bit permanece NOT-build, com gatilhos de revisitação (F19)
+
+- **Decision:** o runtime local continua servindo **4-bit** (candidato congelado do P08: d12, 19,2MB disco / 28,6MB RAM, 98,44% tool acc, no-tool 1.0, hallucination 0.0). O NOT-build "servir 2-bit" permanece — agora como decisão falsificável com números (`scripts/quant2bit_decision.py` → `experiments/reports/quant2bit_decision.json`, run `20260919-142045-1788b4e26166`), não como mero costume. A economia do 2-bit (d12: 15,4MB RAM / 9,6MB disco, −13,2MB) é real nas tabelas mas **não resolve problema existente**.
+- **Reason:** três razões determinísticas: (1) restrição de plataforma — `docs/00` fixa "2-bit shipped só na Cactus Platform", sem engine local que sirva 2-bit não há artefato para adotar; (2) RAM não-vinculante — F16 mediu sessão de 22,5MB vs SLO de 512MB, com folga > 95%, os ~13MB economizados não compram nada; (3) qualidade só simulada — a paridade de acurácia do P08 vem de simulação determinística; nenhum eval real do 2-bit existe no repo, e adotar seria decidir sobre número não medido.
+- **Alternatives:** adotar 2-bit agora (rejeitada pelas 3 razões); adotar só em profundidade menor (pior: d8 d2-bit já perde acurácia — 97,79% — e não existe engine); esperar engine sem registrar gatilhos (decisão invisível não é falsificável).
+- **Advantages:** decisão auditável com regras explícitas; trocar 4-bit→2-bit quando (e só quando) os gatilhos dispararem custa executar `run_decision(platform_supports_2bit=True)` + eval real — o mecanismo de reversão está pronto; provenance preservada (P08 congelado + F16 medido, sem alterar `training/compress.py`).
+- **Disadvantages:** mantém ~13MB de RAM ociosa acima do mínimo teórico (irrelevante vs SLO); decisão depende de relatórios congelados (recalibrar exige degrau novo do ADR-017).
+- **Risks:** gatilhos silenciosos — mitigado: os 3 gatilhos são medíveis e armados/desarmados no próprio relatório (hoje: 0 armados); paridade simulada ser tomada como real por terceiros — mitigado por campo `quantization_is_simulated: true` explícito.
+- **Validate:** 7 testes (deltas do P08 congelado; keep_4bit com as 3 razões; adopt_2bit só quando TODAS as regras mudam — plataforma + RAM vinculante; artefatos com provenance); veredito estável contra os relatórios versionados.
+
 > Novas decisões entram aqui via tarefas com `docs(...): ...` e referência à fase.
