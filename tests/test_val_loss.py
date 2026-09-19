@@ -31,6 +31,11 @@ from training.val_loss import (
 SIGA = ROOT.parent
 
 
+def _siga_clone_available() -> bool:
+    """Clone do SIGA ao lado (CI não tem — provenance carrega null e o schema aceita)."""
+    return (SIGA / "siga-ex").is_dir()
+
+
 class FakeClock:
     """Relógio injetável: 1s por chamada, determinístico."""
 
@@ -144,7 +149,11 @@ def test_record_training_run_validates_against_schema(tmp_path: Path):
         notes="F15: run sintético de teste",
     )
     validate_record(record)  # provenance completa + schema
-    assert record["siga_commit"] and record["sigateste_commit"]
+    if _siga_clone_available():
+        assert record["siga_commit"] and record["sigateste_commit"]
+    else:
+        assert record["siga_commit"] is None  # CI sem clone: null explícito no schema
+        assert record["sigateste_commit"] is not None
     assert record["metrics"]["verdict"] == "continue"
     assert record["metrics"]["analysis"]["trend"] == "decreasing"
     assert len(record["metrics"]["curve"]) == 5
@@ -188,7 +197,8 @@ def test_build_tracking_report_aggregates_sorted_history(tmp_path: Path):
     assert verdicts == ["continue", "stop_overfitting"]
     for entry in report["runs"]:
         assert entry["model_name"] == "needle-tuned-5000-d12"
-        assert entry["siga_commit"] and entry["sigateste_commit"]
+        if _siga_clone_available():
+            assert entry["siga_commit"] and entry["sigateste_commit"]
     persisted = json.loads((tmp_path / "reports" / "val_loss_tracking.json").read_text(encoding="utf-8"))
     assert persisted["total_runs"] == 2
 
