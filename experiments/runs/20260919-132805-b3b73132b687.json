@@ -1,0 +1,32 @@
+{
+  "experiment_id": "20260919-132805-b3b73132b687",
+  "date": "2026-09-19T13:28:05+00:00",
+  "siga_commit": "48610bd6504692ad3f2e99ef318beb84e2668fd6",
+  "sigateste_commit": "91afff2c7c1962cb4dcb479d34c49a5d68176fe7",
+  "needle_version": null,
+  "needle_depth": null,
+  "artifact_hash": null,
+  "dataset_version": "v1.0",
+  "tool_version": "1.0.0",
+  "index_version": "1.0.0",
+  "bench_version": "1.0.0",
+  "metrics": {
+    "ram_rss_mb": 22.53,
+    "startup_s": 0.0436,
+    "trace_p50_d2_s": 0.0031,
+    "trace_worst_p95_s": 0.012,
+    "trace_graph_backed": true,
+    "slo_all_pass": true
+  },
+  "hardware": {
+    "system": "Linux",
+    "machine": "x86_64",
+    "cpu_count": 16,
+    "python": "3.12.2"
+  },
+  "latency": {
+    "p50_ms": 3.07,
+    "p95_ms": 3.2
+  },
+  "notes": "F16: SLOs de hardware auditados (RAM medida, startup, P50/P95 de trace por profundidade)."
+}
