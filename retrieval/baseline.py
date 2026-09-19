@@ -9,6 +9,7 @@ Só stdlib + retrieval.search.
 from __future__ import annotations
 
 import re
+import unicodedata
 from pathlib import Path
 
 from retrieval.search import search_text
@@ -24,20 +25,49 @@ STOPWORDS = frozenset(
 )
 
 
+def _ascii(token: str) -> str:
+    """Remove acentos para aproximar linguagem natural de identificadores do código."""
+    return "".join(
+        char for char in unicodedata.normalize("NFKD", token) if not unicodedata.combining(char)
+    )
+
+
 def terms(query: str) -> list[str]:
-    """Termos buscáveis: minúsculos, split em não-alfanuméricos, ≥4 chars, fora de stopwords."""
+    """Termos buscáveis: normalizados, ≥4 chars e fora de stopwords."""
     seen: list[str] = []
-    for token in re.split(r"[^a-z0-9]+", query.lower()):
+    for raw_token in re.findall(r"[^\W_]+", query.lower(), flags=re.UNICODE):
+        token = _ascii(raw_token)
         if len(token) >= 4 and token not in STOPWORDS and token not in seen:
             seen.append(token)
     return seen
+
+
+def expanded_terms(query: str) -> list[str]:
+    """Termos + formas previsíveis de domínio para queries curtas e pouco contextuais."""
+    expanded: list[str] = []
+    for token in terms(query):
+        variants = [token]
+        if token.endswith("acao") and len(token) > 7:
+            variants.append(token[:-4] + "ar")
+        if token.endswith("acoes") and len(token) > 7:
+            variants.append(token[:-5] + "ar")
+        if token.endswith("oes") and len(token) > 5:
+            variants.append(token[:-3] + "ao")
+        if token.endswith("atura") and len(token) > 7:
+            variants.append(token[:-5] + "ar")
+        if token.endswith("s") and len(token) > 4:
+            variants.append(token[:-1])
+        for variant in variants:
+            if len(variant) >= 4 and variant not in expanded:
+                expanded.append(variant)
+    return expanded
 
 
 def naive_locate(repo: str | Path, query: str, limit: int = 5) -> list[str]:
     """Top arquivos por nº de termos distintos que ocorrem (desempate: nome)."""
     root = Path(repo)
     votes: dict[str, int] = {}
-    for term in terms(query):
+    for term in expanded_terms(query):
         for hit in search_text(root, term, globs=["siga-ex/**", "sigaex/**"], limit=100):
             votes[hit["file"]] = votes.get(hit["file"], 0) + 1
     ranked = sorted(votes, key=lambda f: (-votes[f], f))
