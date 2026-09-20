@@ -1,0 +1,38 @@
+{
+  "experiment_id": "20260920-151021-12421b3cd5c2",
+  "date": "2026-09-20T15:10:21+00:00",
+  "siga_commit": "48610bd6504692ad3f2e99ef318beb84e2668fd6",
+  "sigateste_commit": "18304600c335cfd2a546e5978fffa5ca56036e94",
+  "needle_version": null,
+  "needle_depth": null,
+  "artifact_hash": null,
+  "dataset_version": "v1.0",
+  "tool_version": "1.0.0",
+  "index_version": "tree-sitter-java-0.23",
+  "bench_version": "v1.0",
+  "metrics": {
+    "n_run_files": 1,
+    "n_tasks_scored": 120,
+    "n_tasks_arm_A": 60,
+    "n_tasks_arm_B": 60,
+    "comparisons": [
+      {
+        "comparable": true,
+        "task_success_delta": 0.216,
+        "effective_token_reduction": 0.137,
+        "verdict": "mcp_helps"
+      }
+    ]
+  },
+  "hardware": {
+    "system": "Linux",
+    "machine": "x86_64",
+    "cpu_count": 16,
+    "python": "3.12.2"
+  },
+  "latency": {
+    "p50_ms": 0.0,
+    "p95_ms": null
+  },
+  "notes": "G03: veredito A vs B da suite EVAL-MCP (docs/18)."
+}

@@ -239,15 +239,26 @@ def save_report(report: dict[str, Any]) -> Path:
     out = reports_dir / "mcp_suite_score.json"
     out.write_text(json.dumps(report, ensure_ascii=False, indent=1) + "\n", encoding="utf-8")
     summary = report["summary"]
-    new_run(
-        kind="mcp_suite_score",
+    record = new_run(
         config={
+            "kind": "mcp_suite_score",
             "tasks_artifact": "eval/mcp_suite/tasks.jsonl",
             "runs": [r["file"] for r in report["runs"]],
         },
+        dataset_version="v1.0",
+        tool_version="1.0.0",
+        index_version="tree-sitter-java-0.23",
+        bench_version="v1.0",
         metrics=summary,
-        artifacts=[str(out.relative_to(ROOT))],
+        notes="G03: veredito A vs B da suite EVAL-MCP (docs/18).",
+        siga_root=ROOT.parent,
+        work_root=ROOT,
     )
+    runs_dir = ROOT / "experiments/runs"
+    runs_dir.mkdir(parents=True, exist_ok=True)
+    run_file = runs_dir / f"{record['experiment_id']}.json"
+    run_file.write_text(json.dumps(record, indent=2, ensure_ascii=False) + "\n", encoding="utf-8")
+    report["experiment_id"] = record["experiment_id"]
     return out
 
 
