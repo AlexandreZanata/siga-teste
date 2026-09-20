@@ -1,0 +1,84 @@
+{
+ "suite": "EVAL-MCP/H04",
+ "generated_at": "2026-09-20T15:48:24.833404+00:00",
+ "rows": [
+  {
+   "anchor": "ExMobilVO",
+   "n_refs": 1,
+   "full_tokens": 195,
+   "ref_tokens": 55,
+   "reduction": 0.718
+  },
+  {
+   "anchor": "ExCompetenciaBL",
+   "n_refs": 1,
+   "full_tokens": 106,
+   "ref_tokens": 54,
+   "reduction": 0.491
+  },
+  {
+   "anchor": "ExTipoDeVinculo",
+   "n_refs": 1,
+   "full_tokens": 93,
+   "ref_tokens": 62,
+   "reduction": 0.333
+  },
+  {
+   "anchor": "ExSpringDocumentoController",
+   "n_refs": 1,
+   "full_tokens": 163,
+   "ref_tokens": 55,
+   "reduction": 0.663
+  },
+  {
+   "anchor": "DocumentosSiglaDossieGet",
+   "n_refs": 1,
+   "full_tokens": 107,
+   "ref_tokens": 68,
+   "reduction": 0.364
+  },
+  {
+   "anchor": "ModelosIdLotacoesIdLotacaoPreenchimentosGet",
+   "n_refs": 1,
+   "full_tokens": 133,
+   "ref_tokens": 83,
+   "reduction": 0.376
+  },
+  {
+   "anchor": "ExNotificar",
+   "n_refs": 1,
+   "full_tokens": 156,
+   "ref_tokens": 56,
+   "reduction": 0.641
+  },
+  {
+   "anchor": "AdModelo",
+   "n_refs": 1,
+   "full_tokens": 193,
+   "ref_tokens": 53,
+   "reduction": 0.725
+  },
+  {
+   "anchor": "ExBL",
+   "n_refs": 1,
+   "full_tokens": 221,
+   "ref_tokens": 48,
+   "reduction": 0.783
+  },
+  {
+   "anchor": "DownloadJwtFilenameGet",
+   "n_refs": 1,
+   "full_tokens": 100,
+   "ref_tokens": 56,
+   "reduction": 0.44
+  }
+ ],
+ "summary": {
+  "n_anchors": 10,
+  "n_resolved": 10,
+  "mean_reduction": 0.553,
+  "total_full_tokens": 1467,
+  "total_ref_tokens": 590
+ },
+ "experiment_id": "20260920-154824-77da4fc6e231"
+}

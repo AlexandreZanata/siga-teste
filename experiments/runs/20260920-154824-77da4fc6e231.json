@@ -1,0 +1,31 @@
+{
+  "experiment_id": "20260920-154824-77da4fc6e231",
+  "date": "2026-09-20T15:48:24+00:00",
+  "siga_commit": "48610bd6504692ad3f2e99ef318beb84e2668fd6",
+  "sigateste_commit": "830d838e732bfb47d1e8d093f78b63c4f9375825",
+  "needle_version": null,
+  "needle_depth": null,
+  "artifact_hash": null,
+  "dataset_version": "v1.0",
+  "tool_version": "1.0.0",
+  "index_version": "tree-sitter-java-0.23",
+  "bench_version": "v1.0",
+  "metrics": {
+    "n_anchors": 10,
+    "n_resolved": 10,
+    "mean_reduction": 0.553,
+    "total_full_tokens": 1467,
+    "total_ref_tokens": 590
+  },
+  "hardware": {
+    "system": "Linux",
+    "machine": "x86_64",
+    "cpu_count": 16,
+    "python": "3.12.2"
+  },
+  "latency": {
+    "p50_ms": 0.0,
+    "p95_ms": null
+  },
+  "notes": "H04: full vs referencial nos anchors do contexto (docs/19)."
+}

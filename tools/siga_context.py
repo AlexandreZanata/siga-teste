@@ -4,6 +4,8 @@ Ação: Produz a cápsula final mínima para a IA grande a partir de símbolos v
 Args:
   - symbols: lista de símbolos reais verificados em passos anteriores
   - task: descrição verbatim da tarefa a ser executada
+  - mode?: 'full' (default, cápsula rica) ou 'referential' (H04: só IDs +
+    outlines, snippets via fetch sob demanda; exposição MCP futura)
 Retorna:
   Dicionário com a cápsula estruturada e texto compacto para prompt da IA grande.
 Não recupera nada novo; compacta e empacota símbolos e outlines já validados.
@@ -16,6 +18,7 @@ import sqlite3
 from typing import Any
 
 from context.capsule import build_context_capsule, count_tokens
+from context.referential import build_referential_capsule
 from tools import primitives
 
 
@@ -33,12 +36,15 @@ def siga_context(
     task: str,
     repo: str | Path | None = None,
     conn: sqlite3.Connection | None = None,
+    mode: str = "full",
 ) -> dict[str, Any]:
     """Empacota a cápsula de contexto mínima para a IA grande."""
     if not isinstance(task, str) or not task.strip():
         raise ValueError("task deve ser uma string não vazia")
     if not isinstance(symbols, list):
         raise ValueError("symbols deve ser uma lista de strings")
+    if mode not in ("full", "referential"):
+        raise ValueError(f"mode inválido: {mode!r} (full|referential)")
 
     root = _resolve_repo(repo)
 
@@ -123,6 +129,19 @@ def siga_context(
 
     capsule_text = "\n".join(capsule_lines)
     estimated_tokens = count_tokens(capsule_text)
+
+    if mode == "referential":
+        ref = build_referential_capsule(task, symbols, sorted(files), repo=root)
+        return {
+            "task": task,
+            "mode": "referential",
+            "symbols": symbols,
+            "refs": ref["refs"],
+            "capsule_text": ref["text"],
+            "token_estimate": ref["token_estimate"],
+            "full_token_estimate": estimated_tokens,
+            "fetch": "context.referential.fetch_snippet(repo, id, max_lines=40)",
+        }
 
     return {
         "task": task,
