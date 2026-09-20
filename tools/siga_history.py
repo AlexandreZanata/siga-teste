@@ -8,6 +8,8 @@ Args:
   - limit?: limite de commits retornados (default 10)
 Retorna:
   Dicionário com commits relevantes, diff recente e parceiros de co-alteração.
+  H02: `resolved_target` (alvo no HEAD), commits com `renames` e
+  `files_at_head` ([{path, exists}] resolvidos p/ HEAD).
 Comandos Git estritamente somente leitura.
 """
 
@@ -110,9 +112,20 @@ def siga_history(
     if target_path:
         cochanges = cochange_partners(root, target_path, limit_commits=100)
 
+    # H02: alvo resolvido p/ HEAD + arquivos de cada commit resolvidos p/ HEAD
+    # (renomeações atravessadas; no máximo 30 arquivos/commit p/ custo limitado).
+    resolved_target = primitives.resolve_to_head(root, target_path) if target_path else None
+    for commit in commits:
+        at_head = []
+        for f in (commit.get("files") or [])[:30]:
+            resolved = primitives.resolve_to_head(root, f)
+            at_head.append({"path": resolved, "exists": (root / resolved).is_file()})
+        commit["files_at_head"] = at_head
+
     return {
         "target": target,
         "query": query,
+        "resolved_target": resolved_target,
         "commits": commits,
         "recent_diff": recent_diff,
         "changed_with": cochanges[:10],

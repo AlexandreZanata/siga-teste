@@ -336,6 +336,11 @@
             "type": "integer",
             "minimum": 1,
             "default": 20
+          },
+          "follow": {
+            "type": "boolean",
+            "default": true,
+            "description": "Atravessa renomeações (git log --follow, H02)"
           }
         },
         "additionalProperties": false
@@ -344,7 +349,7 @@
         "type": "array",
         "items": {
           "type": "object",
-          "required": ["sha", "subject", "date", "author", "files"],
+          "required": ["sha", "subject", "date", "author", "files", "renames"],
           "properties": {
             "sha": {"type": "string"},
             "subject": {"type": "string"},
@@ -353,6 +358,18 @@
             "files": {
               "type": "array",
               "items": {"type": "string"}
+            },
+            "renames": {
+              "type": "array",
+              "items": {
+                "type": "object",
+                "required": ["from", "to"],
+                "properties": {
+                  "from": {"type": "string"},
+                  "to": {"type": "string"}
+                },
+                "additionalProperties": false
+              }
             }
           },
           "additionalProperties": false

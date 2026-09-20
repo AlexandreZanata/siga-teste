@@ -240,6 +240,7 @@ def test_results_validation_accepts_valid_and_rejects_invalid():
                 "date": "2026-09-18",
                 "author": "tester",
                 "files": ["A.java"],
+                "renames": [{"from": "Old.java", "to": "A.java"}],
             }
         ],
         "git_diff": {

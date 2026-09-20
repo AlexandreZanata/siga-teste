@@ -387,12 +387,78 @@ def _files_in_commit(repo: str | Path, sha: str) -> list[str]:
     return sorted(line.strip() for line in out.stdout.splitlines() if line.strip())
 
 
+def _renames_in_commit(repo: str | Path, sha: str) -> list[dict[str, str]]:
+    """Renomeações do commit via name-status (`R100 old new`)."""
+    out = subprocess.run(
+        ["git", "-C", str(repo), "show", "--name-status", "--format=", sha],
+        capture_output=True,
+        text=True,
+        check=True,
+        timeout=60,
+    )
+    renames: list[dict[str, str]] = []
+    for line in out.stdout.splitlines():
+        parts = line.split("\t")
+        if len(parts) == 3 and parts[0].startswith("R"):
+            renames.append({"from": parts[1].strip(), "to": parts[2].strip()})
+    return renames
+
+
+_RESOLVE_CACHE: dict[tuple[str, str], str] = {}
+
+
+def resolve_to_head(repo: str | Path, path: str) -> str:
+    """Mapeia um path histórico para o equivalente no HEAD via cadeia de renames.
+
+    Fast path: se existe no HEAD com o mesmo nome, é identidade (limitação
+    documentada: renomeado-para-fora-e-recriado resolve para o recriado).
+    Só stdlib + git read-only; resultado cacheado por processo.
+    """
+    key = (str(repo), path)
+    cached = _RESOLVE_CACHE.get(key)
+    if cached is not None:
+        return cached
+    current = path
+    if (Path(repo) / current).is_file():
+        _RESOLVE_CACHE[key] = current
+        return current
+    for _ in range(25):
+        out = subprocess.run(
+            ["git", "-C", str(repo), "log", "--format=%H", "--", current],
+            capture_output=True,
+            text=True,
+            check=True,
+            timeout=60,
+        )
+        moved = False
+        for sha in out.stdout.splitlines():
+            sha = sha.strip()
+            if not sha:
+                continue
+            for ren in _renames_in_commit(repo, sha):
+                if ren["from"] == current:
+                    current = ren["to"]
+                    moved = True
+                    break
+            if moved:
+                break
+        if not moved:
+            break
+    _RESOLVE_CACHE[key] = current
+    return current
+
+
 def git_history(
     repo: str | Path,
     path: str | None = None,
     limit: int = 20,
+    follow: bool = True,
 ) -> list[dict[str, Any]]:
-    """Histórico de commits somente leitura com autor, data e arquivos tocados."""
+    """Histórico de commits somente leitura com autor, data e arquivos tocados.
+
+    `follow` (default True) atravessa renomeações (`git log --follow`, um path);
+    cada commit carrega `renames` (lista vazia quando não há).
+    """
     cmd = [
         "git",
         "-C",
@@ -403,6 +469,8 @@ def git_history(
         "--date=short",
     ]
     if path:
+        if follow:
+            cmd.append("--follow")
         cmd += ["--", path]
     out = subprocess.run(cmd, capture_output=True, text=True, check=True, timeout=60)
     commits: list[dict[str, Any]] = []
@@ -418,6 +486,7 @@ def git_history(
                     "date": date,
                     "author": author,
                     "files": files,
+                    "renames": _renames_in_commit(repo, sha),
                 }
             )
     return commits

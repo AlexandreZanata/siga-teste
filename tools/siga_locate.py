@@ -161,5 +161,20 @@ def siga_locate(
     for c in ranked:
         c["score"] = round(c["score"], 3)
 
+    # H02: com grafo, descarta entradas stale (símbolo indexado, arquivo sumiu
+    # do HEAD); sem conn o disco já é a verdade. Validador existe-no-HEAD.
+    if conn is not None:
+        fresh: list[dict[str, Any]] = []
+        for c in ranked:
+            file = c.get("file")
+            if file is None:
+                fresh.append(c)
+                continue
+            p = Path(file)
+            exists = p.is_file() if p.is_absolute() else (root / p).is_file()
+            if exists:
+                fresh.append(c)
+        ranked = fresh
+
     # H01: filtro por shard preservando o ranking (None = sem filtro)
     return filter_by_module(ranked, module, root)[:limit]
