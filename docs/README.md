@@ -23,6 +23,14 @@ docs/16-risks-open-questions.md
 docs/17-first-experiment.md
 ```
 
+Pós-slice (fora da Phase 0, cada um com gate próprio):
+
+```text
+docs/18-mcp-eval-suite.md
+docs/19-pos-treino-99-recall.md
+docs/20-mcp-qualquer-projeto.md
+```
+
 Regras:
 
 - Nenhum doc presume estado atual do Needle sem verificar docs oficiais atuais.
