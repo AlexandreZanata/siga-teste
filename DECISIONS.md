@@ -107,4 +107,33 @@ Formato por decisão: Decision / Reason / Alternatives / Advantages / Disadvanta
 - **Risks:** F21/F22 não re-medidas em rodada cega — mitigado: ref3 é o gate, não opcional.
 - **Validate:** `tests/test_g07_verdict.py` (regra); ref3 no protocolo docs/18 com F21/F22 ativas.
 
+## ADR-033 — Desfecho da ref3: NO-GO para a alegação de economia (docs/18, gate do ADR-032)
+
+- **Decision:** NO-GO para alegar economia de tokens com o MCP — uso assistido
+  (locate/trace/history/context) permanece liberado como ferramenta de dev.
+  A cápsula v2 (H04) segue como alternativa válida quando o objetivo é custo.
+- **Reason (números):** ref3 cega (§8 do PROTOCOL.md): braço B pós-F21/F22
+  re-executado com dispatch determinístico — reproduziu a v2 **byte a byte**
+  (60/60 respostas e listas de arquivos idênticas; só latências diferem,
+  timing real): B 0.333 (10 exact + 10 partial + 40 fail, recall~0.359,
+  tokens 2309, p50 177ms) vs A 0.55 → delta −0.217, reduction −2.81,
+  veredito `mcp_hurts`. Raiz honesta: o GT de trace foi congelado no
+  comportamento antigo (1 nó, G01) — callers reais contam como hallucination
+  (F23 documentou a dessincronização); re-freeze do artefato é decisão
+  humana e não foi feito (§8.5).
+- **Alternatives:** re-freeze imediato do GT + nova rodada (rejeitado nesta
+  microtarefa: custo extra sem mudança do veredito determinístico atual;
+  fica como opção futura se as tools evoluírem de novo); GO condicional por
+  ref1 isolada (rejeitado: ref2/ref3 independentes contradizem).
+- **Advantages:** veredito fechado com evidência reproduzível (determinismo
+  60/60 comprovado); critério do §8.4 aplicado sem subjetividade.
+- **Disadvantages:** a suíte permanece medindo o GT antigo para trace/history;
+  alegação de economia adia-se até re-freeze + nova rodada.
+- **Risks:** leitura apressada de "MCP é pior" — o que os números mostram é
+  incompatibilidade GT congelado × ferramenta evolutiva, não regressão da
+  ferramenta (v1 pré-F21 media outra versão).
+- **Validate:** run `eval/mcp_suite/runs/buffy-freebuff-ref3-20260920.jsonl`
+  (120 linhas, A verbatim da ref2); report do scorer; regra
+  `evaluation/g07_verdict.py`; §8 do PROTOCOL.md.
+
 > Novas decisões entram aqui via tarefas com `docs(...): ...` e referência à fase.

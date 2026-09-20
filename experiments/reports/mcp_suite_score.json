@@ -1,11 +1,11 @@
 {
  "suite": "EVAL-MCP",
- "generated_at": "2026-09-20T16:35:12.931609+00:00",
+ "generated_at": "2026-09-20T17:08:02.443194+00:00",
  "tasks_artifact": "eval/mcp_suite/tasks.jsonl",
  "success_threshold": 0.5,
  "runs": [
   {
-   "file": "eval/mcp_suite/runs/buffy-freebuff-20260920.jsonl",
+   "file": "eval/mcp_suite/runs/buffy-freebuff-ref3-20260920.jsonl",
    "n_lines": 120,
    "scores": [
     {
@@ -1530,7 +1530,7 @@
      "n_answered_files": 10,
      "n_answered_symbols": 0,
      "n_mcp_calls": 1,
-     "latency_ms": 474,
+     "latency_ms": 400,
      "tokens_proxy": 22
     },
     {
@@ -1555,7 +1555,7 @@
      "n_answered_files": 10,
      "n_answered_symbols": 0,
      "n_mcp_calls": 1,
-     "latency_ms": 446,
+     "latency_ms": 411,
      "tokens_proxy": 24
     },
     {
@@ -1580,7 +1580,7 @@
      "n_answered_files": 10,
      "n_answered_symbols": 0,
      "n_mcp_calls": 1,
-     "latency_ms": 397,
+     "latency_ms": 354,
      "tokens_proxy": 24
     },
     {
@@ -1605,7 +1605,7 @@
      "n_answered_files": 10,
      "n_answered_symbols": 0,
      "n_mcp_calls": 1,
-     "latency_ms": 318,
+     "latency_ms": 290,
      "tokens_proxy": 22
     },
     {
@@ -1630,7 +1630,7 @@
      "n_answered_files": 10,
      "n_answered_symbols": 0,
      "n_mcp_calls": 1,
-     "latency_ms": 1053,
+     "latency_ms": 873,
      "tokens_proxy": 22
     },
     {
@@ -1655,7 +1655,7 @@
      "n_answered_files": 10,
      "n_answered_symbols": 0,
      "n_mcp_calls": 1,
-     "latency_ms": 588,
+     "latency_ms": 525,
      "tokens_proxy": 22
     },
     {
@@ -1680,7 +1680,7 @@
      "n_answered_files": 10,
      "n_answered_symbols": 0,
      "n_mcp_calls": 1,
-     "latency_ms": 417,
+     "latency_ms": 349,
      "tokens_proxy": 22
     },
     {
@@ -1705,7 +1705,7 @@
      "n_answered_files": 10,
      "n_answered_symbols": 0,
      "n_mcp_calls": 1,
-     "latency_ms": 206,
+     "latency_ms": 185,
      "tokens_proxy": 22
     },
     {
@@ -1730,7 +1730,7 @@
      "n_answered_files": 10,
      "n_answered_symbols": 0,
      "n_mcp_calls": 1,
-     "latency_ms": 119,
+     "latency_ms": 111,
      "tokens_proxy": 22
     },
     {
@@ -1755,7 +1755,7 @@
      "n_answered_files": 10,
      "n_answered_symbols": 0,
      "n_mcp_calls": 1,
-     "latency_ms": 303,
+     "latency_ms": 268,
      "tokens_proxy": 22
     },
     {
@@ -1780,7 +1780,7 @@
      "n_answered_files": 10,
      "n_answered_symbols": 0,
      "n_mcp_calls": 1,
-     "latency_ms": 217,
+     "latency_ms": 190,
      "tokens_proxy": 22
     },
     {
@@ -1805,7 +1805,7 @@
      "n_answered_files": 10,
      "n_answered_symbols": 0,
      "n_mcp_calls": 1,
-     "latency_ms": 578,
+     "latency_ms": 522,
      "tokens_proxy": 22
     },
     {
@@ -1830,7 +1830,7 @@
      "n_answered_files": 10,
      "n_answered_symbols": 0,
      "n_mcp_calls": 1,
-     "latency_ms": 95,
+     "latency_ms": 79,
      "tokens_proxy": 22
     },
     {
@@ -1855,7 +1855,7 @@
      "n_answered_files": 10,
      "n_answered_symbols": 0,
      "n_mcp_calls": 1,
-     "latency_ms": 269,
+     "latency_ms": 237,
      "tokens_proxy": 22
     },
     {
@@ -1880,7 +1880,7 @@
      "n_answered_files": 10,
      "n_answered_symbols": 0,
      "n_mcp_calls": 1,
-     "latency_ms": 410,
+     "latency_ms": 369,
      "tokens_proxy": 22
     },
     {
@@ -1905,7 +1905,7 @@
      "n_answered_files": 10,
      "n_answered_symbols": 0,
      "n_mcp_calls": 1,
-     "latency_ms": 179,
+     "latency_ms": 164,
      "tokens_proxy": 22
     },
     {
@@ -1930,7 +1930,7 @@
      "n_answered_files": 10,
      "n_answered_symbols": 0,
      "n_mcp_calls": 1,
-     "latency_ms": 410,
+     "latency_ms": 358,
      "tokens_proxy": 22
     },
     {
@@ -1955,7 +1955,7 @@
      "n_answered_files": 10,
      "n_answered_symbols": 0,
      "n_mcp_calls": 1,
-     "latency_ms": 183,
+     "latency_ms": 164,
      "tokens_proxy": 28
     },
     {
@@ -1980,7 +1980,7 @@
      "n_answered_files": 10,
      "n_answered_symbols": 0,
      "n_mcp_calls": 1,
-     "latency_ms": 350,
+     "latency_ms": 319,
      "tokens_proxy": 39
     },
     {
@@ -2005,7 +2005,7 @@
      "n_answered_files": 10,
      "n_answered_symbols": 0,
      "n_mcp_calls": 1,
-     "latency_ms": 432,
+     "latency_ms": 393,
      "tokens_proxy": 22
     },
     {
@@ -2030,7 +2030,7 @@
      "n_answered_files": 8,
      "n_answered_symbols": 6,
      "n_mcp_calls": 1,
-     "latency_ms": 65,
+     "latency_ms": 62,
      "tokens_proxy": 30
     },
     {
@@ -2055,7 +2055,7 @@
      "n_answered_files": 7,
      "n_answered_symbols": 7,
      "n_mcp_calls": 1,
-     "latency_ms": 59,
+     "latency_ms": 51,
      "tokens_proxy": 30
     },
     {
@@ -2080,7 +2080,7 @@
      "n_answered_files": 16,
      "n_answered_symbols": 13,
      "n_mcp_calls": 1,
-     "latency_ms": 195,
+     "latency_ms": 180,
      "tokens_proxy": 60
     },
     {
@@ -2105,7 +2105,7 @@
      "n_answered_files": 21,
      "n_answered_symbols": 21,
      "n_mcp_calls": 1,
-     "latency_ms": 310,
+     "latency_ms": 261,
      "tokens_proxy": 86
     },
     {
@@ -2130,7 +2130,7 @@
      "n_answered_files": 8,
      "n_answered_symbols": 6,
      "n_mcp_calls": 1,
-     "latency_ms": 73,
+     "latency_ms": 71,
      "tokens_proxy": 30
     },
     {
@@ -2155,7 +2155,7 @@
      "n_answered_files": 8,
      "n_answered_symbols": 6,
      "n_mcp_calls": 1,
-     "latency_ms": 69,
+     "latency_ms": 58,
      "tokens_proxy": 30
     },
     {
@@ -2180,7 +2180,7 @@
      "n_answered_files": 4,
      "n_answered_symbols": 4,
      "n_mcp_calls": 1,
-     "latency_ms": 64,
+     "latency_ms": 59,
      "tokens_proxy": 18
     },
     {
@@ -2205,7 +2205,7 @@
      "n_answered_files": 15,
      "n_answered_symbols": 14,
      "n_mcp_calls": 1,
-     "latency_ms": 124,
+     "latency_ms": 105,
      "tokens_proxy": 60
     },
     {
@@ -2230,7 +2230,7 @@
      "n_answered_files": 21,
      "n_answered_symbols": 21,
      "n_mcp_calls": 1,
-     "latency_ms": 301,
+     "latency_ms": 258,
      "tokens_proxy": 86
     },
     {
@@ -2255,7 +2255,7 @@
      "n_answered_files": 10,
      "n_answered_symbols": 10,
      "n_mcp_calls": 1,
-     "latency_ms": 115,
+     "latency_ms": 97,
      "tokens_proxy": 42
     },
     {
@@ -2280,7 +2280,7 @@
      "n_answered_files": 18,
      "n_answered_symbols": 1,
      "n_mcp_calls": 1,
-     "latency_ms": 166,
+     "latency_ms": 136,
      "tokens_proxy": 40
     },
     {
@@ -2305,7 +2305,7 @@
      "n_answered_files": 4,
      "n_answered_symbols": 1,
      "n_mcp_calls": 1,
-     "latency_ms": 26,
+     "latency_ms": 23,
      "tokens_proxy": 12
     },
     {
@@ -2330,7 +2330,7 @@
      "n_answered_files": 3,
      "n_answered_symbols": 1,
      "n_mcp_calls": 1,
-     "latency_ms": 26,
+     "latency_ms": 25,
      "tokens_proxy": 10
     },
     {
@@ -2355,7 +2355,7 @@
      "n_answered_files": 40,
      "n_answered_symbols": 1,
      "n_mcp_calls": 1,
-     "latency_ms": 28,
+     "latency_ms": 26,
      "tokens_proxy": 84
     },
     {
@@ -2380,7 +2380,7 @@
      "n_answered_files": 17,
      "n_answered_symbols": 1,
      "n_mcp_calls": 1,
-     "latency_ms": 66,
+     "latency_ms": 58,
      "tokens_proxy": 38
     },
     {
@@ -2405,7 +2405,7 @@
      "n_answered_files": 48,
      "n_answered_symbols": 1,
      "n_mcp_calls": 1,
-     "latency_ms": 26,
+     "latency_ms": 25,
      "tokens_proxy": 100
     },
     {
@@ -2430,7 +2430,7 @@
      "n_answered_files": 5,
      "n_answered_symbols": 1,
      "n_mcp_calls": 1,
-     "latency_ms": 24,
+     "latency_ms": 21,
      "tokens_proxy": 14
     },
     {
@@ -2455,7 +2455,7 @@
      "n_answered_files": 14,
      "n_answered_symbols": 1,
      "n_mcp_calls": 1,
-     "latency_ms": 42,
+     "latency_ms": 36,
      "tokens_proxy": 32
     },
     {
@@ -2480,7 +2480,7 @@
      "n_answered_files": 51,
      "n_answered_symbols": 1,
      "n_mcp_calls": 1,
-     "latency_ms": 116,
+     "latency_ms": 93,
      "tokens_proxy": 106
     },
     {
@@ -2505,7 +2505,7 @@
      "n_answered_files": 20,
      "n_answered_symbols": 1,
      "n_mcp_calls": 1,
-     "latency_ms": 282,
+     "latency_ms": 221,
      "tokens_proxy": 44
     },
     {
@@ -2530,7 +2530,7 @@
      "n_answered_files": 7,
      "n_answered_symbols": 0,
      "n_mcp_calls": 1,
-     "latency_ms": 804,
+     "latency_ms": 720,
      "tokens_proxy": 16
     },
     {
@@ -2555,7 +2555,7 @@
      "n_answered_files": 116,
      "n_answered_symbols": 0,
      "n_mcp_calls": 1,
-     "latency_ms": 443,
+     "latency_ms": 411,
      "tokens_proxy": 234
     },
     {
@@ -2580,7 +2580,7 @@
      "n_answered_files": 55,
      "n_answered_symbols": 0,
      "n_mcp_calls": 1,
-     "latency_ms": 198,
+     "latency_ms": 178,
      "tokens_proxy": 112
     },
     {
@@ -2605,7 +2605,7 @@
      "n_answered_files": 4,
      "n_answered_symbols": 0,
      "n_mcp_calls": 1,
-     "latency_ms": 668,
+     "latency_ms": 612,
      "tokens_proxy": 10
     },
     {
@@ -2630,7 +2630,7 @@
      "n_answered_files": 1,
      "n_answered_symbols": 0,
      "n_mcp_calls": 1,
-     "latency_ms": 518,
+     "latency_ms": 446,
      "tokens_proxy": 4
     },
     {
@@ -2655,7 +2655,7 @@
      "n_answered_files": 3,
      "n_answered_symbols": 0,
      "n_mcp_calls": 1,
-     "latency_ms": 742,
+     "latency_ms": 643,
      "tokens_proxy": 8
     },
     {
@@ -2680,7 +2680,7 @@
      "n_answered_files": 55,
      "n_answered_symbols": 0,
      "n_mcp_calls": 1,
-     "latency_ms": 208,
+     "latency_ms": 176,
      "tokens_proxy": 112
     },
     {
@@ -2705,7 +2705,7 @@
      "n_answered_files": 4,
      "n_answered_symbols": 0,
      "n_mcp_calls": 1,
-     "latency_ms": 278,
+     "latency_ms": 215,
      "tokens_proxy": 10
     },
     {
@@ -2730,7 +2730,7 @@
      "n_answered_files": 44,
      "n_answered_symbols": 0,
      "n_mcp_calls": 1,
-     "latency_ms": 699,
+     "latency_ms": 569,
      "tokens_proxy": 90
     },
     {
@@ -2755,7 +2755,7 @@
      "n_answered_files": 116,
      "n_answered_symbols": 0,
      "n_mcp_calls": 1,
-     "latency_ms": 201,
+     "latency_ms": 170,
      "tokens_proxy": 234
     },
     {
@@ -2780,7 +2780,7 @@
      "n_answered_files": 1,
      "n_answered_symbols": 1,
      "n_mcp_calls": 1,
-     "latency_ms": 238,
+     "latency_ms": 184,
      "tokens_proxy": 6
     },
     {
@@ -2805,7 +2805,7 @@
      "n_answered_files": 1,
      "n_answered_symbols": 1,
      "n_mcp_calls": 1,
-     "latency_ms": 157,
+     "latency_ms": 129,
      "tokens_proxy": 6
     },
     {
@@ -2830,7 +2830,7 @@
      "n_answered_files": 1,
      "n_answered_symbols": 1,
      "n_mcp_calls": 1,
-     "latency_ms": 255,
+     "latency_ms": 213,
      "tokens_proxy": 6
     },
     {
@@ -2855,7 +2855,7 @@
      "n_answered_files": 1,
      "n_answered_symbols": 1,
      "n_mcp_calls": 1,
-     "latency_ms": 125,
+     "latency_ms": 108,
      "tokens_proxy": 6
     },
     {
@@ -2880,7 +2880,7 @@
      "n_answered_files": 1,
      "n_answered_symbols": 1,
      "n_mcp_calls": 1,
-     "latency_ms": 168,
+     "latency_ms": 144,
      "tokens_proxy": 6
     },
     {
@@ -2905,7 +2905,7 @@
      "n_answered_files": 1,
      "n_answered_symbols": 1,
      "n_mcp_calls": 1,
-     "latency_ms": 115,
+     "latency_ms": 96,
      "tokens_proxy": 6
     },
     {
@@ -2930,7 +2930,7 @@
      "n_answered_files": 1,
      "n_answered_symbols": 1,
      "n_mcp_calls": 1,
-     "latency_ms": 131,
+     "latency_ms": 113,
      "tokens_proxy": 6
     },
     {
@@ -2955,7 +2955,7 @@
      "n_answered_files": 1,
      "n_answered_symbols": 1,
      "n_mcp_calls": 1,
-     "latency_ms": 134,
+     "latency_ms": 116,
      "tokens_proxy": 6
     },
     {
@@ -2980,7 +2980,7 @@
      "n_answered_files": 1,
      "n_answered_symbols": 1,
      "n_mcp_calls": 1,
-     "latency_ms": 152,
+     "latency_ms": 126,
      "tokens_proxy": 6
     },
     {
@@ -3005,7 +3005,7 @@
      "n_answered_files": 1,
      "n_answered_symbols": 1,
      "n_mcp_calls": 1,
-     "latency_ms": 174,
+     "latency_ms": 150,
      "tokens_proxy": 6
     }
    ],
@@ -3047,8 +3047,8 @@
      "argument_exact_rate": 1.0,
      "tokens_proxy_total": 2309,
      "latency": {
-      "p50_ms": 199.5,
-      "p95_ms": 742
+      "p50_ms": 177.0,
+      "p95_ms": 643
      },
      "mean_mcp_calls": 1.0
     }
