@@ -1,0 +1,120 @@
+{
+ "suite": "EVAL-MCP/H05",
+ "generated_at": "2026-09-20T15:58:09.734746+00:00",
+ "policy": {
+  "skipped": false,
+  "n_policy_rows": 31,
+  "agg_c": {
+   "n_tasks": 31,
+   "n_exact": 8,
+   "n_partial": 0,
+   "n_fail": 23,
+   "task_success": 0.258,
+   "mean_recall_at_k": 0.348,
+   "mean_recall_at_1": 0.054,
+   "mean_recall_at_3": 0.081,
+   "mean_recall_at_5": 0.124,
+   "mean_symbol_recall_at_1": null,
+   "mean_hallucination_rate": 0.521,
+   "tool_selection_accuracy": null,
+   "argument_exact_rate": null,
+   "tokens_proxy_total": 784,
+   "latency": {
+    "p50_ms": 306.603,
+    "p95_ms": 1322.053
+   },
+   "mean_mcp_calls": 1.0
+  },
+  "b_subset_same_tasks": {
+   "n_tasks": 31,
+   "n_exact": 0,
+   "n_partial": 0,
+   "n_fail": 31,
+   "task_success": 0.0,
+   "mean_recall_at_k": 0.079,
+   "mean_recall_at_1": 0.0,
+   "mean_recall_at_3": 0.03,
+   "mean_recall_at_5": 0.06,
+   "mean_symbol_recall_at_1": null,
+   "mean_hallucination_rate": 0.529,
+   "tool_selection_accuracy": 0.0,
+   "argument_exact_rate": null,
+   "tokens_proxy_total": 354,
+   "latency": {
+    "p50_ms": 198,
+    "p95_ms": 610
+   },
+   "mean_mcp_calls": 1.0
+  },
+  "vs_b_subset": {
+   "comparable": true,
+   "task_success_delta": 0.258,
+   "effective_token_reduction": -1.215,
+   "verdict": "mcp_helps"
+  },
+  "vs_ref1b_all": {
+   "comparable": true,
+   "task_success_delta": -0.225,
+   "effective_token_reduction": -0.356,
+   "verdict": "mcp_hurts"
+  }
+ },
+ "ref1b": {
+  "n_tasks": 60,
+  "n_exact": 22,
+  "n_partial": 7,
+  "n_fail": 31,
+  "task_success": 0.483,
+  "mean_recall_at_k": 0.473,
+  "mean_recall_at_1": 0.46,
+  "mean_recall_at_3": 0.517,
+  "mean_recall_at_5": 0.547,
+  "mean_symbol_recall_at_1": 1.0,
+  "mean_hallucination_rate": 0.286,
+  "tool_selection_accuracy": 0.0,
+  "argument_exact_rate": null,
+  "tokens_proxy_total": 578,
+  "latency": {
+   "p50_ms": 157.5,
+   "p95_ms": 584
+  },
+  "mean_mcp_calls": 1.0
+ },
+ "ref2": {
+  "present": true,
+  "sha16": "dc36757f90ec36ac",
+  "agg_b": {
+   "n_tasks": 60,
+   "n_exact": 20,
+   "n_partial": 10,
+   "n_fail": 30,
+   "task_success": 0.5,
+   "mean_recall_at_k": 0.509,
+   "mean_recall_at_1": 0.44,
+   "mean_recall_at_3": 0.491,
+   "mean_recall_at_5": 0.543,
+   "mean_symbol_recall_at_1": 0.5,
+   "mean_hallucination_rate": 0.337,
+   "tool_selection_accuracy": 1.0,
+   "argument_exact_rate": 1.0,
+   "tokens_proxy_total": 2501,
+   "latency": {
+    "p50_ms": 195.0,
+    "p95_ms": 1475
+   },
+   "mean_mcp_calls": 1.0
+  }
+ },
+ "audit": {
+  "gold_file": "eval/mcp_suite/gold/opencode-musespark-20260920.gold.jsonl",
+  "n_gold": 29,
+  "gold_outside_bench": [],
+  "bench_tree_clean": true,
+  "pass": true
+ },
+ "go_target": {
+  "recall_at_5": 0.99
+ },
+ "verdict": "NO-GO",
+ "experiment_id": "20260920-155809-a71d418fd168"
+}

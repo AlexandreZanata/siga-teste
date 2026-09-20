@@ -33,3 +33,10 @@ Cada degrau: 1 tarefa = 1 commit, `make verify` verde, report + run com provenan
 ## 5. Fluxo do dev SIGA (o que muda no dia a dia)
 
 `localizar → contexto referencial → abrir só o necessário → patch seguro (F10) → juiz (F11) → gates`. A IA grande trabalha com dezenas de referências, não milhares de arquivos; a edição continua em checkout isolado com `apply_unified_patch`. DoD do H05: file recall@5 ≥ 0.99 no holdout congelado, `task_success_delta ≥ 0` vs H04, `make verify` verde em checkout limpo, ADR de GO.
+
+## 6. Medido no H05 (`experiments/reports/h05_onpolicy.json`)
+
+- Policy determinística top-5 nos 31 fails do B: 8 flips (success 0.0→0.258 no subconjunto, recall@5 0.06→0.124) ao custo de +121% tokens — rede de recuperação, não substituto do julgamento do agente.
+- Cross-operador: ref1 B 0.483/0.547 vs ref2 B (Freebuff, cego e independente) 0.50/0.543 — baseline estável entre operadores.
+- Auditoria: gold ⊆ bench congelado, bench intocado — PASS.
+- **Veredito: NO-GO para 0.99** (melhor recall@5 medido: 0.547). Caminho restante: H06 (LoRA real sobre o gold) + novas rodadas multi-IDE.
