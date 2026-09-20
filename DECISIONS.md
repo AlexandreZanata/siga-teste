@@ -55,7 +55,9 @@ Formato por decisão: Decision / Reason / Alternatives / Advantages / Disadvanta
 - **Risks:** CI vermelho por infraestrutura trava merges — mitigado pelo bypass admin + re-run do workflow; check com nome errado daria proteção falsa — mitigado validando a resposta da API na ativação (`contexts=["verify"]`, mesmo nome do job do `verify.yml`).
 - **Validate:** `gh api` confirma `required_pull_request_reviews` ativo, `required_status_checks.contexts=["verify"]`, `allow_force_pushes=false`, `allow_deletions=false`; o merge do próprio F17 acontece pelo fluxo protegido.
 
-## ADR-028 — Wiki do GitHub como espelho read-only de `docs/` (F18)
+## ADR-028 — Wiki do GitHub como espelho read-only de `docs/` (F18) — SUPERSEDED por ADR-031
+
+> Status: revogado. Mantido aqui por histórico; exigência removida em ADR-031. `scripts/sync_wiki.py` segue como utilitário manual opcional, sem gate.
 
 - **Decision:** `scripts/sync_wiki.py` copia os `docs/*.md` (00–17 + README, 19 páginas) para a wiki do repositório com `Home.md` gerado contendo provenance (`source_commit` da `main` protegida, `synced_at`, contagem de páginas). O sync é idempotente byte a byte, determinístico (ordem alfabética; README por último), rejeita páginas estranhas ao plano (`Home`/`_Sidebar`/`_Footer` são os únicos nomes reservados) e só acessa rede em `--push` (clone raso + commit identity neutra + push). Sem pesos, checkpoints ou índices na wiki — NOT-build intocado; sem conversão de cross-references (continuam apontando ao repo).
 - **Reason:** IAs externas consultam a wiki antes do repo; sem sync, wiki vazia ≠ `docs/` da `main` — dois pontos de verdade divergentes. Espelho com `source_commit` citável mantém a provenance exigida pelo AGENTS.md também fora do Git.
@@ -84,5 +86,15 @@ Formato por decisão: Decision / Reason / Alternatives / Advantages / Disadvanta
 - **Disadvantages:** superfície minúscula (9 JSPs HTML puros) — a evidência é sobre o **pipeline** de edição, não sobre edição em escala de produção; proposta determinística não mede qualidade de teacher real.
 - **Risks:** defasagem da superfície se o SIGA ganhar JSPs novos — mitigado por re-execução determinística do módulo; mudança no contrato do juiz invalidaria a superfície — mitigado pela importação direta de `_UNSAFE_JSP`; "GO" ser lido como prontidão de edição em escala — mitigado pelo escopo explícito deste ADR e pelos campos `editing_e2e` no report.
 - **Validate:** 9 testes (incl. e2e no clone real com clone intocado e o caso descoberto — alvo com `javascript:` excluído da superfície); run real publicado com provenance, `clone_untouched_verified=true` e `anti_leakage_verified=true`.
+
+## ADR-031 — Remoção da exigência de wiki (F18 descontinuado)
+
+- **Decision:** a wiki do GitHub deixa de ser exigência. Fonte única de verdade passa a ser `docs/` na `main` protegida. `scripts/sync_wiki.py` + `tests/test_sync_wiki.py` são mantidos como utilitário manual opcional, sem gate de DoD e sem sync real obrigatório. Nenhum bloqueio de release pode citar wiki ausente/desatualizada.
+- **Reason:** custo operacional (repo wiki só nasce via UI, push exige SSH/config do operador) sem ganho medido para o slice; F20/GO não depende da wiki.
+- **Alternatives:** manter sync obrigatório (rejeitado: trava release por infra externa); deletar script + testes (rejeitado: quebra histórico F18 e remove opção manual barata).
+- **Advantages:** remove pendência humana única do F18; DoD volta a ser só `make verify` + critérios docs/17.
+- **Disadvantages:** IAs externas sem espelho wiki consultam o repo direto.
+- **Risks:** nenhum residual relevante.
+- **Validate:** `make verify` verde; `docs/15 §6` marca F18 REMOVIDO e NOT-build inclui wiki.
 
 > Novas decisões entram aqui via tarefas com `docs(...): ...` e referência à fase.

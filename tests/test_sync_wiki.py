@@ -53,13 +53,14 @@ def test_list_doc_files_readme_last():
     files = list_doc_files(DOCS)
     names = [f.stem for f in files]
     assert names[-1] == "README"
-    assert len(files) == 19  # 00–17 + README
+    # contagem dinâmica: docs/ cresce (ex.: docs/18 da suite EVAL-MCP)
+    assert len(files) == len([p for p in DOCS.glob("*.md")])  # todos os docs
     assert names[0].startswith("00-")
 
 
 def test_plan_pages_mirrors_real_docs():
     plan = plan_pages(DOCS)
-    assert len(plan) == 19
+    assert len(plan) == len(list_doc_files(DOCS))
     assert "00-research" in plan and "17-first-experiment" in plan and "README" in plan
     # Conteúdo byte idêntico à fonte
     assert plan["17-first-experiment"] == (DOCS / "17-first-experiment.md").read_text(encoding="utf-8")
@@ -103,7 +104,7 @@ def test_run_sync_prepare_mode_never_touches_network(tmp_path: Path):
     wiki_dir = Path(result["wiki_dir"])
     assert wiki_dir.is_dir()
     assert "Home.md" in {p.name for p in wiki_dir.glob("*.md")}
-    assert len(list(wiki_dir.glob("*.md"))) == 20  # Home + 19 docs reais
+    assert len(list(wiki_dir.glob("*.md"))) == 1 + len(list_doc_files(DOCS))  # Home + docs reais
     assert result["source_commit"]  # HEAD do siga-teste real
     assert result.get("pushed") is None  # modo prepare não empurra
 

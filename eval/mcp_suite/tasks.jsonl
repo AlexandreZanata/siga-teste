@@ -1,0 +1,1913 @@
+{
+ "provenance": {
+  "suite": "EVAL-MCP (G01, docs/18 §3)",
+  "siga_head_commit": "48610bd6504692ad3f2e99ef318beb84e2668fd6",
+  "holdout_manifest_version": 1,
+  "holdout_file": "datasets/benchmark/holdout.jsonl",
+  "selection_rule": "holdout ordenado por id; 20 locate com GT no HEAD; derivados das seguintes na ordem (alvo real do GT)",
+  "gt_source": "mcp.server.dispatch real (mesmo caminho do braço B)",
+  "excluded_candidates": [],
+  "generated_at": "2026-09-20T13:40:21.480279+00:00",
+  "verifier": "deterministic-compute-via-dispatch"
+ },
+ "counts": {
+  "locate": 20,
+  "trace": 10,
+  "impact": 10,
+  "history": 10,
+  "context": 10
+ },
+ "tasks": [
+  {
+   "id": "mcp-locate-001",
+   "seq": 1,
+   "method": "siga.locate",
+   "kind": "locate",
+   "source_holdout_id": "git-0066f4542d17",
+   "query": "API SIGA documentosGet - inclusao da propriedade siga.pesquisa.limite.dias",
+   "args": {
+    "query": "API SIGA documentosGet - inclusao da propriedade siga.pesquisa.limite.dias",
+    "limit": 10
+   },
+   "ground_truth": {
+    "files": [
+     "siga-base/src/main/java/br/gov/jfrj/siga/base/Prop.java",
+     "sigaex/src/main/java/br/gov/jfrj/siga/ex/api/v1/DocumentosGet.java"
+    ]
+   },
+   "check_commit": "0066f4542d17055595017609d92e726151a59940",
+   "execution_commit": "48610bd6504692ad3f2e99ef318beb84e2668fd6",
+   "holdout_date": "2022-07-14"
+  },
+  {
+   "id": "mcp-locate-002",
+   "seq": 2,
+   "method": "siga.locate",
+   "kind": "locate",
+   "source_holdout_id": "git-018eb93d4594",
+   "query": "SIGA-Corrigir marcadores do quadro quantitativo duplicados",
+   "args": {
+    "query": "SIGA-Corrigir marcadores do quadro quantitativo duplicados",
+    "limit": 10
+   },
+   "ground_truth": {
+    "files": [
+     "siga-ex/src/main/java/br/gov/jfrj/siga/ex/AbstractExMarca.java",
+     "siga-ex/src/main/java/br/gov/jfrj/siga/hibernate/ExDao.java"
+    ]
+   },
+   "check_commit": "018eb93d4594663e58f101d18bb50394d2f4c412",
+   "execution_commit": "48610bd6504692ad3f2e99ef318beb84e2668fd6",
+   "holdout_date": "2024-03-01"
+  },
+  {
+   "id": "mcp-locate-003",
+   "seq": 3,
+   "method": "siga.locate",
+   "kind": "locate",
+   "source_holdout_id": "git-02620893b56b",
+   "query": "EX: Aprensentando e ocultando ações inativas na página de exibição",
+   "args": {
+    "query": "EX: Aprensentando e ocultando ações inativas na página de exibição",
+    "limit": 10
+   },
+   "ground_truth": {
+    "files": [
+     "siga/src/main/webapp/css/style_siga.css",
+     "sigaex/src/main/webapp/WEB-INF/page/exDocumento/exibe.jsp"
+    ]
+   },
+   "check_commit": "02620893b56b51250a41ee38f78693f625ddc652",
+   "execution_commit": "48610bd6504692ad3f2e99ef318beb84e2668fd6",
+   "holdout_date": "2021-11-26"
+  },
+  {
+   "id": "mcp-locate-004",
+   "seq": 4,
+   "method": "siga.locate",
+   "kind": "locate",
+   "source_holdout_id": "git-03487295f95f",
+   "query": "Não permite apensar a um documento sobrestado.",
+   "args": {
+    "query": "Não permite apensar a um documento sobrestado.",
+    "limit": 10
+   },
+   "ground_truth": {
+    "files": [
+     "siga-ex/src/main/java/br/gov/jfrj/siga/ex/bl/ExBL.java"
+    ]
+   },
+   "check_commit": "03487295f95f39e0d055d5b3bf1e510884a09a4c",
+   "execution_commit": "48610bd6504692ad3f2e99ef318beb84e2668fd6",
+   "holdout_date": "2014-04-10"
+  },
+  {
+   "id": "mcp-locate-005",
+   "seq": 5,
+   "method": "siga.locate",
+   "kind": "locate",
+   "source_holdout_id": "git-03dbc6a72683",
+   "query": "RM150872 Adequar reclassificação em lote Adequação da tela de reclassificar em lote    * Adição da validação de seleção de responsável    * Adição das classificações selecionadas para confirmação do usuário",
+   "args": {
+    "query": "RM150872 Adequar reclassificação em lote Adequação da tela de reclassificar em lote    * Adição da validação de seleção de responsável    * Adição das classificações selecionadas para confirmação do usuário",
+    "limit": 10
+   },
+   "ground_truth": {
+    "files": [
+     "sigaex/src/main/webapp/WEB-INF/page/exMovimentacao/reclassificar_lote.jsp"
+    ]
+   },
+   "check_commit": "03dbc6a726834311c0aeeb5f7be3df8cb1dfd474",
+   "execution_commit": "48610bd6504692ad3f2e99ef318beb84e2668fd6",
+   "holdout_date": "2023-02-23"
+  },
+  {
+   "id": "mcp-locate-006",
+   "seq": 6,
+   "method": "siga.locate",
+   "kind": "locate",
+   "source_holdout_id": "git-066a57781052",
+   "query": "DOC: Alteração no texto de alerta na migração para o SEI para o usuário atentar-se quanto aos apensos do processo.",
+   "args": {
+    "query": "DOC: Alteração no texto de alerta na migração para o SEI para o usuário atentar-se quanto aos apensos do processo.",
+    "limit": 10
+   },
+   "ground_truth": {
+    "files": [
+     "sigaex/src/main/webapp/WEB-INF/page/exMovimentacao/aMigrarSEI.jsp"
+    ]
+   },
+   "check_commit": "066a5778105260922fed5a88a2d2f8d051af21fc",
+   "execution_commit": "48610bd6504692ad3f2e99ef318beb84e2668fd6",
+   "holdout_date": "2024-10-01"
+  },
+  {
+   "id": "mcp-locate-007",
+   "seq": 7,
+   "method": "siga.locate",
+   "kind": "locate",
+   "source_holdout_id": "git-06d6058f63dd",
+   "query": "Correcao tramitar em lote quando se está em substituição, lotacaoCadastrante deve ser a do titular",
+   "args": {
+    "query": "Correcao tramitar em lote quando se está em substituição, lotacaoCadastrante deve ser a do titular",
+    "limit": 10
+   },
+   "ground_truth": {
+    "files": [
+     "sigaex/src/main/java/br/gov/jfrj/siga/ex/api/v1/DocumentosSiglaTramitarEmParaleloPost.java",
+     "sigaex/src/main/java/br/gov/jfrj/siga/ex/api/v1/DocumentosSiglaTramitarPost.java"
+    ]
+   },
+   "check_commit": "06d6058f63dde92ea215361eaa25a1bd14c46bff",
+   "execution_commit": "48610bd6504692ad3f2e99ef318beb84e2668fd6",
+   "holdout_date": "2024-01-15"
+  },
+  {
+   "id": "mcp-locate-008",
+   "seq": 8,
+   "method": "siga.locate",
+   "kind": "locate",
+   "source_holdout_id": "git-07c5d2f4b16c",
+   "query": "Update AllReferencesGet.java",
+   "args": {
+    "query": "Update AllReferencesGet.java",
+    "limit": 10
+   },
+   "ground_truth": {
+    "files": [
+     "sigaex/src/main/java/br/gov/jfrj/siga/ex/xjus/doc/AllReferencesGet.java"
+    ]
+   },
+   "check_commit": "07c5d2f4b16ca0b09d54358172c865a138972a56",
+   "execution_commit": "48610bd6504692ad3f2e99ef318beb84e2668fd6",
+   "holdout_date": "2022-05-20"
+  },
+  {
+   "id": "mcp-locate-009",
+   "seq": 9,
+   "method": "siga.locate",
+   "kind": "locate",
+   "source_holdout_id": "git-094d7e13b96d",
+   "query": "FIX: Corrigindo ExPodeCancelarMovimentacao",
+   "args": {
+    "query": "FIX: Corrigindo ExPodeCancelarMovimentacao",
+    "limit": 10
+   },
+   "ground_truth": {
+    "files": [
+     "siga-ex/src/main/java/br/gov/jfrj/siga/ex/logic/ExPodeCancelarMovimentacao.java"
+    ]
+   },
+   "check_commit": "094d7e13b96d16e527d0f29845ae0711c18a61cd",
+   "execution_commit": "48610bd6504692ad3f2e99ef318beb84e2668fd6",
+   "holdout_date": "2022-04-27"
+  },
+  {
+   "id": "mcp-locate-010",
+   "seq": 10,
+   "method": "siga.locate",
+   "kind": "locate",
+   "source_holdout_id": "git-0a00b34ca850",
+   "query": "Adequação da nomenclatura dos path dos endpoints",
+   "args": {
+    "query": "Adequação da nomenclatura dos path dos endpoints",
+    "limit": 10
+   },
+   "ground_truth": {
+    "files": [
+     "siga-ex/src/main/java/br/gov/jfrj/siga/ex/bl/ExBL.java",
+     "sigaex/src/main/java/br/gov/jfrj/siga/ex/api/v1/DocumentosSiglaGerarLinkPublicoPost.java",
+     "sigaex/src/main/java/br/gov/jfrj/siga/ex/api/v1/DocumentosSiglaLinkPublicoGet.java",
+     "sigaex/src/main/java/br/gov/jfrj/siga/ex/api/v1/IExApiV1.java",
+     "sigaex/src/main/resources/br/gov/jfrj/siga/ex/api/v1/swagger.yaml"
+    ]
+   },
+   "check_commit": "0a00b34ca850f94bfc02f0241f80add5da38d3c6",
+   "execution_commit": "48610bd6504692ad3f2e99ef318beb84e2668fd6",
+   "holdout_date": "2022-05-27"
+  },
+  {
+   "id": "mcp-locate-011",
+   "seq": 11,
+   "method": "siga.locate",
+   "kind": "locate",
+   "source_holdout_id": "git-0a57d72ff4aa",
+   "query": "DOC Correção no Finalizar para contemplar Migração para o SEI",
+   "args": {
+    "query": "DOC Correção no Finalizar para contemplar Migração para o SEI",
+    "limit": 10
+   },
+   "ground_truth": {
+    "files": [
+     "siga-ex/src/main/java/br/gov/jfrj/siga/ex/logic/ExPodeCancelarDocumento.java"
+    ]
+   },
+   "check_commit": "0a57d72ff4aa4dd5fc5416c09150332098bb892b",
+   "execution_commit": "48610bd6504692ad3f2e99ef318beb84e2668fd6",
+   "holdout_date": "2024-07-16"
+  },
+  {
+   "id": "mcp-locate-012",
+   "seq": 12,
+   "method": "siga.locate",
+   "kind": "locate",
+   "source_holdout_id": "git-0b95af6730de",
+   "query": "WF- Emitir msg de erro caso tente-se iniciar um procedimento a partir da via geral de um documento",
+   "args": {
+    "query": "WF- Emitir msg de erro caso tente-se iniciar um procedimento a partir da via geral de um documento",
+    "limit": 10
+   },
+   "ground_truth": {
+    "files": [
+     "siga-wf/src/main/java/br/gov/jfrj/siga/wf/bl/WfBL.java",
+     "siga-ws/src/main/java/br/gov/jfrj/siga/ex/service/ExService.java",
+     "sigaex/src/main/java/br/gov/jfrj/siga/ex/service/impl/ExServiceImpl.java"
+    ]
+   },
+   "check_commit": "0b95af6730deb891ab084ffc5389a34dc2f5745e",
+   "execution_commit": "48610bd6504692ad3f2e99ef318beb84e2668fd6",
+   "holdout_date": "2024-04-03"
+  },
+  {
+   "id": "mcp-locate-013",
+   "seq": 13,
+   "method": "siga.locate",
+   "kind": "locate",
+   "source_holdout_id": "git-0c31ed8c787e",
+   "query": "88 Tela Principal",
+   "args": {
+    "query": "88 Tela Principal",
+    "limit": 10
+   },
+   "ground_truth": {
+    "files": [
+     "siga-ex/src/main/java/br/gov/jfrj/siga/ex/bl/Mesa.java",
+     "sigaex/src/main/webapp/WEB-INF/page/exMesa/lista.jsp"
+    ]
+   },
+   "check_commit": "0c31ed8c787ea75d0c5f2f27b57ca0e3f1f9be81",
+   "execution_commit": "48610bd6504692ad3f2e99ef318beb84e2668fd6",
+   "holdout_date": "2019-05-31"
+  },
+  {
+   "id": "mcp-locate-014",
+   "seq": 14,
+   "method": "siga.locate",
+   "kind": "locate",
+   "source_holdout_id": "git-0c39dfe2b90c",
+   "query": "fix(ex): Garante exModelo na gravacao e evita NPE em gravaDescrDocumento",
+   "args": {
+    "query": "fix(ex): Garante exModelo na gravacao e evita NPE em gravaDescrDocumento",
+    "limit": 10
+   },
+   "ground_truth": {
+    "files": [
+     "siga-ex/src/main/java/br/gov/jfrj/siga/ex/bl/ExBL.java",
+     "sigaex/src/main/java/br/gov/jfrj/siga/ex/spring/ExSpringDocumentoController.java"
+    ]
+   },
+   "check_commit": "0c39dfe2b90ca3fc84c87b9644961ca7078479dd",
+   "execution_commit": "48610bd6504692ad3f2e99ef318beb84e2668fd6",
+   "holdout_date": "2026-09-10"
+  },
+  {
+   "id": "mcp-locate-015",
+   "seq": 15,
+   "method": "siga.locate",
+   "kind": "locate",
+   "source_holdout_id": "git-0dd955acf92b",
+   "query": "FIX Correção de api para retirar o \"enter\" do usuário no campo texto finalidade .",
+   "args": {
+    "query": "FIX Correção de api para retirar o \"enter\" do usuário no campo texto finalidade .",
+    "limit": 10
+   },
+   "ground_truth": {
+    "files": [
+     "sigaex/src/main/java/br/gov/jfrj/siga/ex/api/v1/BiListarGet.java"
+    ]
+   },
+   "check_commit": "0dd955acf92bdc0b21c21881b3ee928f0ba90528",
+   "execution_commit": "48610bd6504692ad3f2e99ef318beb84e2668fd6",
+   "holdout_date": "2024-03-06"
+  },
+  {
+   "id": "mcp-locate-016",
+   "seq": 16,
+   "method": "siga.locate",
+   "kind": "locate",
+   "source_holdout_id": "git-0e3f6e8e260a",
+   "query": "263 - Relatorio de Indicadores de Gestao",
+   "args": {
+    "query": "263 - Relatorio de Indicadores de Gestao",
+    "limit": 10
+   },
+   "ground_truth": {
+    "files": [
+     "sigaex/src/main/java/br/gov/jfrj/siga/ex/relatorio/dinamico/relatorios/RelDocumentosProduzidos.java",
+     "sigaex/src/main/webapp/WEB-INF/page/exRelatorio/relIndicadoresGestao.jsp",
+     "sigaex/src/main/webapp/paginas/menus/menu.jsp"
+    ]
+   },
+   "check_commit": "0e3f6e8e260ac92081bea9c9dafd744f65eaee13",
+   "execution_commit": "48610bd6504692ad3f2e99ef318beb84e2668fd6",
+   "holdout_date": "2019-08-06"
+  },
+  {
+   "id": "mcp-locate-017",
+   "seq": 17,
+   "method": "siga.locate",
+   "kind": "locate",
+   "source_holdout_id": "git-0e6574346979",
+   "query": "#137 - Ajuste na exibição do combo modelo para ficar no padrão letícia/amauri",
+   "args": {
+    "query": "#137 - Ajuste na exibição do combo modelo para ficar no padrão letícia/amauri",
+    "limit": 10
+   },
+   "ground_truth": {
+    "files": [
+     "siga/src/main/webapp/javascript/hierarchy-select/hierarchy-select.css",
+     "siga/src/main/webapp/javascript/hierarchy-select/hierarchy-select.js",
+     "sigaex/src/main/webapp/WEB-INF/page/exDocumento/edita.jsp"
+    ]
+   },
+   "check_commit": "0e65743469790a1fb12eea573972c2fde82cf137",
+   "execution_commit": "48610bd6504692ad3f2e99ef318beb84e2668fd6",
+   "holdout_date": "2019-07-16"
+  },
+  {
+   "id": "mcp-locate-018",
+   "seq": 18,
+   "method": "siga.locate",
+   "kind": "locate",
+   "source_holdout_id": "git-0f7c1425c1d4",
+   "query": "Altera nome propriedade",
+   "args": {
+    "query": "Altera nome propriedade",
+    "limit": 10
+   },
+   "ground_truth": {
+    "files": [
+     "siga-ex/src/main/java/br/gov/jfrj/itextpdf/Documento.java",
+     "sigaex/src/main/java/br/gov/jfrj/siga/ex/relatorio/dinamico/relatorios/RelDocsOrgaoInteressado.java",
+     "sigaex/src/main/java/br/gov/jfrj/siga/ex/relatorio/dinamico/relatorios/RelTempoTramitacaoPorEspecie.java",
+     "sigaex/src/main/java/br/gov/jfrj/siga/ex/relatorio/dinamico/relatorios/RelVolumeTramitacaoPorModelo.java"
+    ]
+   },
+   "check_commit": "0f7c1425c1d4dea290bdd59ae7e4c063138d663f",
+   "execution_commit": "48610bd6504692ad3f2e99ef318beb84e2668fd6",
+   "holdout_date": "2022-10-04"
+  },
+  {
+   "id": "mcp-locate-019",
+   "seq": 19,
+   "method": "siga.locate",
+   "kind": "locate",
+   "source_holdout_id": "git-148145da0c0c",
+   "query": "Indíces para Tabelas CP_Personalizacao e EX_TP_FORMA_DOC",
+   "args": {
+    "query": "Indíces para Tabelas CP_Personalizacao e EX_TP_FORMA_DOC",
+    "limit": 10
+   },
+   "ground_truth": {
+    "files": [
+     "siga-cp/src/main/resources/db/migration/CORPORATIVO_UTF8_V50_0__idx_CpPersonalizacao_Pessoa.sql",
+     "siga-ex/src/main/resources/db/migration/SIGA_UTF8_V57_0__Indice para Tabela Ex Tp Forma Doc.sql"
+    ]
+   },
+   "check_commit": "148145da0c0cc4a705b8ac50395fadcc0b31ee24",
+   "execution_commit": "48610bd6504692ad3f2e99ef318beb84e2668fd6",
+   "holdout_date": "2019-08-22"
+  },
+  {
+   "id": "mcp-locate-020",
+   "seq": 20,
+   "method": "siga.locate",
+   "kind": "locate",
+   "source_holdout_id": "git-17b012e54641",
+   "query": "EX - Corrige exibição da Mesa Virtual para os internos (Bug após migração MYSQL)",
+   "args": {
+    "query": "EX - Corrige exibição da Mesa Virtual para os internos (Bug após migração MYSQL)",
+    "limit": 10
+   },
+   "ground_truth": {
+    "files": [
+     "siga-ex/src/main/java/br/gov/jfrj/siga/ex/bl/Mesa2Ant.java",
+     "siga-ex/src/main/java/br/gov/jfrj/siga/ex/logic/ExPodeBuscarUltimaMovimentacaoPorId.java",
+     "siga-ex/src/main/java/br/gov/jfrj/siga/ex/model/enm/ExTipoDeConfiguracao.java",
+     "siga-ex/src/main/java/br/gov/jfrj/siga/hibernate/ExDao.java"
+    ]
+   },
+   "check_commit": "17b012e546413c5d90c43cb8fecb8c2dcebd4380",
+   "execution_commit": "48610bd6504692ad3f2e99ef318beb84e2668fd6",
+   "holdout_date": "2024-01-25"
+  },
+  {
+   "id": "mcp-trace-001",
+   "seq": 21,
+   "method": "siga.trace",
+   "kind": "trace",
+   "source_holdout_id": "git-198a5fd8b083",
+   "query": "Cartão 324* - Retirar botão de \"Redefinir Acesso\" quando acesso está redefinido",
+   "args": {
+    "symbol": "ExAcesso",
+    "depth": 2
+   },
+   "ground_truth": {
+    "files": [
+     "siga-ex/src/main/java/br/gov/jfrj/siga/ex/bl/ExAcesso.java"
+    ],
+    "anchor": "ExAcesso"
+   },
+   "check_commit": "48610bd6504692ad3f2e99ef318beb84e2668fd6",
+   "execution_commit": "48610bd6504692ad3f2e99ef318beb84e2668fd6",
+   "holdout_date": "2019-09-26"
+  },
+  {
+   "id": "mcp-trace-002",
+   "seq": 22,
+   "method": "siga.trace",
+   "kind": "trace",
+   "source_holdout_id": "git-1a47b86233cc",
+   "query": "fix(ex): Sanitiza style sem aspas antes do XHTML do PDF",
+   "args": {
+    "symbol": "FlyingSaucer",
+    "depth": 2
+   },
+   "ground_truth": {
+    "files": [
+     "siga-ex/src/main/java/br/gov/jfrj/itextpdf/FlyingSaucer.java"
+    ],
+    "anchor": "FlyingSaucer"
+   },
+   "check_commit": "48610bd6504692ad3f2e99ef318beb84e2668fd6",
+   "execution_commit": "48610bd6504692ad3f2e99ef318beb84e2668fd6",
+   "holdout_date": "2026-09-11"
+  },
+  {
+   "id": "mcp-trace-003",
+   "seq": 23,
+   "method": "siga.trace",
+   "kind": "trace",
+   "source_holdout_id": "git-1a87d10d1699",
+   "query": "FIX DOC: Inclusão da movimentação Transferência Externa no cálculo de tramites pendentes.",
+   "args": {
+    "symbol": "ExMobil",
+    "depth": 2
+   },
+   "ground_truth": {
+    "files": [
+     "siga-ex/src/main/java/br/gov/jfrj/siga/ex/AbstractExMobil.java"
+    ],
+    "anchor": "ExMobil"
+   },
+   "check_commit": "48610bd6504692ad3f2e99ef318beb84e2668fd6",
+   "execution_commit": "48610bd6504692ad3f2e99ef318beb84e2668fd6",
+   "holdout_date": "2022-06-09"
+  },
+  {
+   "id": "mcp-trace-004",
+   "seq": 24,
+   "method": "siga.trace",
+   "kind": "trace",
+   "source_holdout_id": "git-1cd294571577",
+   "query": "RM129564: Reclassificar em Lote Refatoramento da query FIX dos ID de pessoaIni e lotaIni",
+   "args": {
+    "symbol": "ExDao",
+    "depth": 2
+   },
+   "ground_truth": {
+    "files": [
+     "siga-ex/src/main/java/br/gov/jfrj/siga/hibernate/ExDao.java"
+    ],
+    "anchor": "ExDao"
+   },
+   "check_commit": "48610bd6504692ad3f2e99ef318beb84e2668fd6",
+   "execution_commit": "48610bd6504692ad3f2e99ef318beb84e2668fd6",
+   "holdout_date": "2022-10-13"
+  },
+  {
+   "id": "mcp-trace-005",
+   "seq": 25,
+   "method": "siga.trace",
+   "kind": "trace",
+   "source_holdout_id": "git-1cd974d5b790",
+   "query": "Init Interceptor Check Request Params",
+   "args": {
+    "symbol": "HtmlToPlainText",
+    "depth": 2
+   },
+   "ground_truth": {
+    "files": [
+     "siga-base/src/main/java/br/gov/jfrj/siga/base/HtmlToPlainText.java"
+    ],
+    "anchor": "HtmlToPlainText"
+   },
+   "check_commit": "48610bd6504692ad3f2e99ef318beb84e2668fd6",
+   "execution_commit": "48610bd6504692ad3f2e99ef318beb84e2668fd6",
+   "holdout_date": "2022-08-22"
+  },
+  {
+   "id": "mcp-trace-006",
+   "seq": 26,
+   "method": "siga.trace",
+   "kind": "trace",
+   "source_holdout_id": "git-1d59a63cf530",
+   "query": "DOC: calculo acesso não considerava perfis dos pais",
+   "args": {
+    "symbol": "ExAcesso",
+    "depth": 2
+   },
+   "ground_truth": {
+    "files": [
+     "siga-ex/src/main/java/br/gov/jfrj/siga/ex/bl/ExAcesso.java"
+    ],
+    "anchor": "ExAcesso"
+   },
+   "check_commit": "48610bd6504692ad3f2e99ef318beb84e2668fd6",
+   "execution_commit": "48610bd6504692ad3f2e99ef318beb84e2668fd6",
+   "holdout_date": "2017-04-04"
+  },
+  {
+   "id": "mcp-trace-007",
+   "seq": 27,
+   "method": "siga.trace",
+   "kind": "trace",
+   "source_holdout_id": "git-1da8157bb8a6",
+   "query": "RM75571 - Ajuste Relatórios Gerenciais - Documentos por Volume",
+   "args": {
+    "symbol": "RelDocumentosProduzidos",
+    "depth": 2
+   },
+   "ground_truth": {
+    "files": [
+     "sigaex/src/main/java/br/gov/jfrj/siga/ex/relatorio/dinamico/relatorios/RelDocumentosProduzidos.java"
+    ],
+    "anchor": "RelDocumentosProduzidos"
+   },
+   "check_commit": "48610bd6504692ad3f2e99ef318beb84e2668fd6",
+   "execution_commit": "48610bd6504692ad3f2e99ef318beb84e2668fd6",
+   "holdout_date": "2021-07-28"
+  },
+  {
+   "id": "mcp-trace-008",
+   "seq": 28,
+   "method": "siga.trace",
+   "kind": "trace",
+   "source_holdout_id": "git-1dc177d96171",
+   "query": "RM150982 Adicionar paginação arquivar lote FIX Documentos inassíveis ao usuário",
+   "args": {
+    "symbol": "FuncoesEL",
+    "depth": 2
+   },
+   "ground_truth": {
+    "files": [
+     "siga-ex/src/main/java/br/gov/jfrj/siga/ex/util/FuncoesEL.java"
+    ],
+    "anchor": "FuncoesEL"
+   },
+   "check_commit": "48610bd6504692ad3f2e99ef318beb84e2668fd6",
+   "execution_commit": "48610bd6504692ad3f2e99ef318beb84e2668fd6",
+   "holdout_date": "2023-02-13"
+  },
+  {
+   "id": "mcp-trace-009",
+   "seq": 29,
+   "method": "siga.trace",
+   "kind": "trace",
+   "source_holdout_id": "git-1df8c5819316",
+   "query": "Fix Siga-EX correção de bug no filtro por espécie",
+   "args": {
+    "symbol": "ExDao",
+    "depth": 2
+   },
+   "ground_truth": {
+    "files": [
+     "siga-ex/src/main/java/br/gov/jfrj/siga/hibernate/ExDao.java"
+    ],
+    "anchor": "ExDao"
+   },
+   "check_commit": "48610bd6504692ad3f2e99ef318beb84e2668fd6",
+   "execution_commit": "48610bd6504692ad3f2e99ef318beb84e2668fd6",
+   "holdout_date": "2024-02-20"
+  },
+  {
+   "id": "mcp-trace-010",
+   "seq": 30,
+   "method": "siga.trace",
+   "kind": "trace",
+   "source_holdout_id": "git-1eaed2a4be2f",
+   "query": "Ajusta expressao que transforma numero de documentos em links (chamado TRF2-SR-2015/17101)",
+   "args": {
+    "symbol": "ProcessadorReferencias",
+    "depth": 2
+   },
+   "ground_truth": {
+    "files": [
+     "siga-ex/src/main/java/br/gov/jfrj/siga/ex/util/ProcessadorReferencias.java"
+    ],
+    "anchor": "ProcessadorReferencias"
+   },
+   "check_commit": "48610bd6504692ad3f2e99ef318beb84e2668fd6",
+   "execution_commit": "48610bd6504692ad3f2e99ef318beb84e2668fd6",
+   "holdout_date": "2015-11-30"
+  },
+  {
+   "id": "mcp-impact-001",
+   "seq": 31,
+   "method": "siga.impact",
+   "kind": "impact",
+   "source_holdout_id": "git-1c16593d162a",
+   "query": "Retira conteúdo que faz parte do javascript assina.js",
+   "args": {
+    "target": "siga/src/main/webapp/WEB-INF/page/principal/principal.jsp",
+    "hops": 1
+   },
+   "ground_truth": {
+    "files": [
+     "siga-ex/src/main/java/br/gov/jfrj/siga/ex/AbstractExDocumento.java",
+     "siga-ex/src/main/java/br/gov/jfrj/siga/ex/AbstractExMovimentacao.java",
+     "siga-ex/src/main/java/br/gov/jfrj/siga/ex/ExDocumento.java",
+     "siga-ex/src/main/java/br/gov/jfrj/siga/ex/bl/ExBL.java",
+     "siga-ex/src/main/java/br/gov/jfrj/siga/ex/bl/ExMarcadorBL.java",
+     "siga-ex/src/main/java/br/gov/jfrj/siga/ex/util/ExGraphRelacaoDocs.java",
+     "siga-ex/src/main/java/br/gov/jfrj/siga/ex/util/notificador/geral/Notificador.java",
+     "siga-ex/src/main/java/br/gov/jfrj/siga/ex/vo/ExDocumentoVO.java",
+     "siga-ex/src/main/java/com/aryjr/nheengatu/testes/TesteParagrafos.java",
+     "sigaex/src/main/java/br/gov/jfrj/siga/ex/api/v1/DownloadJwtFilenameGet.java",
+     "sigaex/src/main/java/br/gov/jfrj/siga/ex/service/impl/ExServiceSeiImpl.java",
+     "sigaex/src/main/java/br/gov/jfrj/siga/util/ExWebdavStore.java",
+     "sigaex/src/main/java/br/gov/jfrj/siga/util/ExWebdavStore2.java",
+     "sigaex/src/main/java/br/gov/jfrj/siga/util/LocalFileSystemStore.java"
+    ],
+    "anchor": "siga/src/main/webapp/WEB-INF/page/principal/principal.jsp"
+   },
+   "check_commit": "48610bd6504692ad3f2e99ef318beb84e2668fd6",
+   "execution_commit": "48610bd6504692ad3f2e99ef318beb84e2668fd6",
+   "holdout_date": "2015-07-07"
+  },
+  {
+   "id": "mcp-impact-002",
+   "seq": 32,
+   "method": "siga.impact",
+   "kind": "impact",
+   "source_holdout_id": "git-1cad6c9dc3d9",
+   "query": "FIX_ADICIONA_PAGINACAO",
+   "args": {
+    "target": "sigaex/src/main/webapp/WEB-INF/page/exMovimentacao/aTransferirDocArquivadoLote.jsp",
+    "hops": 1
+   },
+   "ground_truth": {
+    "files": [
+     "sigaex/src/legacy/java/br/gov/jfrj/siga/vraptor/ExMovimentacaoController.java",
+     "sigaex/src/legacy/java/br/gov/jfrj/siga/vraptor/ExRelatorioController.java",
+     "sigaex/src/main/java/br/gov/jfrj/siga/ex/spring/ExSpringMovimentacaoController.java"
+    ],
+    "anchor": "sigaex/src/main/webapp/WEB-INF/page/exMovimentacao/aTransferirDocArquivadoLote.jsp"
+   },
+   "check_commit": "48610bd6504692ad3f2e99ef318beb84e2668fd6",
+   "execution_commit": "48610bd6504692ad3f2e99ef318beb84e2668fd6",
+   "holdout_date": "2023-02-16"
+  },
+  {
+   "id": "mcp-impact-003",
+   "seq": 33,
+   "method": "siga.impact",
+   "kind": "impact",
+   "source_holdout_id": "git-1cd70ec86590",
+   "query": "RM114542 - Continuacao de tratativa para execucao em lote de definicao acompanhamento",
+   "args": {
+    "target": "sigaex/src/main/webapp/WEB-INF/page/exMovimentacao/aVincularPapelLote.jsp",
+    "hops": 1
+   },
+   "ground_truth": {
+    "files": [
+     "sigaex/src/legacy/java/br/gov/jfrj/siga/vraptor/ExMovimentacaoController.java",
+     "sigaex/src/main/java/br/gov/jfrj/siga/ex/spring/ExSpringMovimentacaoController.java"
+    ],
+    "anchor": "sigaex/src/main/webapp/WEB-INF/page/exMovimentacao/aVincularPapelLote.jsp"
+   },
+   "check_commit": "48610bd6504692ad3f2e99ef318beb84e2668fd6",
+   "execution_commit": "48610bd6504692ad3f2e99ef318beb84e2668fd6",
+   "holdout_date": "2023-01-10"
+  },
+  {
+   "id": "mcp-impact-004",
+   "seq": 34,
+   "method": "siga.impact",
+   "kind": "impact",
+   "source_holdout_id": "git-1e9e3f83b4da",
+   "query": "Atualização CKEditor",
+   "args": {
+    "target": "sigaex/src/main/webapp/WEB-INF/page/exDocumento/edita.jsp",
+    "hops": 1
+   },
+   "ground_truth": {
+    "files": [
+     "siga-ex/src/main/java/br/gov/jfrj/siga/ex/AbstractExMovimentacao.java",
+     "siga-ex/src/main/java/br/gov/jfrj/siga/ex/ExEditalEliminacao.java",
+     "siga-ex/src/main/java/br/gov/jfrj/siga/ex/ExMobil.java",
+     "siga-ex/src/main/java/br/gov/jfrj/siga/ex/ExTermoEliminacao.java",
+     "siga-ex/src/main/java/br/gov/jfrj/siga/ex/bl/ExBL.java",
+     "siga-ex/src/main/java/br/gov/jfrj/siga/ex/logic/ExEstaEmEditalDeEliminacao.java",
+     "siga-ex/src/main/java/br/gov/jfrj/siga/ex/logic/ExPodeAutuarDocumento.java",
+     "siga-ex/src/main/java/br/gov/jfrj/siga/ex/logic/ExPodeDespachar.java",
+     "siga-ex/src/main/java/br/gov/jfrj/siga/ex/logic/ExPodeEditar.java",
+     "siga-ex/src/main/java/br/gov/jfrj/siga/ex/logic/ExPodeEditarData.java",
+     "siga-ex/src/main/java/br/gov/jfrj/siga/ex/logic/ExPodeEditarDescricao.java",
+     "siga-ex/src/main/java/br/gov/jfrj/siga/ex/logic/ExPodeExibirBotaoDeArquivarIntermediario.java",
+     "siga-ex/src/main/java/br/gov/jfrj/siga/ex/logic/ExPodeExibirBotaoDeArquivarPermanente.java",
+     "siga-ex/src/main/java/br/gov/jfrj/siga/ex/logic/ExPodeExibirBotaoDeDesarquivarIntermediario.java",
+     "siga-ex/src/main/java/br/gov/jfrj/siga/ex/logic/ExPodeIncluirEmEditalDeEliminacao.java",
+     "siga-ex/src/main/java/br/gov/jfrj/siga/ex/logic/ExPodeRetirarDeEditalDeEliminacao.java",
+     "siga-ex/src/main/java/br/gov/jfrj/siga/ex/model/enm/ExTipoDeConfiguracao.java",
+     "siga-ex/src/main/java/br/gov/jfrj/siga/ex/util/FuncoesEL.java",
+     "siga-ex/src/main/java/br/gov/jfrj/siga/ex/vo/ExDocumentoVO.java",
+     "siga-ex/src/main/java/br/gov/jfrj/siga/ex/vo/ExMobilVO.java",
+     "sigaex/src/legacy/java/br/gov/jfrj/siga/vraptor/ExClassificacaoController.java",
+     "sigaex/src/legacy/java/br/gov/jfrj/siga/vraptor/ExConfiguracaoController.java",
+     "sigaex/src/legacy/java/br/gov/jfrj/siga/vraptor/ExDocumentoController.java",
+     "sigaex/src/legacy/java/br/gov/jfrj/siga/vraptor/ExEmailNotificacaoController.java",
+     "sigaex/src/legacy/java/br/gov/jfrj/siga/vraptor/ExFormaDocumentoController.java",
+     "sigaex/src/legacy/java/br/gov/jfrj/siga/vraptor/ExModeloController.java",
+     "sigaex/src/legacy/java/br/gov/jfrj/siga/vraptor/ExMovimentacaoController.java",
+     "sigaex/src/legacy/java/br/gov/jfrj/siga/vraptor/ExTemporalidadeController.java",
+     "sigaex/src/legacy/java/br/gov/jfrj/siga/vraptor/ExTipoDespachoController.java",
+     "sigaex/src/main/java/br/gov/jfrj/siga/ex/spring/ExSpringClassificacaoController.java",
+     "sigaex/src/main/java/br/gov/jfrj/siga/ex/spring/ExSpringConfiguracao2Controller.java",
+     "sigaex/src/main/java/br/gov/jfrj/siga/ex/spring/ExSpringConfiguracaoController.java",
+     "sigaex/src/main/java/br/gov/jfrj/siga/ex/spring/ExSpringDocumentoController.java",
+     "sigaex/src/main/java/br/gov/jfrj/siga/ex/spring/ExSpringEmailNotificacaoController.java",
+     "sigaex/src/main/java/br/gov/jfrj/siga/ex/spring/ExSpringFormaDocumentoController.java",
+     "sigaex/src/main/java/br/gov/jfrj/siga/ex/spring/ExSpringModeloController.java",
+     "sigaex/src/main/java/br/gov/jfrj/siga/ex/spring/ExSpringMovimentacaoController.java",
+     "sigaex/src/main/java/br/gov/jfrj/siga/ex/spring/ExSpringTemporalidadeController.java",
+     "sigaex/src/main/java/br/gov/jfrj/siga/ex/spring/ExSpringTipoDespachoController.java"
+    ],
+    "anchor": "sigaex/src/main/webapp/WEB-INF/page/exDocumento/edita.jsp"
+   },
+   "check_commit": "48610bd6504692ad3f2e99ef318beb84e2668fd6",
+   "execution_commit": "48610bd6504692ad3f2e99ef318beb84e2668fd6",
+   "holdout_date": "2021-01-15"
+  },
+  {
+   "id": "mcp-impact-005",
+   "seq": 35,
+   "method": "siga.impact",
+   "kind": "impact",
+   "source_holdout_id": "git-1f61bd1336f5",
+   "query": "[PRJ_TRF2][270] - OSI_FS0009 - VRAPTOR - 06. MIGRAÇÃO DA FUNCIONALIDADE FINALIZAR",
+   "args": {
+    "target": "siga-ex/src/main/java/br/gov/jfrj/siga/ex/vo/ExDocumentoVO.java",
+    "hops": 1
+   },
+   "ground_truth": {
+    "files": [
+     "siga-ex/src/main/java/br/gov/jfrj/siga/ex/AbstractExDocumento.java",
+     "siga-ex/src/main/java/br/gov/jfrj/siga/ex/vo/ExMobilVO.java",
+     "siga-ex/src/main/java/br/gov/jfrj/siga/hibernate/ExDao.java",
+     "sigaex/src/legacy/java/br/gov/jfrj/siga/vraptor/ExAutenticacaoController.java",
+     "sigaex/src/legacy/java/br/gov/jfrj/siga/vraptor/ExDocumentoController.java",
+     "sigaex/src/legacy/java/br/gov/jfrj/siga/vraptor/ExMobilController.java",
+     "sigaex/src/legacy/java/br/gov/jfrj/siga/vraptor/ExPainelController.java",
+     "sigaex/src/legacy/java/br/gov/jfrj/siga/vraptor/ExProcessoAutenticacaoController.java",
+     "sigaex/src/legacy/java/br/gov/jfrj/siga/vraptor/ExProcessoConsultaPublicaController.java",
+     "sigaex/src/main/java/br/gov/jfrj/siga/ex/api/v1/DocumentosSiglaGet.java",
+     "sigaex/src/main/java/br/gov/jfrj/siga/ex/spring/ExSpringAutenticacaoController.java",
+     "sigaex/src/main/java/br/gov/jfrj/siga/ex/spring/ExSpringDocumentoController.java",
+     "sigaex/src/main/java/br/gov/jfrj/siga/ex/spring/ExSpringMobilController.java",
+     "sigaex/src/main/java/br/gov/jfrj/siga/ex/spring/ExSpringPainelController.java",
+     "sigaex/src/main/java/br/gov/jfrj/siga/ex/spring/ExSpringProcessoAutenticacaoController.java",
+     "sigaex/src/main/java/br/gov/jfrj/siga/ex/spring/ExSpringProcessoConsultaPublicaController.java"
+    ],
+    "anchor": "siga-ex/src/main/java/br/gov/jfrj/siga/ex/vo/ExDocumentoVO.java"
+   },
+   "check_commit": "48610bd6504692ad3f2e99ef318beb84e2668fd6",
+   "execution_commit": "48610bd6504692ad3f2e99ef318beb84e2668fd6",
+   "holdout_date": "2015-01-14"
+  },
+  {
+   "id": "mcp-impact-006",
+   "seq": 36,
+   "method": "siga.impact",
+   "kind": "impact",
+   "source_holdout_id": "git-20a612da94c2",
+   "query": "GOVSP1427#aplicacao de validacao em campos Freemaker",
+   "args": {
+    "target": "siga-ex/src/main/resources/br/gov/jfrj/siga/ex/util/default.ftl",
+    "hops": 1
+   },
+   "ground_truth": {
+    "files": [
+     "siga-ex/src/main/java/br/gov/jfrj/itextpdf/FlyingSaucer.java",
+     "siga-ex/src/main/java/br/gov/jfrj/siga/ex/ExMovimentacao.java",
+     "siga-ex/src/main/java/br/gov/jfrj/siga/ex/bl/ExAcesso.java",
+     "siga-ex/src/main/java/br/gov/jfrj/siga/ex/bl/ExBL.java",
+     "siga-ex/src/main/java/br/gov/jfrj/siga/ex/logic/ExPodeAcessarPorGrauDeAcesso.java",
+     "siga-ex/src/main/java/br/gov/jfrj/siga/ex/logic/ExPodeRestringirAcesso.java",
+     "siga-ex/src/main/java/br/gov/jfrj/siga/ex/util/FreemarkerDefault.java",
+     "siga-ex/src/main/java/br/gov/jfrj/siga/ex/util/FuncoesEL.java",
+     "siga-ex/src/main/java/br/gov/jfrj/siga/ex/util/MascaraUtil.java",
+     "siga-ex/src/main/java/br/gov/jfrj/siga/ex/util/ProcessadorHtml.java",
+     "siga-ex/src/main/java/br/gov/jfrj/siga/ex/util/ProcessadorModeloFreemarker.java",
+     "siga-ex/src/main/java/br/gov/jfrj/siga/ex/util/ProcessadorReferencias.java",
+     "siga-ex/src/main/java/br/gov/jfrj/siga/ex/util/notificador/geral/Notificador.java",
+     "siga-ex/src/main/java/br/gov/jfrj/siga/hibernate/CarregadorPlugin.java",
+     "siga-ex/src/main/java/br/gov/jfrj/siga/hibernate/ext/MontadorQueryNative.java",
+     "siga-ex/src/main/java/com/aryjr/nheengatu/css2/Style.java",
+     "siga-ex/src/main/java/com/aryjr/nheengatu/document/Document.java",
+     "siga-ex/src/main/java/com/aryjr/nheengatu/html/HTMLDocument.java",
+     "siga-ex/src/main/java/com/aryjr/nheengatu/html/HTMLHandler.java",
+     "siga-ex/src/main/java/com/aryjr/nheengatu/pdf/PDFTable.java",
+     "siga-ex/src/test/java/br/gov/jfrj/siga/ex/util/MascaraClassificacaoTest.java",
+     "sigaex/src/legacy/java/br/gov/jfrj/siga/vraptor/ExMobilController.java",
+     "sigaex/src/main/java/br/gov/jfrj/siga/ex/api/v1/DocumentosSiglaGet.java",
+     "sigaex/src/main/java/br/gov/jfrj/siga/ex/api/v1/ExApiV1Servlet.java",
+     "sigaex/src/main/java/br/gov/jfrj/siga/ex/api/v1/MesaGet.java",
+     "sigaex/src/main/java/br/gov/jfrj/siga/ex/service/impl/ExServiceImpl.java",
+     "sigaex/src/main/java/br/gov/jfrj/siga/ex/spring/ExSpringArquivoController.java",
+     "sigaex/src/main/java/br/gov/jfrj/siga/ex/spring/ExSpringAutenticacaoController.java",
+     "sigaex/src/main/java/br/gov/jfrj/siga/ex/spring/ExSpringClassificacaoController.java",
+     "sigaex/src/main/java/br/gov/jfrj/siga/ex/spring/ExSpringConfiguracaoController.java",
+     "sigaex/src/main/java/br/gov/jfrj/siga/ex/spring/ExSpringDocumentoController.java",
+     "sigaex/src/main/java/br/gov/jfrj/siga/ex/spring/ExSpringFormaDocumentoController.java",
+     "sigaex/src/main/java/br/gov/jfrj/siga/ex/spring/ExSpringGadgetController.java",
+     "sigaex/src/main/java/br/gov/jfrj/siga/ex/spring/ExSpringMesa2AntController.java",
+     "sigaex/src/main/java/br/gov/jfrj/siga/ex/spring/ExSpringMesa2Controller.java",
+     "sigaex/src/main/java/br/gov/jfrj/siga/ex/spring/ExSpringMobilController.java",
+     "sigaex/src/main/java/br/gov/jfrj/siga/ex/spring/ExSpringMovimentacaoController.java",
+     "sigaex/src/main/java/br/gov/jfrj/siga/ex/spring/ExSpringPainelController.java",
+     "sigaex/src/main/java/br/gov/jfrj/siga/ex/spring/ExSpringProcessoAutenticacaoController.java",
+     "sigaex/src/main/java/br/gov/jfrj/siga/ex/spring/ExSpringTemporalidadeController.java",
+     "sigaex/src/main/java/br/gov/jfrj/siga/ex/spring/ExSpringUtilController.java",
+     "sigaex/src/main/java/br/gov/jfrj/siga/ex/xjus/AllReferencesGet.java",
+     "sigaex/src/main/java/br/gov/jfrj/siga/ex/xjus/ChangedReferencesGet.java",
+     "sigaex/src/main/java/br/gov/jfrj/siga/vraptor/builder/ExMovimentacaoBuilder.java"
+    ],
+    "anchor": "siga-ex/src/main/resources/br/gov/jfrj/siga/ex/util/default.ftl"
+   },
+   "check_commit": "48610bd6504692ad3f2e99ef318beb84e2668fd6",
+   "execution_commit": "48610bd6504692ad3f2e99ef318beb84e2668fd6",
+   "holdout_date": "2020-08-12"
+  },
+  {
+   "id": "mcp-impact-007",
+   "seq": 37,
+   "method": "siga.impact",
+   "kind": "impact",
+   "source_holdout_id": "git-21805945ba2d",
+   "query": "FIX: Upload Formato Livre - geração do .war para rodar no jboss",
+   "args": {
+    "target": "siga-arq/pom.xml",
+    "hops": 1
+   },
+   "ground_truth": {
+    "files": [
+     "siga-ex/src/main/java/br/gov/jfrj/siga/ex/bl/ExBL.java",
+     "sigaex/src/main/java/br/gov/jfrj/siga/ex/api/v1/DocumentosGet.java",
+     "sigaex/src/main/java/br/gov/jfrj/siga/ex/api/v1/IExApiV1.java",
+     "sigaex/src/main/java/br/gov/jfrj/siga/ex/relatorio/dinamico/relatorios/RelOrgao.java"
+    ],
+    "anchor": "siga-arq/pom.xml"
+   },
+   "check_commit": "48610bd6504692ad3f2e99ef318beb84e2668fd6",
+   "execution_commit": "48610bd6504692ad3f2e99ef318beb84e2668fd6",
+   "holdout_date": "2022-10-11"
+  },
+  {
+   "id": "mcp-impact-008",
+   "seq": 38,
+   "method": "siga.impact",
+   "kind": "impact",
+   "source_holdout_id": "git-22879b435974",
+   "query": "fix(hibernate): Restaura entrevista Freemarker com MIME nulo e gravação de CpArquivoBlob",
+   "args": {
+    "target": "siga-cp/src/main/java/br/gov/jfrj/siga/cp/CpArquivo.java",
+    "hops": 1
+   },
+   "ground_truth": {
+    "files": [
+     "siga-ex/src/main/java/br/gov/jfrj/itextpdf/Documento.java",
+     "siga-ex/src/main/java/br/gov/jfrj/siga/ex/AbstractExDocumento.java",
+     "siga-ex/src/main/java/br/gov/jfrj/siga/ex/AbstractExModelo.java",
+     "siga-ex/src/main/java/br/gov/jfrj/siga/ex/AbstractExMovimentacao.java",
+     "siga-ex/src/main/java/br/gov/jfrj/siga/ex/AbstractExPreenchimento.java",
+     "siga-ex/src/main/java/br/gov/jfrj/siga/ex/ExArquivoNumerado.java",
+     "siga-ex/src/main/java/br/gov/jfrj/siga/ex/ExDocumento.java",
+     "siga-ex/src/main/java/br/gov/jfrj/siga/ex/bl/ExBL.java",
+     "sigaex/src/legacy/java/br/gov/jfrj/siga/vraptor/ExArquivoController.java",
+     "sigaex/src/legacy/java/br/gov/jfrj/siga/vraptor/ExDocumentoController.java",
+     "sigaex/src/main/java/br/gov/jfrj/siga/ex/spring/ExSpringArquivoController.java",
+     "sigaex/src/main/java/br/gov/jfrj/siga/ex/spring/ExSpringDocumentoController.java",
+     "sigaex/src/main/java/br/gov/jfrj/siga/vraptor/ExDocumentoDTO.java"
+    ],
+    "anchor": "siga-cp/src/main/java/br/gov/jfrj/siga/cp/CpArquivo.java"
+   },
+   "check_commit": "48610bd6504692ad3f2e99ef318beb84e2668fd6",
+   "execution_commit": "48610bd6504692ad3f2e99ef318beb84e2668fd6",
+   "holdout_date": "2026-09-14"
+  },
+  {
+   "id": "mcp-impact-009",
+   "seq": 39,
+   "method": "siga.impact",
+   "kind": "impact",
+   "source_holdout_id": "git-2299dd9f6b6a",
+   "query": "Refactoring no método isAssinado para chamar o método isAssinadoEletronicoPorTodosOsSignatario",
+   "args": {
+    "target": "siga-ex/src/main/java/br/gov/jfrj/siga/ex/ExDocumento.java",
+    "hops": 1
+   },
+   "ground_truth": {
+    "files": [
+     "siga-ex/src/main/java/br/gov/jfrj/itextpdf/Documento.java",
+     "siga-ex/src/main/java/br/gov/jfrj/siga/ex/AbstractExDocumento.java",
+     "siga-ex/src/main/java/br/gov/jfrj/siga/ex/AbstractExMarca.java",
+     "siga-ex/src/main/java/br/gov/jfrj/siga/ex/AbstractExMobil.java",
+     "siga-ex/src/main/java/br/gov/jfrj/siga/ex/AbstractExMovimentacao.java",
+     "siga-ex/src/main/java/br/gov/jfrj/siga/ex/BIE/AbstractExBoletimDoc.java",
+     "siga-ex/src/main/java/br/gov/jfrj/siga/ex/ExArquivo.java",
+     "siga-ex/src/main/java/br/gov/jfrj/siga/ex/ExArquivoNumerado.java",
+     "siga-ex/src/main/java/br/gov/jfrj/siga/ex/ExDocumentoNumeracao.java",
+     "siga-ex/src/main/java/br/gov/jfrj/siga/ex/ExEditalEliminacao.java",
+     "siga-ex/src/main/java/br/gov/jfrj/siga/ex/ExMarca.java",
+     "siga-ex/src/main/java/br/gov/jfrj/siga/ex/ExMobil.java",
+     "siga-ex/src/main/java/br/gov/jfrj/siga/ex/ExMovimentacao.java",
+     "siga-ex/src/main/java/br/gov/jfrj/siga/ex/ExProtocolo.java",
+     "siga-ex/src/main/java/br/gov/jfrj/siga/ex/ExRef.java",
+     "siga-ex/src/main/java/br/gov/jfrj/siga/ex/ExTermoEliminacao.java",
+     "siga-ex/src/main/java/br/gov/jfrj/siga/ex/ItemDeProtocolo.java",
+     "siga-ex/src/main/java/br/gov/jfrj/siga/ex/ItemDeProtocoloComparator.java",
+     "siga-ex/src/main/java/br/gov/jfrj/siga/ex/bl/AcessoConsulta.java",
+     "siga-ex/src/main/java/br/gov/jfrj/siga/ex/bl/BIE/BoletimInternoBL.java",
+     "siga-ex/src/main/java/br/gov/jfrj/siga/ex/bl/ExAcesso.java",
+     "siga-ex/src/main/java/br/gov/jfrj/siga/ex/bl/ExAssinavelDoc.java",
+     "siga-ex/src/main/java/br/gov/jfrj/siga/ex/bl/ExBL.java",
+     "siga-ex/src/main/java/br/gov/jfrj/siga/ex/bl/ExCompetenciaBL.java",
+     "siga-ex/src/main/java/br/gov/jfrj/siga/ex/bl/ExMarcadorBL.java",
+     "siga-ex/src/main/java/br/gov/jfrj/siga/ex/bl/ExVisualizacaoTempDocCompl.java",
+     "siga-ex/src/main/java/br/gov/jfrj/siga/ex/ext/AbstractConversorHTMLFactory.java",
+     "siga-ex/src/main/java/br/gov/jfrj/siga/ex/ext/ConversorHTMLFactory.java",
+     "siga-ex/src/main/java/br/gov/jfrj/siga/ex/logic/ExEAssinanteAtual.java",
+     "siga-ex/src/main/java/br/gov/jfrj/siga/ex/logic/ExECadastrante.java",
+     "siga-ex/src/main/java/br/gov/jfrj/siga/ex/logic/ExECapturado.java",
+     "siga-ex/src/main/java/br/gov/jfrj/siga/ex/logic/ExECapturadoFormatoLivre.java",
+     "siga-ex/src/main/java/br/gov/jfrj/siga/ex/logic/ExEColaborativo.java",
+     "siga-ex/src/main/java/br/gov/jfrj/siga/ex/logic/ExEComposto.java",
+     "siga-ex/src/main/java/br/gov/jfrj/siga/ex/logic/ExECossignatario.java",
+     "siga-ex/src/main/java/br/gov/jfrj/siga/ex/logic/ExEDocFilho.java",
+     "siga-ex/src/main/java/br/gov/jfrj/siga/ex/logic/ExEDocFilhoJuntadoAoPai.java",
+     "siga-ex/src/main/java/br/gov/jfrj/siga/ex/logic/ExEEletronico.java",
+     "siga-ex/src/main/java/br/gov/jfrj/siga/ex/logic/ExEExpediente.java",
+     "siga-ex/src/main/java/br/gov/jfrj/siga/ex/logic/ExEExterno.java",
+     "siga-ex/src/main/java/br/gov/jfrj/siga/ex/logic/ExEExternoCapturado.java",
+     "siga-ex/src/main/java/br/gov/jfrj/siga/ex/logic/ExEFisico.java",
+     "siga-ex/src/main/java/br/gov/jfrj/siga/ex/vo/ExDocumentoVO.java",
+     "siga-ex/src/main/java/br/gov/jfrj/siga/persistencia/ExDocumentoDaoFiltro.java",
+     "sigaex/src/legacy/java/br/gov/jfrj/siga/vraptor/ExDocumentoController.java",
+     "sigaex/src/main/java/br/gov/jfrj/siga/ex/spring/ExDocumentoSelecao.java",
+     "sigaex/src/main/java/br/gov/jfrj/siga/ex/spring/dto/ExDocumentoDTO.java",
+     "sigaex/src/main/java/br/gov/jfrj/siga/vraptor/ExDocumentoDTO.java",
+     "sigaex/src/main/java/br/gov/jfrj/siga/vraptor/ExDocumentoSelecao.java"
+    ],
+    "anchor": "siga-ex/src/main/java/br/gov/jfrj/siga/ex/ExDocumento.java"
+   },
+   "check_commit": "48610bd6504692ad3f2e99ef318beb84e2668fd6",
+   "execution_commit": "48610bd6504692ad3f2e99ef318beb84e2668fd6",
+   "holdout_date": "2014-10-07"
+  },
+  {
+   "id": "mcp-impact-010",
+   "seq": 40,
+   "method": "siga.impact",
+   "kind": "impact",
+   "source_holdout_id": "git-22ce9694b7aa",
+   "query": "RM95484 - Alteração de método para evitar chamadas de exclusão",
+   "args": {
+    "target": "siga-ex/src/main/java/br/gov/jfrj/siga/ex/bl/ExBL.java",
+    "hops": 1
+   },
+   "ground_truth": {
+    "files": [
+     "siga-ex/src/main/java/br/gov/jfrj/siga/ex/AbstractExModelo.java",
+     "siga-ex/src/main/java/br/gov/jfrj/siga/ex/ExEditalEliminacao.java",
+     "siga-ex/src/main/java/br/gov/jfrj/siga/ex/bl/Ex.java",
+     "siga-ex/src/main/java/br/gov/jfrj/siga/ex/bl/ExVisualizacaoTempDocCompl.java",
+     "siga-ex/src/main/java/br/gov/jfrj/siga/hibernate/ExDao.java",
+     "sigaex/src/legacy/java/br/gov/jfrj/siga/vraptor/ExConfiguracaoController.java",
+     "sigaex/src/legacy/java/br/gov/jfrj/siga/vraptor/ExDocumentoController.java",
+     "sigaex/src/legacy/java/br/gov/jfrj/siga/vraptor/ExMobilController.java",
+     "sigaex/src/main/java/br/gov/jfrj/siga/ex/api/v1/DocumentosGet.java",
+     "sigaex/src/main/java/br/gov/jfrj/siga/ex/api/v1/DocumentosPost.java",
+     "sigaex/src/main/java/br/gov/jfrj/siga/ex/api/v1/DocumentosSiglaConsultarProtocoloGet.java",
+     "sigaex/src/main/java/br/gov/jfrj/siga/ex/api/v1/DocumentosSiglaGerarProtocoloPost.java",
+     "sigaex/src/main/java/br/gov/jfrj/siga/ex/api/v1/DocumentosSiglaMovimentacoesIdCancelarPost.java",
+     "sigaex/src/main/java/br/gov/jfrj/siga/ex/api/v1/NumeracaoExpedientePost.java",
+     "sigaex/src/main/java/br/gov/jfrj/siga/ex/api/v1/NumeracaoGenericaPost.java",
+     "sigaex/src/main/java/br/gov/jfrj/siga/ex/service/impl/ExServiceImpl.java",
+     "sigaex/src/main/java/br/gov/jfrj/siga/ex/spring/ExSpringConfiguracaoController.java",
+     "sigaex/src/main/java/br/gov/jfrj/siga/ex/spring/ExSpringDocumentoController.java",
+     "sigaex/src/main/java/br/gov/jfrj/siga/ex/spring/ExSpringMobilController.java"
+    ],
+    "anchor": "siga-ex/src/main/java/br/gov/jfrj/siga/ex/bl/ExBL.java"
+   },
+   "check_commit": "48610bd6504692ad3f2e99ef318beb84e2668fd6",
+   "execution_commit": "48610bd6504692ad3f2e99ef318beb84e2668fd6",
+   "holdout_date": "2022-03-16"
+  },
+  {
+   "id": "mcp-history-001",
+   "seq": 41,
+   "method": "siga.history",
+   "kind": "history",
+   "source_holdout_id": "git-2323e5757ca5",
+   "query": "[PRJ_TRF2][610] - [OSI 12] - 14 - A EDIÇÃO ESTÁ FUNCIONANDO, MAS NÃO ESTÁ CARREGANDO AS CONFIGURAÇÕES POR AJAX",
+   "args": {
+    "target": "sigaex/src/main/webapp/WEB-INF/page/erro.jsp",
+    "query": "[PRJ_TRF2][610] - [OSI 12] - 14 - A EDIÇÃO ESTÁ FUNCIONANDO, MAS NÃO ESTÁ CARREGANDO AS CONFIGURAÇÕES POR AJAX",
+    "limit": 10
+   },
+   "ground_truth": {
+    "commits": [
+     {
+      "sha": "2323e5757ca5094e55d4604b22bc98e19f2205e2",
+      "date": "2015-03-11",
+      "subject": "[PRJ_TRF2][610] - [OSI 12] - 14 - A EDIÇÃO ESTÁ FUNCIONANDO, MAS NÃO ESTÁ CARREGANDO AS CONFIGURAÇÕES POR AJAX"
+     }
+    ],
+    "files": [],
+    "anchor": "sigaex/src/main/webapp/WEB-INF/page/erro.jsp"
+   },
+   "check_commit": "48610bd6504692ad3f2e99ef318beb84e2668fd6",
+   "execution_commit": "48610bd6504692ad3f2e99ef318beb84e2668fd6",
+   "holdout_date": "2015-03-11"
+  },
+  {
+   "id": "mcp-history-002",
+   "seq": 42,
+   "method": "siga.history",
+   "kind": "history",
+   "source_holdout_id": "git-247962e9f569",
+   "query": "RM66231 - Melhorias: Alteracao de controle de mov utilizando campo mob_ref",
+   "args": {
+    "target": "siga-ex/src/main/java/br/gov/jfrj/siga/ex/bl/ExBL.java",
+    "query": "RM66231 - Melhorias: Alteracao de controle de mov utilizando campo mob_ref",
+    "limit": 10
+   },
+   "ground_truth": {
+    "commits": [
+     {
+      "sha": "58f2cfe2a53ef5be55e0a9982f37af656b47dbce",
+      "date": "2026-09-14",
+      "subject": "fix(sigaex): Restaura entrevista do Memorando (modelo 26)"
+     },
+     {
+      "sha": "ceba2360ef6fd7bf7604f8d7220fa2f0f3eb0603",
+      "date": "2026-09-14",
+      "subject": "refactor(jakarta): Converte o núcleo para Jakarta EE 10, Spring 6 e Hibernate 6.6"
+     },
+     {
+      "sha": "0c39dfe2b90ca3fc84c87b9644961ca7078479dd",
+      "date": "2026-09-10",
+      "subject": "fix(ex): Garante exModelo na gravacao e evita NPE em gravaDescrDocumento"
+     },
+     {
+      "sha": "0698b2ebac9a8cf3a6b0a4354a0850880fb07f6c",
+      "date": "2026-09-04",
+      "subject": "Otimizações da geração de PDF"
+     },
+     {
+      "sha": "6407ed11065b564e157d0636357b27c3afc1fffb",
+      "date": "2025-08-19",
+      "subject": "Descomentando código de configuração para permitir a funcionalidade CRIAR_COMO_NOVO - Trocando o modelo de despacho de 'Prefeitura' para 'Prefeitura: Despacho' - Voltando a configuração de segurança de upgrade-insecure-requests - Mudando o favicon e as logos de relatório"
+     },
+     {
+      "sha": "5c4ba1a77e8996712cc697147377768436a6ecb7",
+      "date": "2024-09-27",
+      "subject": "DOC: Versão inicial de restrição ao uso do Siga-Doc"
+     },
+     {
+      "sha": "2fe4910caaaae87f7243b37d19ca01cccb853f53",
+      "date": "2024-07-23",
+      "subject": "Ex-Ajuste na funcionalidade Migrar para o SEI solicitada pelo GT"
+     },
+     {
+      "sha": "852d7937dfd7fb217b24af9fbb433c8da4964134",
+      "date": "2024-07-16",
+      "subject": "DOC Inclusão de popup explicativo ao clicar no botão de Registro de Migração do SEI. Também alteração da descrição do tipo de movimentação."
+     },
+     {
+      "sha": "8711e00cf68bc143492b493740327ae8065a56b3",
+      "date": "2024-07-15",
+      "subject": "DOC Criação da marca Migrado para o SEI"
+     },
+     {
+      "sha": "7195c6b250546c1b3d8462ac049c7b4e938cbf62",
+      "date": "2024-05-14",
+      "subject": "DOC: Imprementação da marca Juntado a Documento Externo."
+     }
+    ],
+    "files": [],
+    "anchor": "siga-ex/src/main/java/br/gov/jfrj/siga/ex/bl/ExBL.java"
+   },
+   "check_commit": "48610bd6504692ad3f2e99ef318beb84e2668fd6",
+   "execution_commit": "48610bd6504692ad3f2e99ef318beb84e2668fd6",
+   "holdout_date": "2022-04-06"
+  },
+  {
+   "id": "mcp-history-003",
+   "seq": 43,
+   "method": "siga.history",
+   "kind": "history",
+   "source_holdout_id": "git-2679647275b5",
+   "query": "FIX DOC: Correção para mostrar a matrícula atual na marca.",
+   "args": {
+    "target": "siga-ex/src/main/java/br/gov/jfrj/siga/ex/vo/ExMobilVO.java",
+    "query": "FIX DOC: Correção para mostrar a matrícula atual na marca.",
+    "limit": 10
+   },
+   "ground_truth": {
+    "commits": [
+     {
+      "sha": "2fe4910caaaae87f7243b37d19ca01cccb853f53",
+      "date": "2024-07-23",
+      "subject": "Ex-Ajuste na funcionalidade Migrar para o SEI solicitada pelo GT"
+     },
+     {
+      "sha": "852d7937dfd7fb217b24af9fbb433c8da4964134",
+      "date": "2024-07-16",
+      "subject": "DOC Inclusão de popup explicativo ao clicar no botão de Registro de Migração do SEI. Também alteração da descrição do tipo de movimentação."
+     },
+     {
+      "sha": "8711e00cf68bc143492b493740327ae8065a56b3",
+      "date": "2024-07-15",
+      "subject": "DOC Criação da marca Migrado para o SEI"
+     },
+     {
+      "sha": "3a037edda91a6dcf5cca21186e4869c52c319ce5",
+      "date": "2023-07-10",
+      "subject": "Resolvendo o chamado 2023034150, trocando a explicação do botão de tramitar em paralelo."
+     },
+     {
+      "sha": "49482ea2ff8412d8e0a7e5caa0a6f9f7fcc14934",
+      "date": "2023-05-09",
+      "subject": "Ajustando namespace da ação de anotar"
+     },
+     {
+      "sha": "552b5301f9c4c5a4b2e2134b7fe43be71b5b7cbe",
+      "date": "2023-04-26",
+      "subject": "HOTFIX: Correção de conflito com ID modelo"
+     },
+     {
+      "sha": "6b5db814603cec442a25bb333a7d28bd1ae15a73",
+      "date": "2023-02-24",
+      "subject": "Padronizando 'acao' anotar e adicionando 'ATENÇÃO' no inicio do texto do modal."
+     },
+     {
+      "sha": "7b8120e52154b6d1c53d93a516d393c74acf279c",
+      "date": "2023-02-24",
+      "subject": "Removendo o modal de Anotar e Sobrestar do JSP e adicionando o msgConfirmacao."
+     },
+     {
+      "sha": "d272a8ec934588cacda97a9389e14665a62e372e",
+      "date": "2023-02-17",
+      "subject": "Adicionando model de confirmação para sobrestar documento."
+     },
+     {
+      "sha": "315675ae276560c7eecf7edf823783597f83908b",
+      "date": "2022-11-23",
+      "subject": "RM125742 - Ordem de Assinatura nos Documentos"
+     }
+    ],
+    "files": [],
+    "anchor": "siga-ex/src/main/java/br/gov/jfrj/siga/ex/vo/ExMobilVO.java"
+   },
+   "check_commit": "48610bd6504692ad3f2e99ef318beb84e2668fd6",
+   "execution_commit": "48610bd6504692ad3f2e99ef318beb84e2668fd6",
+   "holdout_date": "2022-10-07"
+  },
+  {
+   "id": "mcp-history-004",
+   "seq": 44,
+   "method": "siga.history",
+   "kind": "history",
+   "source_holdout_id": "git-274ebf792fae",
+   "query": "Implementação cartão 108",
+   "args": {
+    "target": "sigaex/src/main/webapp/WEB-INF/page/exMobil/aCarregarListaFormas.jsp",
+    "query": "Implementação cartão 108",
+    "limit": 10
+   },
+   "ground_truth": {
+    "commits": [
+     {
+      "sha": "1262629fedab1fc00bb05c89204ec6de55b19576",
+      "date": "2021-05-14",
+      "subject": "GOVSP66218* Tela Pesquisa: Não trazer espécies e modelos imediatamente"
+     },
+     {
+      "sha": "b7e99a7c78b2bb080fe60f9368d34de2472f76b3",
+      "date": "2020-09-11",
+      "subject": "Resolve conflito jquery do select2"
+     },
+     {
+      "sha": "be7ac7183f0a017ac6e263b8520139ae61f21108",
+      "date": "2020-09-03",
+      "subject": "Erros de JS Pesquisa Avançada e Implementa Select2 Espécie e Modelo"
+     },
+     {
+      "sha": "3033abbb17669176f8babdcce87867f30bf05ac9",
+      "date": "2019-11-28",
+      "subject": "#622 Tornar combos com lista extensa pesquisáveis"
+     },
+     {
+      "sha": "274ebf792fae5a3d4624a5f80d7cfee4e95b043b",
+      "date": "2019-05-23",
+      "subject": "Implementação cartão 108"
+     },
+     {
+      "sha": "b48f9354d2fec8a6000c5cbc13ea3e32d0ac69bd",
+      "date": "2019-05-21",
+      "subject": "108 - Pesquisar Documentos"
+     },
+     {
+      "sha": "3f41e8dc5b0682cc3ac4eb67bd6494dd663c7e08",
+      "date": "2019-05-16",
+      "subject": "#BS4 Busca de Documento"
+     },
+     {
+      "sha": "34b78e34802b9ede47edef72588a592113eb9311",
+      "date": "2019-03-20",
+      "subject": "Refazendo o form de pesquisa em documentos."
+     },
+     {
+      "sha": "01a8eee134b9ff0f0bfffba22fafa9a1725defc1",
+      "date": "2016-03-18",
+      "subject": "DOC: correções na busca de documentos. Closes #722. Closes #704"
+     },
+     {
+      "sha": "ab264b5480c99d3b79069cb41c71554fc9de1a06",
+      "date": "2015-04-30",
+      "subject": "[PRJ_TRF2][882] - OSI_FS0012 - ERRO NA PÁGINA DE LISTAGEM DE DOCUMENTOS EXMOBILCONTROLLER.ALISTAR"
+     }
+    ],
+    "files": [],
+    "anchor": "sigaex/src/main/webapp/WEB-INF/page/exMobil/aCarregarListaFormas.jsp"
+   },
+   "check_commit": "48610bd6504692ad3f2e99ef318beb84e2668fd6",
+   "execution_commit": "48610bd6504692ad3f2e99ef318beb84e2668fd6",
+   "holdout_date": "2019-05-23"
+  },
+  {
+   "id": "mcp-history-005",
+   "seq": 45,
+   "method": "siga.history",
+   "kind": "history",
+   "source_holdout_id": "git-2a0679f15281",
+   "query": "Retirada condição específica do Interno Capturado",
+   "args": {
+    "target": "siga-ex/src/main/java/br/gov/jfrj/siga/ex/logic/ExPodeJuntar.java",
+    "query": "Retirada condição específica do Interno Capturado",
+    "limit": 10
+   },
+   "ground_truth": {
+    "commits": [
+     {
+      "sha": "8711e00cf68bc143492b493740327ae8065a56b3",
+      "date": "2024-07-15",
+      "subject": "DOC Criação da marca Migrado para o SEI"
+     },
+     {
+      "sha": "2a0679f1528182289a2c91f1b4dea9f9dc8a9d88",
+      "date": "2023-01-26",
+      "subject": "Retirada condição específica do Interno Capturado"
+     },
+     {
+      "sha": "c482eb3671ae693efde00728532cd7ca18361db2",
+      "date": "2022-04-04",
+      "subject": "FIX: EX: Mudando lógica para permitir juntada de autuação de documento em outra lotação"
+     },
+     {
+      "sha": "a015938b9ee64ee47994181b20ee89688f3d19ba",
+      "date": "2021-12-08",
+      "subject": "Adição de Regra para Subscritor poder Juntar"
+     },
+     {
+      "sha": "a8ac0a8263e87cd05c7ebf485c0c6787a641ca75",
+      "date": "2021-11-30",
+      "subject": "EX: Convertendo ExTipoMovimentacao para o emul ExTipoDeMovimentacao 2"
+     },
+     {
+      "sha": "415c765babd2f6fd37d3bf57dfa3a297e208c4f7",
+      "date": "2021-11-09",
+      "subject": "EX: Desenvolvendo classes JLogic"
+     }
+    ],
+    "files": [],
+    "anchor": "siga-ex/src/main/java/br/gov/jfrj/siga/ex/logic/ExPodeJuntar.java"
+   },
+   "check_commit": "48610bd6504692ad3f2e99ef318beb84e2668fd6",
+   "execution_commit": "48610bd6504692ad3f2e99ef318beb84e2668fd6",
+   "holdout_date": "2023-01-26"
+  },
+  {
+   "id": "mcp-history-006",
+   "seq": 46,
+   "method": "siga.history",
+   "kind": "history",
+   "source_holdout_id": "git-2a203b570c0e",
+   "query": "33 - Migracao da tela de testes",
+   "args": {
+    "target": "siga/src/main/webapp/WEB-INF/page/testes/testes.jsp",
+    "query": "33 - Migracao da tela de testes",
+    "limit": 10
+   },
+   "ground_truth": {
+    "commits": [
+     {
+      "sha": "567f56ad73b2c9c7efc91f748bfb7fe39a94d14e",
+      "date": "2019-05-07",
+      "subject": "#BS4 Testes, Error, Logout, Gadget"
+     },
+     {
+      "sha": "78f71e89b80c818fcb225735d3d275314d50893a",
+      "date": "2018-05-23",
+      "subject": "GERAL: Trocando autenticação para JWT"
+     },
+     {
+      "sha": "c6ca7096f8c3830066010f59049997c817b5a88d",
+      "date": "2016-05-17",
+      "subject": "SR: GC: criando URLs de teste. Closes #857"
+     },
+     {
+      "sha": "2a203b570c0e79bfc81dfb1a9990cb89244ec6f8",
+      "date": "2015-02-19",
+      "subject": "33 - Migracao da tela de testes"
+     }
+    ],
+    "files": [],
+    "anchor": "siga/src/main/webapp/WEB-INF/page/testes/testes.jsp"
+   },
+   "check_commit": "48610bd6504692ad3f2e99ef318beb84e2668fd6",
+   "execution_commit": "48610bd6504692ad3f2e99ef318beb84e2668fd6",
+   "holdout_date": "2015-02-19"
+  },
+  {
+   "id": "mcp-history-007",
+   "seq": 47,
+   "method": "siga.history",
+   "kind": "history",
+   "source_holdout_id": "git-2c1fbb7a8ed0",
+   "query": "Corrige url no link de \"Cancelar Via\" #436",
+   "args": {
+    "target": "siga-ex/src/main/java/br/gov/jfrj/siga/ex/vo/ExMobilVO.java",
+    "query": "Corrige url no link de \"Cancelar Via\" #436",
+    "limit": 10
+   },
+   "ground_truth": {
+    "commits": [
+     {
+      "sha": "2fe4910caaaae87f7243b37d19ca01cccb853f53",
+      "date": "2024-07-23",
+      "subject": "Ex-Ajuste na funcionalidade Migrar para o SEI solicitada pelo GT"
+     },
+     {
+      "sha": "852d7937dfd7fb217b24af9fbb433c8da4964134",
+      "date": "2024-07-16",
+      "subject": "DOC Inclusão de popup explicativo ao clicar no botão de Registro de Migração do SEI. Também alteração da descrição do tipo de movimentação."
+     },
+     {
+      "sha": "8711e00cf68bc143492b493740327ae8065a56b3",
+      "date": "2024-07-15",
+      "subject": "DOC Criação da marca Migrado para o SEI"
+     },
+     {
+      "sha": "3a037edda91a6dcf5cca21186e4869c52c319ce5",
+      "date": "2023-07-10",
+      "subject": "Resolvendo o chamado 2023034150, trocando a explicação do botão de tramitar em paralelo."
+     },
+     {
+      "sha": "49482ea2ff8412d8e0a7e5caa0a6f9f7fcc14934",
+      "date": "2023-05-09",
+      "subject": "Ajustando namespace da ação de anotar"
+     },
+     {
+      "sha": "552b5301f9c4c5a4b2e2134b7fe43be71b5b7cbe",
+      "date": "2023-04-26",
+      "subject": "HOTFIX: Correção de conflito com ID modelo"
+     },
+     {
+      "sha": "6b5db814603cec442a25bb333a7d28bd1ae15a73",
+      "date": "2023-02-24",
+      "subject": "Padronizando 'acao' anotar e adicionando 'ATENÇÃO' no inicio do texto do modal."
+     },
+     {
+      "sha": "7b8120e52154b6d1c53d93a516d393c74acf279c",
+      "date": "2023-02-24",
+      "subject": "Removendo o modal de Anotar e Sobrestar do JSP e adicionando o msgConfirmacao."
+     },
+     {
+      "sha": "d272a8ec934588cacda97a9389e14665a62e372e",
+      "date": "2023-02-17",
+      "subject": "Adicionando model de confirmação para sobrestar documento."
+     },
+     {
+      "sha": "315675ae276560c7eecf7edf823783597f83908b",
+      "date": "2022-11-23",
+      "subject": "RM125742 - Ordem de Assinatura nos Documentos"
+     }
+    ],
+    "files": [],
+    "anchor": "siga-ex/src/main/java/br/gov/jfrj/siga/ex/vo/ExMobilVO.java"
+   },
+   "check_commit": "48610bd6504692ad3f2e99ef318beb84e2668fd6",
+   "execution_commit": "48610bd6504692ad3f2e99ef318beb84e2668fd6",
+   "holdout_date": "2015-10-02"
+  },
+  {
+   "id": "mcp-history-008",
+   "seq": 48,
+   "method": "siga.history",
+   "kind": "history",
+   "source_holdout_id": "git-2d091b8ae22e",
+   "query": "fix(ex): Evita IndexOutOfBounds em campo de upload vazio",
+   "args": {
+    "target": "siga-ex/src/main/java/br/gov/jfrj/siga/ex/ExModelo.java",
+    "query": "fix(ex): Evita IndexOutOfBounds em campo de upload vazio",
+    "limit": 10
+   },
+   "ground_truth": {
+    "commits": [
+     {
+      "sha": "ceba2360ef6fd7bf7604f8d7220fa2f0f3eb0603",
+      "date": "2026-09-14",
+      "subject": "refactor(jakarta): Converte o núcleo para Jakarta EE 10, Spring 6 e Hibernate 6.6"
+     },
+     {
+      "sha": "2d091b8ae22ed36da208f15cafca0ee6046ac7d7",
+      "date": "2026-09-11",
+      "subject": "fix(ex): Evita IndexOutOfBounds em campo de upload vazio"
+     },
+     {
+      "sha": "b60f651540393dea5b0e98dab973b20124a836fe",
+      "date": "2023-05-16",
+      "subject": "Corrigindo funcionamento da descrição para os modelos simples"
+     },
+     {
+      "sha": "815bbed8026fbc3b660e8ca4abef251717770751",
+      "date": "2023-04-20",
+      "subject": "Detectando a macro @description como indicativo de descrição automática"
+     },
+     {
+      "sha": "84a8044b7b94551189d0ac714e4c8b9843fcb2b0",
+      "date": "2022-09-16",
+      "subject": "RM105095 - Escolha de extensões de arquivos capturados formato livre"
+     },
+     {
+      "sha": "760c697acf959542588e291e1d26fdc254a355eb",
+      "date": "2021-12-02",
+      "subject": "EX: Corrigindo exclusão de ExTipoMovimentacao"
+     },
+     {
+      "sha": "834fa14ad6b60f898b8c4bb9134fede268bb027d",
+      "date": "2021-07-02",
+      "subject": "EX:FIX: Refatorando consulta de modelos por Id usando método padrão do siga"
+     },
+     {
+      "sha": "af8725b24d81de1a7a4044fe606ef118352c079d",
+      "date": "2021-06-18",
+      "subject": "EX:Feature: Permitir que informações de pessoa e lotações de documentos sejam omitidas na pesquisa e visualização baseado na nova configuração TIPO_CONFIG_EXIBIR_QUEM_TEM_ACESSO_DOCUMENTO"
+     },
+     {
+      "sha": "eb431886af37a879af3feef2b1caebb301f83eda",
+      "date": "2021-04-07",
+      "subject": "Corrigindo import para Texto.java"
+     },
+     {
+      "sha": "bd63a88c97f9a8726d3c6fb860d6b9d081e2a2cc",
+      "date": "2020-12-02",
+      "subject": "Impedindo a carga automática do CpArquivoBlob e também ativando o cache para CpArquivo e CpArquivoBlob, o que deve aumentar drasticamente o desempenho"
+     }
+    ],
+    "files": [],
+    "anchor": "siga-ex/src/main/java/br/gov/jfrj/siga/ex/ExModelo.java"
+   },
+   "check_commit": "48610bd6504692ad3f2e99ef318beb84e2668fd6",
+   "execution_commit": "48610bd6504692ad3f2e99ef318beb84e2668fd6",
+   "holdout_date": "2026-09-11"
+  },
+  {
+   "id": "mcp-history-009",
+   "seq": 49,
+   "method": "siga.history",
+   "kind": "history",
+   "source_holdout_id": "git-2d5ab6cd6bb1",
+   "query": "HOT EX: Alteração do construtor EXDocumentoVO ao selecionar os documentos a serem publicados no BIE.",
+   "args": {
+    "target": "siga-ex/src/main/java/br/gov/jfrj/siga/ex/vo/ExDocumentoVO.java",
+    "query": "HOT EX: Alteração do construtor EXDocumentoVO ao selecionar os documentos a serem publicados no BIE.",
+    "limit": 10
+   },
+   "ground_truth": {
+    "commits": [
+     {
+      "sha": "7195c6b250546c1b3d8462ac049c7b4e938cbf62",
+      "date": "2024-05-14",
+      "subject": "DOC: Imprementação da marca Juntado a Documento Externo."
+     },
+     {
+      "sha": "574e9d158b512b6c06487c73cf086ded1fc1280d",
+      "date": "2023-09-05",
+      "subject": "Corrige pequeno erro na consulta via JSON a um documento desentranhado"
+     },
+     {
+      "sha": "0c47f7bd41bcb6bfbc8d7d9a67d7a53ce966b97b",
+      "date": "2023-07-31",
+      "subject": "Merge branch 'release/11.0.3' into release/11.1"
+     },
+     {
+      "sha": "878c49a1c7fef57ba9c39483207432b98c23204a",
+      "date": "2023-01-13",
+      "subject": "Merge branch 'release/11.0.0' into feature/trf2/nova-ux"
+     },
+     {
+      "sha": "8d58328be30d24ec17bb491233b59bdc6a5e39fe",
+      "date": "2022-12-20",
+      "subject": "FIX - RM146717 - Botão Vincular Indisponível"
+     },
+     {
+      "sha": "fa77a836a6d5b94339520d7dfe21bc5ee2ee9888",
+      "date": "2022-12-08",
+      "subject": "Merge branch 'release/11.0.0' into feature/trf2/nova-ux"
+     },
+     {
+      "sha": "315675ae276560c7eecf7edf823783597f83908b",
+      "date": "2022-11-23",
+      "subject": "RM125742 - Ordem de Assinatura nos Documentos"
+     },
+     {
+      "sha": "dfb024e6c22970983acc722ebed23905b56ab7ca",
+      "date": "2022-11-11",
+      "subject": "Merge branch 'release/10.2.9' into release/11.0.0"
+     },
+     {
+      "sha": "3d3fe6703190bf498d69d004146af277af3b9163",
+      "date": "2022-11-11",
+      "subject": "Merge branch 'release/10.2.7' into release/10.2.8"
+     },
+     {
+      "sha": "4bb6dc92e2c8c4ea914a7bfd0fe46596d588534d",
+      "date": "2022-11-11",
+      "subject": "Merge branch 'release/10.2.6' into release/10.2.7"
+     }
+    ],
+    "files": [],
+    "anchor": "siga-ex/src/main/java/br/gov/jfrj/siga/ex/vo/ExDocumentoVO.java"
+   },
+   "check_commit": "48610bd6504692ad3f2e99ef318beb84e2668fd6",
+   "execution_commit": "48610bd6504692ad3f2e99ef318beb84e2668fd6",
+   "holdout_date": "2022-05-05"
+  },
+  {
+   "id": "mcp-history-010",
+   "seq": 50,
+   "method": "siga.history",
+   "kind": "history",
+   "source_holdout_id": "git-2fda0a19a4af",
+   "query": "DOC: Alteração para corrigir cancelamento de movimentações para não executar o cancelamento em movimentações já canceladas.",
+   "args": {
+    "target": "siga-ex/src/main/java/br/gov/jfrj/siga/ex/bl/ExBL.java",
+    "query": "DOC: Alteração para corrigir cancelamento de movimentações para não executar o cancelamento em movimentações já canceladas.",
+    "limit": 10
+   },
+   "ground_truth": {
+    "commits": [
+     {
+      "sha": "58f2cfe2a53ef5be55e0a9982f37af656b47dbce",
+      "date": "2026-09-14",
+      "subject": "fix(sigaex): Restaura entrevista do Memorando (modelo 26)"
+     },
+     {
+      "sha": "ceba2360ef6fd7bf7604f8d7220fa2f0f3eb0603",
+      "date": "2026-09-14",
+      "subject": "refactor(jakarta): Converte o núcleo para Jakarta EE 10, Spring 6 e Hibernate 6.6"
+     },
+     {
+      "sha": "0c39dfe2b90ca3fc84c87b9644961ca7078479dd",
+      "date": "2026-09-10",
+      "subject": "fix(ex): Garante exModelo na gravacao e evita NPE em gravaDescrDocumento"
+     },
+     {
+      "sha": "0698b2ebac9a8cf3a6b0a4354a0850880fb07f6c",
+      "date": "2026-09-04",
+      "subject": "Otimizações da geração de PDF"
+     },
+     {
+      "sha": "6407ed11065b564e157d0636357b27c3afc1fffb",
+      "date": "2025-08-19",
+      "subject": "Descomentando código de configuração para permitir a funcionalidade CRIAR_COMO_NOVO - Trocando o modelo de despacho de 'Prefeitura' para 'Prefeitura: Despacho' - Voltando a configuração de segurança de upgrade-insecure-requests - Mudando o favicon e as logos de relatório"
+     },
+     {
+      "sha": "5c4ba1a77e8996712cc697147377768436a6ecb7",
+      "date": "2024-09-27",
+      "subject": "DOC: Versão inicial de restrição ao uso do Siga-Doc"
+     },
+     {
+      "sha": "2fe4910caaaae87f7243b37d19ca01cccb853f53",
+      "date": "2024-07-23",
+      "subject": "Ex-Ajuste na funcionalidade Migrar para o SEI solicitada pelo GT"
+     },
+     {
+      "sha": "852d7937dfd7fb217b24af9fbb433c8da4964134",
+      "date": "2024-07-16",
+      "subject": "DOC Inclusão de popup explicativo ao clicar no botão de Registro de Migração do SEI. Também alteração da descrição do tipo de movimentação."
+     },
+     {
+      "sha": "8711e00cf68bc143492b493740327ae8065a56b3",
+      "date": "2024-07-15",
+      "subject": "DOC Criação da marca Migrado para o SEI"
+     },
+     {
+      "sha": "7195c6b250546c1b3d8462ac049c7b4e938cbf62",
+      "date": "2024-05-14",
+      "subject": "DOC: Imprementação da marca Juntado a Documento Externo."
+     }
+    ],
+    "files": [],
+    "anchor": "siga-ex/src/main/java/br/gov/jfrj/siga/ex/bl/ExBL.java"
+   },
+   "check_commit": "48610bd6504692ad3f2e99ef318beb84e2668fd6",
+   "execution_commit": "48610bd6504692ad3f2e99ef318beb84e2668fd6",
+   "holdout_date": "2018-09-05"
+  },
+  {
+   "id": "mcp-context-001",
+   "seq": 51,
+   "method": "siga.context",
+   "kind": "context",
+   "source_holdout_id": "git-30537a7d8f68",
+   "query": "1185#Mensagem de alerta para arquivar corrente apenas para documentos compostos",
+   "args": {
+    "symbols": [
+     "ExMobilVO"
+    ],
+    "task": "1185#Mensagem de alerta para arquivar corrente apenas para documentos compostos"
+   },
+   "ground_truth": {
+    "files": [
+     "siga-ex/src/main/java/br/gov/jfrj/siga/ex/vo/ExMobilVO.java"
+    ],
+    "anchor": "ExMobilVO"
+   },
+   "check_commit": "48610bd6504692ad3f2e99ef318beb84e2668fd6",
+   "execution_commit": "48610bd6504692ad3f2e99ef318beb84e2668fd6",
+   "holdout_date": "2020-06-04"
+  },
+  {
+   "id": "mcp-context-002",
+   "seq": 52,
+   "method": "siga.context",
+   "kind": "context",
+   "source_holdout_id": "git-30b349c479a6",
+   "query": "Alteração no método duplicar para chamar novo método de acessar documento podeAcessarDocumento()",
+   "args": {
+    "symbols": [
+     "ExCompetenciaBL"
+    ],
+    "task": "Alteração no método duplicar para chamar novo método de acessar documento podeAcessarDocumento()"
+   },
+   "ground_truth": {
+    "files": [
+     "siga-ex/src/main/java/br/gov/jfrj/siga/ex/bl/ExCompetenciaBL.java"
+    ],
+    "anchor": "ExCompetenciaBL"
+   },
+   "check_commit": "48610bd6504692ad3f2e99ef318beb84e2668fd6",
+   "execution_commit": "48610bd6504692ad3f2e99ef318beb84e2668fd6",
+   "holdout_date": "2014-08-05"
+  },
+  {
+   "id": "mcp-context-003",
+   "seq": 53,
+   "method": "siga.context",
+   "kind": "context",
+   "source_holdout_id": "git-30c349525bcc",
+   "query": "DOC: Inclusão do vínculo SEM EFEITO.",
+   "args": {
+    "symbols": [
+     "ExTipoDeVinculo"
+    ],
+    "task": "DOC: Inclusão do vínculo SEM EFEITO."
+   },
+   "ground_truth": {
+    "files": [
+     "siga-ex/src/main/java/br/gov/jfrj/siga/ex/model/enm/ExTipoDeVinculo.java"
+    ],
+    "anchor": "ExTipoDeVinculo"
+   },
+   "check_commit": "48610bd6504692ad3f2e99ef318beb84e2668fd6",
+   "execution_commit": "48610bd6504692ad3f2e99ef318beb84e2668fd6",
+   "holdout_date": "2024-03-20"
+  },
+  {
+   "id": "mcp-context-004",
+   "seq": 54,
+   "method": "siga.context",
+   "kind": "context",
+   "source_holdout_id": "git-317f21de433f",
+   "query": "fix(ex): Preenche subscritor e lotacao na criacao de documento",
+   "args": {
+    "symbols": [
+     "ExSpringDocumentoController"
+    ],
+    "task": "fix(ex): Preenche subscritor e lotacao na criacao de documento"
+   },
+   "ground_truth": {
+    "files": [
+     "sigaex/src/main/java/br/gov/jfrj/siga/ex/spring/ExSpringDocumentoController.java"
+    ],
+    "anchor": "ExSpringDocumentoController"
+   },
+   "check_commit": "48610bd6504692ad3f2e99ef318beb84e2668fd6",
+   "execution_commit": "48610bd6504692ad3f2e99ef318beb84e2668fd6",
+   "holdout_date": "2026-09-10"
+  },
+  {
+   "id": "mcp-context-005",
+   "seq": 55,
+   "method": "siga.context",
+   "kind": "context",
+   "source_holdout_id": "git-35bd6040b195",
+   "query": "Tratamento de NPE no WS do dossiê",
+   "args": {
+    "symbols": [
+     "DocumentosSiglaDossieGet"
+    ],
+    "task": "Tratamento de NPE no WS do dossiê"
+   },
+   "ground_truth": {
+    "files": [
+     "sigaex/src/main/java/br/gov/jfrj/siga/ex/api/v1/DocumentosSiglaDossieGet.java"
+    ],
+    "anchor": "DocumentosSiglaDossieGet"
+   },
+   "check_commit": "48610bd6504692ad3f2e99ef318beb84e2668fd6",
+   "execution_commit": "48610bd6504692ad3f2e99ef318beb84e2668fd6",
+   "holdout_date": "2023-02-28"
+  },
+  {
+   "id": "mcp-context-006",
+   "seq": 56,
+   "method": "siga.context",
+   "kind": "context",
+   "source_holdout_id": "git-36d27b9af154",
+   "query": "Lista os preenchimentos da lotação selecionada na frente e os das outras lotações depois",
+   "args": {
+    "symbols": [
+     "ModelosIdLotacoesIdLotacaoPreenchimentosGet"
+    ],
+    "task": "Lista os preenchimentos da lotação selecionada na frente e os das outras lotações depois"
+   },
+   "ground_truth": {
+    "files": [
+     "sigaex/src/main/java/br/gov/jfrj/siga/ex/api/v1/ModelosIdLotacoesIdLotacaoPreenchimentosGet.java"
+    ],
+    "anchor": "ModelosIdLotacoesIdLotacaoPreenchimentosGet"
+   },
+   "check_commit": "48610bd6504692ad3f2e99ef318beb84e2668fd6",
+   "execution_commit": "48610bd6504692ad3f2e99ef318beb84e2668fd6",
+   "holdout_date": "2023-06-28"
+  },
+  {
+   "id": "mcp-context-007",
+   "seq": 57,
+   "method": "siga.context",
+   "kind": "context",
+   "source_holdout_id": "git-38a8fefd1173",
+   "query": "FIX: Corrigindo o trâmite externo sem que seja informada a lotação responsável",
+   "args": {
+    "symbols": [
+     "ExNotificar"
+    ],
+    "task": "FIX: Corrigindo o trâmite externo sem que seja informada a lotação responsável"
+   },
+   "ground_truth": {
+    "files": [
+     "siga-ex/src/main/java/br/gov/jfrj/siga/ex/util/notificador/especifico/ExNotificar.java"
+    ],
+    "anchor": "ExNotificar"
+   },
+   "check_commit": "48610bd6504692ad3f2e99ef318beb84e2668fd6",
+   "execution_commit": "48610bd6504692ad3f2e99ef318beb84e2668fd6",
+   "holdout_date": "2023-03-21"
+  },
+  {
+   "id": "mcp-context-008",
+   "seq": 58,
+   "method": "siga.context",
+   "kind": "context",
+   "source_holdout_id": "git-3abf2818e58e",
+   "query": "chore(build): Isola o nucleo sem vRaptor e habilita compile Java 11",
+   "args": {
+    "symbols": [
+     "AdModelo"
+    ],
+    "task": "chore(build): Isola o nucleo sem vRaptor e habilita compile Java 11"
+   },
+   "ground_truth": {
+    "files": [
+     "siga-cp/src/main/java/br/gov/jfrj/siga/ldap/AdModelo.java"
+    ],
+    "anchor": "AdModelo"
+   },
+   "check_commit": "48610bd6504692ad3f2e99ef318beb84e2668fd6",
+   "execution_commit": "48610bd6504692ad3f2e99ef318beb84e2668fd6",
+   "holdout_date": "2026-09-10"
+  },
+  {
+   "id": "mcp-context-009",
+   "seq": 59,
+   "method": "siga.context",
+   "kind": "context",
+   "source_holdout_id": "git-3b3bfd485293",
+   "query": "FIX - RM91453 - Erro ao duplicar um documento",
+   "args": {
+    "symbols": [
+     "ExBL"
+    ],
+    "task": "FIX - RM91453 - Erro ao duplicar um documento"
+   },
+   "ground_truth": {
+    "files": [
+     "siga-ex/src/main/java/br/gov/jfrj/siga/ex/bl/ExBL.java"
+    ],
+    "anchor": "ExBL"
+   },
+   "check_commit": "48610bd6504692ad3f2e99ef318beb84e2668fd6",
+   "execution_commit": "48610bd6504692ad3f2e99ef318beb84e2668fd6",
+   "holdout_date": "2021-12-01"
+  },
+  {
+   "id": "mcp-context-010",
+   "seq": 60,
+   "method": "siga.context",
+   "kind": "context",
+   "source_holdout_id": "git-3de1b2e65f67",
+   "query": "Complemento da conversão da API SIGALE para SIGAEX",
+   "args": {
+    "symbols": [
+     "DownloadJwtFilenameGet"
+    ],
+    "task": "Complemento da conversão da API SIGALE para SIGAEX"
+   },
+   "ground_truth": {
+    "files": [
+     "sigaex/src/main/java/br/gov/jfrj/siga/ex/api/v1/DownloadJwtFilenameGet.java"
+    ],
+    "anchor": "DownloadJwtFilenameGet"
+   },
+   "check_commit": "48610bd6504692ad3f2e99ef318beb84e2668fd6",
+   "execution_commit": "48610bd6504692ad3f2e99ef318beb84e2668fd6",
+   "holdout_date": "2020-09-16"
+  }
+ ]
+}
