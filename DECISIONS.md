@@ -97,4 +97,14 @@ Formato por decisão: Decision / Reason / Alternatives / Advantages / Disadvanta
 - **Risks:** nenhum residual relevante.
 - **Validate:** `make verify` verde; `docs/15 §6` marca F18 REMOVIDO e NOT-build inclui wiki.
 
+## ADR-032 — Veredito do MCP: CONDICIONAL (G07, docs/18 §5)
+
+- **Decision:** CONDICIONAL — MCP liberado como assistente de dev (locate/trace/context), sem alegação de economia até ref3 cega pós-correções; NO-GO mantido para a meta 0.99 (H05).
+- **Reason (números, 60 tarefas cegas por ref):** ref1 (opencode): B 0.483 vs A 0.267 (delta +0.216), −13,7% tokens, `mcp_helps`; ref2 (Freebuff, independente): B 0.50 vs A 0.55 (delta −0,05), +312% tokens, `mcp_hurts` — raiz: history ignorava query (unions de 37–116 arquivos) + trace de 1 nó, ambos corrigidos em F21 APÓS a ref2; cápsula v2 −55% tokens (H04); auditoria gold⊆bench PASS (H05). Regra `evaluation/g07_verdict.py`: refs divergentes ⇒ CONDICIONAL.
+- **Alternatives:** GO pleno (rejeitado: ref2 real contradiz); NO-GO geral (rejeitado: ref1 + H-fixes + cápsula mostram valor em trace/locate/context).
+- **Advantages:** decisão falsificável com gate explícito (ref3); uso assistido continua rendendo sem prometer economia.
+- **Disadvantages:** economia não comprovada; ref3 custa outra rodada cega.
+- **Risks:** F21/F22 não re-medidas em rodada cega — mitigado: ref3 é o gate, não opcional.
+- **Validate:** `tests/test_g07_verdict.py` (regra); ref3 no protocolo docs/18 com F21/F22 ativas.
+
 > Novas decisões entram aqui via tarefas com `docs(...): ...` e referência à fase.
