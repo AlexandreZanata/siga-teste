@@ -95,6 +95,7 @@ def dispatch(method: str, params: dict[str, Any] | None, repo_root: Path | None 
             kind=params.get("kind"),
             repo=root,
             limit=int(params.get("limit", 10)),
+            module=params.get("module"),
         )
     elif method == "siga.trace":
         result = siga_trace(

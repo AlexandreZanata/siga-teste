@@ -18,7 +18,7 @@ from typing import Any
 
 from retrieval.baseline import broadened_terms, expanded_terms as extract_terms
 from tools import primitives
-from tools.module_shards import filter_by_module, validate_module
+from tools.module_shards import filter_by_module, infer_module, validate_module
 
 VALID_KINDS = frozenset(
     {"file", "symbol", "controller", "entity", "jsp", "migration", "test"}
@@ -45,7 +45,8 @@ def siga_locate(
 ) -> list[dict[str, Any]]:
     """Localiza arquivos/símbolos de uma funcionalidade a partir de termos da query.
 
-    `module` restringe ao shard do módulo (H01, docs/19 §4); None = repo inteiro.
+    `module` restringe ao shard do módulo (H01, docs/19 §4); None = repo inteiro;
+    'auto' infere o módulo da query (F22) e cai p/ repo inteiro se ambíguo.
     """
     if not isinstance(query, str) or not query.strip():
         raise ValueError("query deve ser uma string não vazia")
@@ -55,9 +56,13 @@ def siga_locate(
         )
     if limit < 1:
         raise ValueError(f"limit deve ser >= 1, recebido {limit}")
-    module = validate_module(module)
 
     root = _resolve_repo(repo)
+    if module == "auto":
+        module = infer_module(query, root)
+    else:
+        module = validate_module(module)
+
     query_terms = extract_terms(query)
     candidates: dict[str, dict[str, Any]] = {}
 

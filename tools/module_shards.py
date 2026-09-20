@@ -73,6 +73,26 @@ def validate_module(module: str | None) -> str | None:
     return clean
 
 
+def infer_module(query: str, root: str | Path) -> str | None:
+    """Infere o shard a partir de menção explícita na query (F22).
+
+    Retorna o módulo quando exatamente 1 módulo conhecido é nomeado;
+    None quando ambíguo ou ausente. Evidência por votação de símbolos
+    foi medida e REJEITADA (0 flips em 15 fails, custo de precisão) —
+    não inferir no escuro; o filtro explícito via parâmetro `module`
+    continua disponível para quem sabe o módulo.
+    Determinístico, somente leitura.
+    """
+    root = Path(root)
+    if not isinstance(query, str) or not query.strip():
+        return None
+    lowered = query.lower()
+    named = [m for m in iter_modules(root) if m.lower() in lowered]
+    if len(named) == 1:
+        return named[0]
+    return None
+
+
 def filter_by_module(
     candidates: list[dict[str, Any]],
     module: str | None,

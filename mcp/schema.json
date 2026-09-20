@@ -24,6 +24,10 @@
                   "type": "string",
                   "description": "Span da tarefa descrevendo a funcionalidade a localizar."
                 },
+                "module": {
+                  "type": "string",
+                  "description": "Shard do módulo (ex.: siga-ex) ou 'auto' p/ inferir da query (F22). Omitido = repo inteiro."
+                },
                 "kind": {
                   "type": "string",
                   "enum": ["file", "symbol", "controller", "entity", "jsp", "migration", "test"],
