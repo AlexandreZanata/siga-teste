@@ -4,6 +4,7 @@ Ação: Localiza arquivos, símbolos e componentes de uma funcionalidade no repo
 Args:
   - query: texto da funcionalidade (span da tarefa)
   - kind?: tipo opcional ('file', 'symbol', 'controller', 'entity', 'jsp', 'migration', 'test')
+  - module?: shard do módulo (ex. 'siga-ex'); None = repo inteiro
 Retorna:
   Lista de candidatos reais [ {target, file, symbol, kind, score} ]
 Todo arquivo e símbolo retornado existe em disco ou no grafo.
@@ -17,6 +18,7 @@ from typing import Any
 
 from retrieval.baseline import expanded_terms as extract_terms
 from tools import primitives
+from tools.module_shards import filter_by_module, validate_module
 
 VALID_KINDS = frozenset(
     {"file", "symbol", "controller", "entity", "jsp", "migration", "test"}
@@ -39,8 +41,12 @@ def siga_locate(
     repo: str | Path | None = None,
     conn: sqlite3.Connection | None = None,
     limit: int = 10,
+    module: str | None = None,
 ) -> list[dict[str, Any]]:
-    """Localiza arquivos/símbolos de uma funcionalidade a partir de termos da query."""
+    """Localiza arquivos/símbolos de uma funcionalidade a partir de termos da query.
+
+    `module` restringe ao shard do módulo (H01, docs/19 §4); None = repo inteiro.
+    """
     if not isinstance(query, str) or not query.strip():
         raise ValueError("query deve ser uma string não vazia")
     if kind is not None and kind not in VALID_KINDS:
@@ -49,6 +55,7 @@ def siga_locate(
         )
     if limit < 1:
         raise ValueError(f"limit deve ser >= 1, recebido {limit}")
+    module = validate_module(module)
 
     root = _resolve_repo(repo)
     query_terms = extract_terms(query)
@@ -154,4 +161,5 @@ def siga_locate(
     for c in ranked:
         c["score"] = round(c["score"], 3)
 
-    return ranked[:limit]
+    # H01: filtro por shard preservando o ranking (None = sem filtro)
+    return filter_by_module(ranked, module, root)[:limit]

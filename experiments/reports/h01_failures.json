@@ -1,0 +1,848 @@
+{
+ "suite": "EVAL-MCP/H01",
+ "generated_at": "2026-09-20T15:24:28.644527+00:00",
+ "tasks_artifact": "eval/mcp_suite/tasks.jsonl",
+ "run_files": [
+  "eval/mcp_suite/runs/opencode-musespark-20260920.jsonl"
+ ],
+ "mining": {
+  "head_check_skipped": false,
+  "by_arm": {
+   "A": {
+    "n_tasks": 60,
+    "n_fail": 44,
+    "mode_counts": {
+     "no_files_cited": 0,
+     "out_of_head": 0,
+     "history_commit_miss": 5,
+     "wrong_module": 5,
+     "partial_miss": 34
+    },
+    "fails": [
+     {
+      "task_id": "mcp-history-002",
+      "kind": "history",
+      "primary_mode": "history_commit_miss",
+      "modes": [
+       "history_commit_miss"
+      ],
+      "recall_at_k": 0.0,
+      "n_answered_files": 1
+     },
+     {
+      "task_id": "mcp-history-003",
+      "kind": "history",
+      "primary_mode": "history_commit_miss",
+      "modes": [
+       "history_commit_miss"
+      ],
+      "recall_at_k": 0.0,
+      "n_answered_files": 1
+     },
+     {
+      "task_id": "mcp-history-004",
+      "kind": "history",
+      "primary_mode": "partial_miss",
+      "modes": [
+       "partial_miss"
+      ],
+      "recall_at_k": 0.1,
+      "n_answered_files": 1
+     },
+     {
+      "task_id": "mcp-history-005",
+      "kind": "history",
+      "primary_mode": "partial_miss",
+      "modes": [
+       "partial_miss"
+      ],
+      "recall_at_k": 0.167,
+      "n_answered_files": 1
+     },
+     {
+      "task_id": "mcp-history-006",
+      "kind": "history",
+      "primary_mode": "partial_miss",
+      "modes": [
+       "partial_miss"
+      ],
+      "recall_at_k": 0.25,
+      "n_answered_files": 1
+     },
+     {
+      "task_id": "mcp-history-007",
+      "kind": "history",
+      "primary_mode": "history_commit_miss",
+      "modes": [
+       "history_commit_miss"
+      ],
+      "recall_at_k": 0.0,
+      "n_answered_files": 1
+     },
+     {
+      "task_id": "mcp-history-008",
+      "kind": "history",
+      "primary_mode": "partial_miss",
+      "modes": [
+       "partial_miss"
+      ],
+      "recall_at_k": 0.1,
+      "n_answered_files": 3
+     },
+     {
+      "task_id": "mcp-history-009",
+      "kind": "history",
+      "primary_mode": "history_commit_miss",
+      "modes": [
+       "history_commit_miss"
+      ],
+      "recall_at_k": 0.0,
+      "n_answered_files": 1
+     },
+     {
+      "task_id": "mcp-history-010",
+      "kind": "history",
+      "primary_mode": "history_commit_miss",
+      "modes": [
+       "history_commit_miss"
+      ],
+      "recall_at_k": 0.0,
+      "n_answered_files": 1
+     },
+     {
+      "task_id": "mcp-impact-001",
+      "kind": "impact",
+      "primary_mode": "wrong_module",
+      "modes": [
+       "wrong_module"
+      ],
+      "recall_at_k": 0.0,
+      "n_answered_files": 4
+     },
+     {
+      "task_id": "mcp-impact-004",
+      "kind": "impact",
+      "primary_mode": "partial_miss",
+      "modes": [
+       "partial_miss"
+      ],
+      "recall_at_k": 0.051,
+      "n_answered_files": 2
+     },
+     {
+      "task_id": "mcp-impact-005",
+      "kind": "impact",
+      "primary_mode": "partial_miss",
+      "modes": [
+       "partial_miss"
+      ],
+      "recall_at_k": 0.25,
+      "n_answered_files": 4
+     },
+     {
+      "task_id": "mcp-impact-006",
+      "kind": "impact",
+      "primary_mode": "partial_miss",
+      "modes": [
+       "partial_miss"
+      ],
+      "recall_at_k": 0.045,
+      "n_answered_files": 3
+     },
+     {
+      "task_id": "mcp-impact-007",
+      "kind": "impact",
+      "primary_mode": "wrong_module",
+      "modes": [
+       "wrong_module"
+      ],
+      "recall_at_k": 0.0,
+      "n_answered_files": 3
+     },
+     {
+      "task_id": "mcp-impact-008",
+      "kind": "impact",
+      "primary_mode": "partial_miss",
+      "modes": [
+       "partial_miss"
+      ],
+      "recall_at_k": 0.308,
+      "n_answered_files": 4
+     },
+     {
+      "task_id": "mcp-impact-009",
+      "kind": "impact",
+      "primary_mode": "partial_miss",
+      "modes": [
+       "partial_miss"
+      ],
+      "recall_at_k": 0.061,
+      "n_answered_files": 4
+     },
+     {
+      "task_id": "mcp-impact-010",
+      "kind": "impact",
+      "primary_mode": "partial_miss",
+      "modes": [
+       "partial_miss"
+      ],
+      "recall_at_k": 0.211,
+      "n_answered_files": 4
+     },
+     {
+      "task_id": "mcp-locate-002",
+      "kind": "locate",
+      "primary_mode": "wrong_module",
+      "modes": [
+       "wrong_module"
+      ],
+      "recall_at_k": 0.0,
+      "n_answered_files": 2
+     },
+     {
+      "task_id": "mcp-locate-003",
+      "kind": "locate",
+      "primary_mode": "partial_miss",
+      "modes": [
+       "partial_miss"
+      ],
+      "recall_at_k": 0.0,
+      "n_answered_files": 2
+     },
+     {
+      "task_id": "mcp-locate-004",
+      "kind": "locate",
+      "primary_mode": "partial_miss",
+      "modes": [
+       "partial_miss"
+      ],
+      "recall_at_k": 0.0,
+      "n_answered_files": 2
+     },
+     {
+      "task_id": "mcp-locate-005",
+      "kind": "locate",
+      "primary_mode": "partial_miss",
+      "modes": [
+       "partial_miss"
+      ],
+      "recall_at_k": 0.0,
+      "n_answered_files": 2
+     },
+     {
+      "task_id": "mcp-locate-006",
+      "kind": "locate",
+      "primary_mode": "partial_miss",
+      "modes": [
+       "partial_miss"
+      ],
+      "recall_at_k": 0.0,
+      "n_answered_files": 2
+     },
+     {
+      "task_id": "mcp-locate-007",
+      "kind": "locate",
+      "primary_mode": "partial_miss",
+      "modes": [
+       "partial_miss"
+      ],
+      "recall_at_k": 0.0,
+      "n_answered_files": 2
+     },
+     {
+      "task_id": "mcp-locate-008",
+      "kind": "locate",
+      "primary_mode": "partial_miss",
+      "modes": [
+       "partial_miss"
+      ],
+      "recall_at_k": 0.0,
+      "n_answered_files": 2
+     },
+     {
+      "task_id": "mcp-locate-010",
+      "kind": "locate",
+      "primary_mode": "partial_miss",
+      "modes": [
+       "partial_miss"
+      ],
+      "recall_at_k": 0.2,
+      "n_answered_files": 2
+     },
+     {
+      "task_id": "mcp-locate-011",
+      "kind": "locate",
+      "primary_mode": "partial_miss",
+      "modes": [
+       "partial_miss"
+      ],
+      "recall_at_k": 0.0,
+      "n_answered_files": 2
+     },
+     {
+      "task_id": "mcp-locate-012",
+      "kind": "locate",
+      "primary_mode": "partial_miss",
+      "modes": [
+       "partial_miss"
+      ],
+      "recall_at_k": 0.333,
+      "n_answered_files": 2
+     },
+     {
+      "task_id": "mcp-locate-013",
+      "kind": "locate",
+      "primary_mode": "wrong_module",
+      "modes": [
+       "wrong_module"
+      ],
+      "recall_at_k": 0.0,
+      "n_answered_files": 2
+     },
+     {
+      "task_id": "mcp-locate-015",
+      "kind": "locate",
+      "primary_mode": "partial_miss",
+      "modes": [
+       "partial_miss"
+      ],
+      "recall_at_k": 0.0,
+      "n_answered_files": 2
+     },
+     {
+      "task_id": "mcp-locate-016",
+      "kind": "locate",
+      "primary_mode": "partial_miss",
+      "modes": [
+       "partial_miss"
+      ],
+      "recall_at_k": 0.0,
+      "n_answered_files": 2
+     },
+     {
+      "task_id": "mcp-locate-017",
+      "kind": "locate",
+      "primary_mode": "partial_miss",
+      "modes": [
+       "partial_miss"
+      ],
+      "recall_at_k": 0.0,
+      "n_answered_files": 2
+     },
+     {
+      "task_id": "mcp-locate-018",
+      "kind": "locate",
+      "primary_mode": "wrong_module",
+      "modes": [
+       "wrong_module"
+      ],
+      "recall_at_k": 0.0,
+      "n_answered_files": 1
+     },
+     {
+      "task_id": "mcp-locate-019",
+      "kind": "locate",
+      "primary_mode": "partial_miss",
+      "modes": [
+       "partial_miss"
+      ],
+      "recall_at_k": 0.0,
+      "n_answered_files": 2
+     },
+     {
+      "task_id": "mcp-locate-020",
+      "kind": "locate",
+      "primary_mode": "partial_miss",
+      "modes": [
+       "partial_miss"
+      ],
+      "recall_at_k": 0.25,
+      "n_answered_files": 2
+     },
+     {
+      "task_id": "mcp-trace-001",
+      "kind": "trace",
+      "primary_mode": "partial_miss",
+      "modes": [
+       "partial_miss"
+      ],
+      "recall_at_k": 1.0,
+      "n_answered_files": 4
+     },
+     {
+      "task_id": "mcp-trace-002",
+      "kind": "trace",
+      "primary_mode": "partial_miss",
+      "modes": [
+       "partial_miss"
+      ],
+      "recall_at_k": 1.0,
+      "n_answered_files": 4
+     },
+     {
+      "task_id": "mcp-trace-003",
+      "kind": "trace",
+      "primary_mode": "partial_miss",
+      "modes": [
+       "partial_miss"
+      ],
+      "recall_at_k": 0.0,
+      "n_answered_files": 4
+     },
+     {
+      "task_id": "mcp-trace-004",
+      "kind": "trace",
+      "primary_mode": "partial_miss",
+      "modes": [
+       "partial_miss"
+      ],
+      "recall_at_k": 1.0,
+      "n_answered_files": 4
+     },
+     {
+      "task_id": "mcp-trace-005",
+      "kind": "trace",
+      "primary_mode": "partial_miss",
+      "modes": [
+       "partial_miss"
+      ],
+      "recall_at_k": 1.0,
+      "n_answered_files": 4
+     },
+     {
+      "task_id": "mcp-trace-006",
+      "kind": "trace",
+      "primary_mode": "partial_miss",
+      "modes": [
+       "partial_miss"
+      ],
+      "recall_at_k": 1.0,
+      "n_answered_files": 4
+     },
+     {
+      "task_id": "mcp-trace-007",
+      "kind": "trace",
+      "primary_mode": "partial_miss",
+      "modes": [
+       "partial_miss"
+      ],
+      "recall_at_k": 1.0,
+      "n_answered_files": 4
+     },
+     {
+      "task_id": "mcp-trace-008",
+      "kind": "trace",
+      "primary_mode": "partial_miss",
+      "modes": [
+       "partial_miss"
+      ],
+      "recall_at_k": 1.0,
+      "n_answered_files": 4
+     },
+     {
+      "task_id": "mcp-trace-009",
+      "kind": "trace",
+      "primary_mode": "partial_miss",
+      "modes": [
+       "partial_miss"
+      ],
+      "recall_at_k": 1.0,
+      "n_answered_files": 4
+     },
+     {
+      "task_id": "mcp-trace-010",
+      "kind": "trace",
+      "primary_mode": "partial_miss",
+      "modes": [
+       "partial_miss"
+      ],
+      "recall_at_k": 1.0,
+      "n_answered_files": 4
+     }
+    ]
+   },
+   "B": {
+    "n_tasks": 60,
+    "n_fail": 31,
+    "mode_counts": {
+     "no_files_cited": 0,
+     "out_of_head": 4,
+     "history_commit_miss": 0,
+     "wrong_module": 8,
+     "partial_miss": 19
+    },
+    "fails": [
+     {
+      "task_id": "mcp-history-002",
+      "kind": "history",
+      "primary_mode": "partial_miss",
+      "modes": [
+       "partial_miss"
+      ],
+      "recall_at_k": 0.1,
+      "n_answered_files": 4
+     },
+     {
+      "task_id": "mcp-history-003",
+      "kind": "history",
+      "primary_mode": "out_of_head",
+      "modes": [
+       "out_of_head"
+      ],
+      "recall_at_k": 0.1,
+      "n_answered_files": 5
+     },
+     {
+      "task_id": "mcp-history-004",
+      "kind": "history",
+      "primary_mode": "out_of_head",
+      "modes": [
+       "out_of_head"
+      ],
+      "recall_at_k": 0.1,
+      "n_answered_files": 4
+     },
+     {
+      "task_id": "mcp-history-005",
+      "kind": "history",
+      "primary_mode": "partial_miss",
+      "modes": [
+       "partial_miss"
+      ],
+      "recall_at_k": 0.167,
+      "n_answered_files": 1
+     },
+     {
+      "task_id": "mcp-history-006",
+      "kind": "history",
+      "primary_mode": "out_of_head",
+      "modes": [
+       "out_of_head"
+      ],
+      "recall_at_k": 0.25,
+      "n_answered_files": 5
+     },
+     {
+      "task_id": "mcp-history-007",
+      "kind": "history",
+      "primary_mode": "out_of_head",
+      "modes": [
+       "out_of_head"
+      ],
+      "recall_at_k": 0.1,
+      "n_answered_files": 5
+     },
+     {
+      "task_id": "mcp-history-008",
+      "kind": "history",
+      "primary_mode": "partial_miss",
+      "modes": [
+       "partial_miss"
+      ],
+      "recall_at_k": 0.1,
+      "n_answered_files": 4
+     },
+     {
+      "task_id": "mcp-history-009",
+      "kind": "history",
+      "primary_mode": "partial_miss",
+      "modes": [
+       "partial_miss"
+      ],
+      "recall_at_k": 0.1,
+      "n_answered_files": 5
+     },
+     {
+      "task_id": "mcp-history-010",
+      "kind": "history",
+      "primary_mode": "partial_miss",
+      "modes": [
+       "partial_miss"
+      ],
+      "recall_at_k": 0.1,
+      "n_answered_files": 4
+     },
+     {
+      "task_id": "mcp-impact-001",
+      "kind": "impact",
+      "primary_mode": "partial_miss",
+      "modes": [
+       "partial_miss"
+      ],
+      "recall_at_k": 0.286,
+      "n_answered_files": 5
+     },
+     {
+      "task_id": "mcp-impact-004",
+      "kind": "impact",
+      "primary_mode": "partial_miss",
+      "modes": [
+       "partial_miss"
+      ],
+      "recall_at_k": 0.103,
+      "n_answered_files": 5
+     },
+     {
+      "task_id": "mcp-impact-005",
+      "kind": "impact",
+      "primary_mode": "partial_miss",
+      "modes": [
+       "partial_miss"
+      ],
+      "recall_at_k": 0.25,
+      "n_answered_files": 5
+     },
+     {
+      "task_id": "mcp-impact-006",
+      "kind": "impact",
+      "primary_mode": "partial_miss",
+      "modes": [
+       "partial_miss"
+      ],
+      "recall_at_k": 0.091,
+      "n_answered_files": 5
+     },
+     {
+      "task_id": "mcp-impact-008",
+      "kind": "impact",
+      "primary_mode": "partial_miss",
+      "modes": [
+       "partial_miss"
+      ],
+      "recall_at_k": 0.308,
+      "n_answered_files": 5
+     },
+     {
+      "task_id": "mcp-impact-009",
+      "kind": "impact",
+      "primary_mode": "partial_miss",
+      "modes": [
+       "partial_miss"
+      ],
+      "recall_at_k": 0.082,
+      "n_answered_files": 5
+     },
+     {
+      "task_id": "mcp-impact-010",
+      "kind": "impact",
+      "primary_mode": "partial_miss",
+      "modes": [
+       "partial_miss"
+      ],
+      "recall_at_k": 0.211,
+      "n_answered_files": 5
+     },
+     {
+      "task_id": "mcp-locate-002",
+      "kind": "locate",
+      "primary_mode": "wrong_module",
+      "modes": [
+       "wrong_module"
+      ],
+      "recall_at_k": 0.0,
+      "n_answered_files": 1
+     },
+     {
+      "task_id": "mcp-locate-003",
+      "kind": "locate",
+      "primary_mode": "wrong_module",
+      "modes": [
+       "wrong_module"
+      ],
+      "recall_at_k": 0.0,
+      "n_answered_files": 1
+     },
+     {
+      "task_id": "mcp-locate-004",
+      "kind": "locate",
+      "primary_mode": "partial_miss",
+      "modes": [
+       "partial_miss"
+      ],
+      "recall_at_k": 0.0,
+      "n_answered_files": 1
+     },
+     {
+      "task_id": "mcp-locate-005",
+      "kind": "locate",
+      "primary_mode": "partial_miss",
+      "modes": [
+       "partial_miss"
+      ],
+      "recall_at_k": 0.0,
+      "n_answered_files": 1
+     },
+     {
+      "task_id": "mcp-locate-006",
+      "kind": "locate",
+      "primary_mode": "partial_miss",
+      "modes": [
+       "partial_miss"
+      ],
+      "recall_at_k": 0.0,
+      "n_answered_files": 1
+     },
+     {
+      "task_id": "mcp-locate-008",
+      "kind": "locate",
+      "primary_mode": "wrong_module",
+      "modes": [
+       "wrong_module"
+      ],
+      "recall_at_k": 0.0,
+      "n_answered_files": 1
+     },
+     {
+      "task_id": "mcp-locate-010",
+      "kind": "locate",
+      "primary_mode": "wrong_module",
+      "modes": [
+       "wrong_module"
+      ],
+      "recall_at_k": 0.0,
+      "n_answered_files": 1
+     },
+     {
+      "task_id": "mcp-locate-011",
+      "kind": "locate",
+      "primary_mode": "wrong_module",
+      "modes": [
+       "wrong_module"
+      ],
+      "recall_at_k": 0.0,
+      "n_answered_files": 1
+     },
+     {
+      "task_id": "mcp-locate-012",
+      "kind": "locate",
+      "primary_mode": "wrong_module",
+      "modes": [
+       "wrong_module"
+      ],
+      "recall_at_k": 0.0,
+      "n_answered_files": 1
+     },
+     {
+      "task_id": "mcp-locate-013",
+      "kind": "locate",
+      "primary_mode": "partial_miss",
+      "modes": [
+       "partial_miss"
+      ],
+      "recall_at_k": 0.0,
+      "n_answered_files": 1
+     },
+     {
+      "task_id": "mcp-locate-015",
+      "kind": "locate",
+      "primary_mode": "wrong_module",
+      "modes": [
+       "wrong_module"
+      ],
+      "recall_at_k": 0.0,
+      "n_answered_files": 1
+     },
+     {
+      "task_id": "mcp-locate-016",
+      "kind": "locate",
+      "primary_mode": "partial_miss",
+      "modes": [
+       "partial_miss"
+      ],
+      "recall_at_k": 0.0,
+      "n_answered_files": 1
+     },
+     {
+      "task_id": "mcp-locate-017",
+      "kind": "locate",
+      "primary_mode": "wrong_module",
+      "modes": [
+       "wrong_module"
+      ],
+      "recall_at_k": 0.0,
+      "n_answered_files": 1
+     },
+     {
+      "task_id": "mcp-locate-018",
+      "kind": "locate",
+      "primary_mode": "partial_miss",
+      "modes": [
+       "partial_miss"
+      ],
+      "recall_at_k": 0.0,
+      "n_answered_files": 1
+     },
+     {
+      "task_id": "mcp-locate-020",
+      "kind": "locate",
+      "primary_mode": "partial_miss",
+      "modes": [
+       "partial_miss"
+      ],
+      "recall_at_k": 0.0,
+      "n_answered_files": 1
+     }
+    ]
+   }
+  },
+  "gt_module_fails": {
+   "siga-ex": 252,
+   "sigaex": 210,
+   "siga": 6,
+   "siga-wf": 2,
+   "siga-ws": 2,
+   "siga-base": 1,
+   "siga-cp": 1
+  },
+  "top_missed_files": [
+   [
+    "siga-ex/src/main/java/br/gov/jfrj/siga/ex/bl/ExBL.java",
+    15
+   ],
+   [
+    "siga-ex/src/main/java/br/gov/jfrj/siga/hibernate/ExDao.java",
+    10
+   ],
+   [
+    "sigaex/src/legacy/java/br/gov/jfrj/siga/vraptor/ExDocumentoController.java",
+    10
+   ],
+   [
+    "sigaex/src/main/java/br/gov/jfrj/siga/ex/spring/ExSpringDocumentoController.java",
+    10
+   ],
+   [
+    "siga-ex/src/main/java/br/gov/jfrj/siga/ex/AbstractExDocumento.java",
+    8
+   ],
+   [
+    "siga-ex/src/main/java/br/gov/jfrj/siga/ex/AbstractExMovimentacao.java",
+    8
+   ],
+   [
+    "siga-ex/src/main/java/br/gov/jfrj/itextpdf/Documento.java",
+    6
+   ],
+   [
+    "siga-ex/src/main/java/br/gov/jfrj/siga/ex/ExEditalEliminacao.java",
+    6
+   ],
+   [
+    "siga-ex/src/main/java/br/gov/jfrj/siga/ex/bl/ExAcesso.java",
+    6
+   ],
+   [
+    "siga-ex/src/main/java/br/gov/jfrj/siga/ex/vo/ExDocumentoVO.java",
+    6
+   ]
+  ],
+  "priorities": [
+   "wrong_module → filtro por shard no locate (H01) + juiz por módulo (H02)",
+   "out_of_head → validador existe-no-HEAD no envelope MCP (H02)",
+   "history_commit_miss → siga_history sobre git log --follow com resolução p/ HEAD (H02)",
+   "no_files_cited → fallback: ampliar termos antes de declarar vazio (H03)",
+   "partial_miss → teacher agentivo sobre estes casos (H03)"
+  ]
+ },
+ "experiment_id": "20260920-152428-796cb9682cd2"
+}
