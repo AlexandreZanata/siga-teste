@@ -10,6 +10,8 @@ Retorna:
   Dicionário com commits relevantes, diff recente e parceiros de co-alteração.
   H02: `resolved_target` (alvo no HEAD), commits com `renames` e
   `files_at_head` ([{path, exists}] resolvidos p/ HEAD).
+  F21: com target+query, `commits` é a interseção (`query_matched` diz se
+  a query filtrou algo; vazio → cai p/ target-only).
 Comandos Git estritamente somente leitura.
 """
 
@@ -21,6 +23,7 @@ import subprocess
 from typing import Any
 
 from indexer.git_history import cochange_partners
+from retrieval.baseline import _ascii
 from tools import primitives
 
 
@@ -73,8 +76,22 @@ def siga_history(
                 target_path = target
 
     commits: list[dict[str, Any]] = []
+    query_matched: bool | None = None
     if target_path:
         commits = primitives.git_history(root, path=target_path, limit=limit)
+        if query:
+            # F21: com target+query, intersecta (antes a query era ignorada e
+            # unions de dezenas de arquivos explodiam tokens — diag ref2).
+            needle = _ascii(query.lower())
+            matched = [
+                c
+                for c in commits
+                if needle in _ascii(c.get("subject", "").lower())
+                or needle in _ascii(c.get("author", "").lower())
+            ]
+            query_matched = bool(matched)
+            if matched:
+                commits = matched
     elif query:
         cmd = [
             "git",
@@ -125,6 +142,7 @@ def siga_history(
     return {
         "target": target,
         "query": query,
+        "query_matched": query_matched,
         "resolved_target": resolved_target,
         "commits": commits,
         "recent_diff": recent_diff,

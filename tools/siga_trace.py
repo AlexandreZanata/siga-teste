@@ -46,7 +46,10 @@ def siga_trace(
     if conn is not None:
         chain = store.trace(conn, symbol, depth=depth)
     else:
-        # Sem conexão de grafo aberta: tenta ler símbolo e rastrear via primitivas
+        # Sem grafo: expande via referências textuais (F21 — antes era 1 nó).
+        # hop0 = símbolo; hopN (N<=depth) = arquivos que referenciam o
+        # símbolo do hop anterior (nome = stem .java, kind = caller).
+        # Tampos: 10 arquivos no hop1, 3 por nó no hop2+, 25 nós no total.
         sym_file = None
         for path in primitives.find_file(root, f"{symbol}.java", limit=1):
             sym_file = path
@@ -62,6 +65,26 @@ def siga_trace(
                     "hop": 0,
                 }
             )
+            seen_files = {sym_file}
+            frontier = [(symbol, 0)]
+            next_id = 2
+            while frontier and len(chain) < 25:
+                current, hop = frontier.pop(0)
+                if hop >= depth:
+                    continue
+                per_node = 10 if hop == 0 else 3
+                callers = primitives.find_callers(root, current, limit=per_node)
+                for ref in sorted({r["file"] for r in callers if r.get("file")}):
+                    if ref in seen_files or len(chain) >= 25:
+                        continue
+                    seen_files.add(ref)
+                    stem = Path(ref).stem if ref.endswith(".java") else Path(ref).name
+                    chain.append(
+                        {"id": next_id, "kind": "caller", "name": stem, "file": ref, "hop": hop + 1}
+                    )
+                    next_id += 1
+                    if hop + 1 < depth and ref.endswith(".java"):
+                        frontier.append((stem, hop + 1))
 
     # Categorização nos estágios do fluxo arquitetural
     stages: dict[str, list[dict[str, Any]]] = {
