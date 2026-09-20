@@ -17,6 +17,7 @@ from pathlib import Path
 import sqlite3
 from typing import Any
 
+from context import library
 from context.capsule import build_context_capsule, count_tokens
 from context.referential import build_referential_capsule
 from tools import primitives
@@ -92,6 +93,11 @@ def siga_context(
         files=sorted(files),
     )
 
+    # G06: ponteiros das páginas da biblioteca de contexto (docs/context)
+    # relevantes aos símbolos/arquivos da cápsula — por existência real,
+    # nunca por inferência (context/library.py).
+    context_library = library.pages_for(symbols, sorted(files), root)
+
     # Monta a cápsula textual compacta para o prompt da IA grande
     capsule_lines: list[str] = [
         f"# CONTEXT CAPSULE — {task.strip()}",
@@ -147,6 +153,7 @@ def siga_context(
         "task": task,
         "symbols": symbols,
         "files": sorted(files),
+        "context_library": context_library,
         "outlines": outlines,
         "related_tests": sorted(tests | set(rich_capsule.tests)),
         "relations": relations,
