@@ -199,6 +199,11 @@
             "type": "integer",
             "minimum": 1,
             "default": 20
+          },
+          "case_insensitive": {
+            "type": "boolean",
+            "default": false,
+            "description": "Match literal ignorando caixa (fallback H03)"
           }
         },
         "additionalProperties": false
@@ -212,7 +217,9 @@
             "file": {"type": "string"},
             "lines": {
               "type": "array",
-              "items": {"type": "integer"}
+              "items": {
+                "type": "integer"
+              }
             }
           },
           "additionalProperties": false

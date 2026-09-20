@@ -1,0 +1,52 @@
+{
+ "suite": "EVAL-MCP/H03",
+ "generated_at": "2026-09-20T15:44:05.014341+00:00",
+ "tasks_artifact": "eval/mcp_suite/tasks.jsonl",
+ "run_file": "opencode-musespark-20260920.jsonl",
+ "teacher": "opencode-musespark-20260920",
+ "gold_file": "eval/mcp_suite/gold/opencode-musespark-20260920.gold.jsonl",
+ "stats": {
+  "n_b_rows": 60,
+  "n_gold": 29,
+  "n_near_miss": 31,
+  "difficulty": {
+   "easy": 15,
+   "medium": 1,
+   "hard": 13,
+   "unknown": 0
+  }
+ },
+ "near_miss": [
+  "mcp-history-002",
+  "mcp-history-003",
+  "mcp-history-004",
+  "mcp-history-005",
+  "mcp-history-006",
+  "mcp-history-007",
+  "mcp-history-008",
+  "mcp-history-009",
+  "mcp-history-010",
+  "mcp-impact-001",
+  "mcp-impact-004",
+  "mcp-impact-005",
+  "mcp-impact-006",
+  "mcp-impact-008",
+  "mcp-impact-009",
+  "mcp-impact-010",
+  "mcp-locate-002",
+  "mcp-locate-003",
+  "mcp-locate-004",
+  "mcp-locate-005",
+  "mcp-locate-006",
+  "mcp-locate-008",
+  "mcp-locate-010",
+  "mcp-locate-011",
+  "mcp-locate-012",
+  "mcp-locate-013",
+  "mcp-locate-015",
+  "mcp-locate-016",
+  "mcp-locate-017",
+  "mcp-locate-018",
+  "mcp-locate-020"
+ ]
+}

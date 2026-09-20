@@ -16,7 +16,7 @@ from pathlib import Path
 import sqlite3
 from typing import Any
 
-from retrieval.baseline import expanded_terms as extract_terms
+from retrieval.baseline import broadened_terms, expanded_terms as extract_terms
 from tools import primitives
 from tools.module_shards import filter_by_module, validate_module
 
@@ -177,4 +177,32 @@ def siga_locate(
         ranked = fresh
 
     # H01: filtro por shard preservando o ranking (None = sem filtro)
-    return filter_by_module(ranked, module, root)[:limit]
+    ranked = filter_by_module(ranked, module, root)[:limit]
+
+    # H03: fallback antes de declarar vazio — varredura case-insensitive
+    # com termos ampliados sobre o slice; respeita o filtro de módulo.
+    if not ranked:
+        tried = set(query_terms or [query])
+        extras = [t for t in broadened_terms(query) if t not in tried]
+        globs = ["siga-ex/**", "sigaex/**"] if (root / "siga-ex").is_dir() else None
+        fb: dict[str, dict[str, Any]] = {}
+        for term in extras:
+            for hit in primitives.search_text(
+                root, term, globs=globs, limit=limit, case_insensitive=True
+            ):
+                key = hit["file"]
+                if key not in fb:
+                    fb[key] = {
+                        "target": key,
+                        "file": key,
+                        "symbol": None,
+                        "kind": "file",
+                        "score": 0.0,
+                    }
+                fb[key]["score"] += 0.4
+        ranked = sorted(fb.values(), key=lambda c: (-c["score"], c["target"]))
+        for c in ranked:
+            c["score"] = round(c["score"], 3)
+        ranked = filter_by_module(ranked, module, root)[:limit]
+
+    return ranked

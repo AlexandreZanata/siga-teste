@@ -1,0 +1,28 @@
+{
+  "experiment_id": "20260920-154405-3397041fa35a",
+  "date": "2026-09-20T15:44:05+00:00",
+  "siga_commit": "48610bd6504692ad3f2e99ef318beb84e2668fd6",
+  "sigateste_commit": "3ac18fc2e7b76ef2fbcd8402f707ebd3a269f37d",
+  "needle_version": null,
+  "needle_depth": null,
+  "artifact_hash": null,
+  "dataset_version": "v1.0",
+  "tool_version": "1.0.0",
+  "index_version": "tree-sitter-java-0.23",
+  "bench_version": "v1.0",
+  "metrics": {
+    "n_gold": 29,
+    "n_near_miss": 31
+  },
+  "hardware": {
+    "system": "Linux",
+    "machine": "x86_64",
+    "cpu_count": 16,
+    "python": "3.12.2"
+  },
+  "latency": {
+    "p50_ms": 0.0,
+    "p95_ms": null
+  },
+  "notes": "H03: teacher agentivo — runs verificados viram gold (docs/19)."
+}

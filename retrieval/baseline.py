@@ -63,6 +63,26 @@ def expanded_terms(query: str) -> list[str]:
     return expanded
 
 
+def broadened_terms(query: str) -> list[str]:
+    """Termos ampliados p/ fallback antes de declarar vazio (H03, docs/19).
+
+    Base (`expanded_terms`) + quebra camelCase do token original
+    (`LimiteDias` → limite/dias), sem dígitos finais (`relatorio2` →
+    `relatorio`), mínimo 3 chars. Superset determinístico da base.
+    """
+    base = expanded_terms(query)
+    extra: list[str] = []
+    for raw_token in re.findall(r"[^\W_]+", query, flags=re.UNICODE):
+        ascii_token = _ascii(raw_token)
+        parts = re.sub(r"(?<=[a-z0-9])(?=[A-Z])|(?<=[A-Z])(?=[A-Z][a-z])", " ", ascii_token).split()
+        for part in parts:
+            lowered = part.lower()
+            for cand in (lowered, re.sub(r"\d+$", "", lowered)):
+                if len(cand) >= 3 and cand not in STOPWORDS and cand not in base and cand not in extra:
+                    extra.append(cand)
+    return base + extra
+
+
 def naive_locate(repo: str | Path, query: str, limit: int = 5) -> list[str]:
     """Top arquivos por nº de termos distintos que ocorrem (desempate: nome)."""
     root = Path(repo)

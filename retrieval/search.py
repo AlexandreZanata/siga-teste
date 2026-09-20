@@ -28,12 +28,15 @@ def search_text(
     pattern: str,
     globs: list[str] | None = None,
     limit: int = 20,
+    case_insensitive: bool = False,
 ) -> list[dict]:
-    """Matches literais case-sensitive. Com `rg` usa `rg --json -F`; sem `rg`, fallback puro-Python. Retorna [{file, lines[]}]."""
+    """Matches literais (`rg --json -F`, case-sensitive por padrão). Com `rg` usa `rg --json -F`; sem `rg`, fallback puro-Python. Retorna [{file, lines[]}]."""
     root = _repo(repo)
     if shutil.which("rg") is None:
-        return _search_python(root, pattern, globs=globs, limit=limit)
+        return _search_python(root, pattern, globs=globs, limit=limit, case_insensitive=case_insensitive)
     cmd = ["rg", "--json", "-F", "--no-messages", pattern, "."]
+    if case_insensitive:
+        cmd.append("-i")
     for glob in globs or []:
         cmd += ["--glob", glob]
     out = subprocess.run(cmd, cwd=root, capture_output=True, text=True, timeout=120)
@@ -89,9 +92,11 @@ def _search_python(
     pattern: str,
     globs: list[str] | None = None,
     limit: int = 20,
+    case_insensitive: bool = False,
 ) -> list[dict]:
     """Varredura literal linha a linha (fallback sem `rg`): mesmo contrato e ranking."""
     hits: dict[str, set[int]] = {}
+    needle = pattern.lower() if case_insensitive else pattern
     for rel in _list_files(root):
         if not _glob_match(rel, globs):
             continue
@@ -103,7 +108,8 @@ def _search_python(
         except OSError:
             continue
         for lineno, line in enumerate(text.splitlines(), 1):
-            if pattern in line:
+            hay = line.lower() if case_insensitive else line
+            if needle in hay:
                 hits.setdefault(str(path), set()).add(lineno)
     ranked = sorted(hits, key=lambda f: (_rank_file(f, pattern), f))
     return [{"file": f, "lines": sorted(hits[f])} for f in ranked[:limit]]

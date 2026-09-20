@@ -292,9 +292,10 @@ def search_text(
     pattern: str,
     globs: list[str] | None = None,
     limit: int = 20,
+    case_insensitive: bool = False,
 ) -> list[dict[str, Any]]:
     """Busca textual determinística por padrão via ripgrep."""
-    return search.search_text(repo, pattern, globs=globs, limit=limit)
+    return search.search_text(repo, pattern, globs=globs, limit=limit, case_insensitive=case_insensitive)
 
 
 def read_symbol(
