@@ -1,0 +1,515 @@
+{
+ "suite": "EVAL-MCP/F23",
+ "generated_at": "2026-09-20T16:40:22.590762+00:00",
+ "tasks_artifact": "eval/mcp_suite/tasks.jsonl",
+ "audit": {
+  "n_tasks": 60,
+  "by_kind": {
+   "context": {
+    "EXACT": 10
+   },
+   "history": {
+    "EXACT": 5,
+    "PARTIAL": 5
+   },
+   "impact": {
+    "PARTIAL": 7,
+    "SUPERSET_STALE": 3
+   },
+   "locate": {
+    "PARTIAL": 3,
+    "DISJOINT": 14,
+    "SUPERSET_STALE": 3
+   },
+   "trace": {
+    "SUPERSET_STALE": 6,
+    "DISJOINT": 4
+   }
+  },
+  "n_superset_stale": 12,
+  "recommendation": "RE-FREEZE",
+  "rows": [
+   {
+    "task_id": "mcp-context-001",
+    "kind": "context",
+    "status": "EXACT",
+    "n_gt_files": 1,
+    "n_cur_files": 1,
+    "latency_ms": 203.524
+   },
+   {
+    "task_id": "mcp-context-002",
+    "kind": "context",
+    "status": "EXACT",
+    "n_gt_files": 1,
+    "n_cur_files": 1,
+    "latency_ms": 126.811
+   },
+   {
+    "task_id": "mcp-context-003",
+    "kind": "context",
+    "status": "EXACT",
+    "n_gt_files": 1,
+    "n_cur_files": 1,
+    "latency_ms": 216.853
+   },
+   {
+    "task_id": "mcp-context-004",
+    "kind": "context",
+    "status": "EXACT",
+    "n_gt_files": 1,
+    "n_cur_files": 1,
+    "latency_ms": 122.668
+   },
+   {
+    "task_id": "mcp-context-005",
+    "kind": "context",
+    "status": "EXACT",
+    "n_gt_files": 1,
+    "n_cur_files": 1,
+    "latency_ms": 141.389
+   },
+   {
+    "task_id": "mcp-context-006",
+    "kind": "context",
+    "status": "EXACT",
+    "n_gt_files": 1,
+    "n_cur_files": 1,
+    "latency_ms": 98.076
+   },
+   {
+    "task_id": "mcp-context-007",
+    "kind": "context",
+    "status": "EXACT",
+    "n_gt_files": 1,
+    "n_cur_files": 1,
+    "latency_ms": 117.372
+   },
+   {
+    "task_id": "mcp-context-008",
+    "kind": "context",
+    "status": "EXACT",
+    "n_gt_files": 1,
+    "n_cur_files": 1,
+    "latency_ms": 116.649
+   },
+   {
+    "task_id": "mcp-context-009",
+    "kind": "context",
+    "status": "EXACT",
+    "n_gt_files": 1,
+    "n_cur_files": 1,
+    "latency_ms": 166.789
+   },
+   {
+    "task_id": "mcp-context-010",
+    "kind": "context",
+    "status": "EXACT",
+    "n_gt_files": 1,
+    "n_cur_files": 1,
+    "latency_ms": 156.258
+   },
+   {
+    "task_id": "mcp-history-001",
+    "kind": "history",
+    "status": "EXACT",
+    "n_gt_files": 0,
+    "n_cur_files": 5,
+    "latency_ms": 718.666
+   },
+   {
+    "task_id": "mcp-history-002",
+    "kind": "history",
+    "status": "EXACT",
+    "n_gt_files": 0,
+    "n_cur_files": 5,
+    "latency_ms": 396.894
+   },
+   {
+    "task_id": "mcp-history-003",
+    "kind": "history",
+    "status": "EXACT",
+    "n_gt_files": 0,
+    "n_cur_files": 5,
+    "latency_ms": 177.72
+   },
+   {
+    "task_id": "mcp-history-004",
+    "kind": "history",
+    "status": "PARTIAL",
+    "n_gt_files": 0,
+    "n_cur_files": 4,
+    "latency_ms": 594.981
+   },
+   {
+    "task_id": "mcp-history-005",
+    "kind": "history",
+    "status": "PARTIAL",
+    "n_gt_files": 0,
+    "n_cur_files": 1,
+    "latency_ms": 477.103
+   },
+   {
+    "task_id": "mcp-history-006",
+    "kind": "history",
+    "status": "PARTIAL",
+    "n_gt_files": 0,
+    "n_cur_files": 3,
+    "latency_ms": 651.05
+   },
+   {
+    "task_id": "mcp-history-007",
+    "kind": "history",
+    "status": "EXACT",
+    "n_gt_files": 0,
+    "n_cur_files": 5,
+    "latency_ms": 174.811
+   },
+   {
+    "task_id": "mcp-history-008",
+    "kind": "history",
+    "status": "PARTIAL",
+    "n_gt_files": 0,
+    "n_cur_files": 4,
+    "latency_ms": 218.201
+   },
+   {
+    "task_id": "mcp-history-009",
+    "kind": "history",
+    "status": "PARTIAL",
+    "n_gt_files": 0,
+    "n_cur_files": 5,
+    "latency_ms": 576.303
+   },
+   {
+    "task_id": "mcp-history-010",
+    "kind": "history",
+    "status": "EXACT",
+    "n_gt_files": 0,
+    "n_cur_files": 5,
+    "latency_ms": 163.917
+   },
+   {
+    "task_id": "mcp-impact-001",
+    "kind": "impact",
+    "status": "PARTIAL",
+    "n_gt_files": 14,
+    "n_cur_files": 5,
+    "latency_ms": 147.507
+   },
+   {
+    "task_id": "mcp-impact-002",
+    "kind": "impact",
+    "status": "SUPERSET_STALE",
+    "n_gt_files": 3,
+    "n_cur_files": 4,
+    "latency_ms": 22.088
+   },
+   {
+    "task_id": "mcp-impact-003",
+    "kind": "impact",
+    "status": "SUPERSET_STALE",
+    "n_gt_files": 2,
+    "n_cur_files": 3,
+    "latency_ms": 21.804
+   },
+   {
+    "task_id": "mcp-impact-004",
+    "kind": "impact",
+    "status": "PARTIAL",
+    "n_gt_files": 39,
+    "n_cur_files": 5,
+    "latency_ms": 24.177
+   },
+   {
+    "task_id": "mcp-impact-005",
+    "kind": "impact",
+    "status": "PARTIAL",
+    "n_gt_files": 16,
+    "n_cur_files": 5,
+    "latency_ms": 59.101
+   },
+   {
+    "task_id": "mcp-impact-006",
+    "kind": "impact",
+    "status": "PARTIAL",
+    "n_gt_files": 44,
+    "n_cur_files": 5,
+    "latency_ms": 24.106
+   },
+   {
+    "task_id": "mcp-impact-007",
+    "kind": "impact",
+    "status": "SUPERSET_STALE",
+    "n_gt_files": 4,
+    "n_cur_files": 5,
+    "latency_ms": 22.421
+   },
+   {
+    "task_id": "mcp-impact-008",
+    "kind": "impact",
+    "status": "PARTIAL",
+    "n_gt_files": 13,
+    "n_cur_files": 5,
+    "latency_ms": 35.507
+   },
+   {
+    "task_id": "mcp-impact-009",
+    "kind": "impact",
+    "status": "PARTIAL",
+    "n_gt_files": 49,
+    "n_cur_files": 5,
+    "latency_ms": 95.709
+   },
+   {
+    "task_id": "mcp-impact-010",
+    "kind": "impact",
+    "status": "PARTIAL",
+    "n_gt_files": 19,
+    "n_cur_files": 5,
+    "latency_ms": 245.013
+   },
+   {
+    "task_id": "mcp-locate-001",
+    "kind": "locate",
+    "status": "PARTIAL",
+    "n_gt_files": 2,
+    "n_cur_files": 5,
+    "latency_ms": 396.005
+   },
+   {
+    "task_id": "mcp-locate-002",
+    "kind": "locate",
+    "status": "DISJOINT",
+    "n_gt_files": 2,
+    "n_cur_files": 5,
+    "latency_ms": 431.695
+   },
+   {
+    "task_id": "mcp-locate-003",
+    "kind": "locate",
+    "status": "DISJOINT",
+    "n_gt_files": 2,
+    "n_cur_files": 5,
+    "latency_ms": 369.247
+   },
+   {
+    "task_id": "mcp-locate-004",
+    "kind": "locate",
+    "status": "DISJOINT",
+    "n_gt_files": 1,
+    "n_cur_files": 5,
+    "latency_ms": 306.011
+   },
+   {
+    "task_id": "mcp-locate-005",
+    "kind": "locate",
+    "status": "SUPERSET_STALE",
+    "n_gt_files": 1,
+    "n_cur_files": 5,
+    "latency_ms": 887.891
+   },
+   {
+    "task_id": "mcp-locate-006",
+    "kind": "locate",
+    "status": "DISJOINT",
+    "n_gt_files": 1,
+    "n_cur_files": 5,
+    "latency_ms": 549.705
+   },
+   {
+    "task_id": "mcp-locate-007",
+    "kind": "locate",
+    "status": "DISJOINT",
+    "n_gt_files": 2,
+    "n_cur_files": 5,
+    "latency_ms": 359.911
+   },
+   {
+    "task_id": "mcp-locate-008",
+    "kind": "locate",
+    "status": "DISJOINT",
+    "n_gt_files": 1,
+    "n_cur_files": 5,
+    "latency_ms": 198.616
+   },
+   {
+    "task_id": "mcp-locate-009",
+    "kind": "locate",
+    "status": "SUPERSET_STALE",
+    "n_gt_files": 1,
+    "n_cur_files": 5,
+    "latency_ms": 110.817
+   },
+   {
+    "task_id": "mcp-locate-010",
+    "kind": "locate",
+    "status": "DISJOINT",
+    "n_gt_files": 5,
+    "n_cur_files": 5,
+    "latency_ms": 281.105
+   },
+   {
+    "task_id": "mcp-locate-011",
+    "kind": "locate",
+    "status": "DISJOINT",
+    "n_gt_files": 1,
+    "n_cur_files": 5,
+    "latency_ms": 193.253
+   },
+   {
+    "task_id": "mcp-locate-012",
+    "kind": "locate",
+    "status": "DISJOINT",
+    "n_gt_files": 3,
+    "n_cur_files": 5,
+    "latency_ms": 529.164
+   },
+   {
+    "task_id": "mcp-locate-013",
+    "kind": "locate",
+    "status": "DISJOINT",
+    "n_gt_files": 2,
+    "n_cur_files": 5,
+    "latency_ms": 86.584
+   },
+   {
+    "task_id": "mcp-locate-014",
+    "kind": "locate",
+    "status": "SUPERSET_STALE",
+    "n_gt_files": 2,
+    "n_cur_files": 5,
+    "latency_ms": 241.023
+   },
+   {
+    "task_id": "mcp-locate-015",
+    "kind": "locate",
+    "status": "DISJOINT",
+    "n_gt_files": 1,
+    "n_cur_files": 5,
+    "latency_ms": 391.592
+   },
+   {
+    "task_id": "mcp-locate-016",
+    "kind": "locate",
+    "status": "PARTIAL",
+    "n_gt_files": 3,
+    "n_cur_files": 5,
+    "latency_ms": 162.037
+   },
+   {
+    "task_id": "mcp-locate-017",
+    "kind": "locate",
+    "status": "DISJOINT",
+    "n_gt_files": 3,
+    "n_cur_files": 5,
+    "latency_ms": 383.604
+   },
+   {
+    "task_id": "mcp-locate-018",
+    "kind": "locate",
+    "status": "DISJOINT",
+    "n_gt_files": 4,
+    "n_cur_files": 5,
+    "latency_ms": 169.045
+   },
+   {
+    "task_id": "mcp-locate-019",
+    "kind": "locate",
+    "status": "PARTIAL",
+    "n_gt_files": 2,
+    "n_cur_files": 5,
+    "latency_ms": 325.814
+   },
+   {
+    "task_id": "mcp-locate-020",
+    "kind": "locate",
+    "status": "DISJOINT",
+    "n_gt_files": 4,
+    "n_cur_files": 5,
+    "latency_ms": 403.729
+   },
+   {
+    "task_id": "mcp-trace-001",
+    "kind": "trace",
+    "status": "SUPERSET_STALE",
+    "n_gt_files": 1,
+    "n_cur_files": 5,
+    "latency_ms": 62.866
+   },
+   {
+    "task_id": "mcp-trace-002",
+    "kind": "trace",
+    "status": "SUPERSET_STALE",
+    "n_gt_files": 1,
+    "n_cur_files": 5,
+    "latency_ms": 53.019
+   },
+   {
+    "task_id": "mcp-trace-003",
+    "kind": "trace",
+    "status": "SUPERSET_STALE",
+    "n_gt_files": 1,
+    "n_cur_files": 5,
+    "latency_ms": 188.233
+   },
+   {
+    "task_id": "mcp-trace-004",
+    "kind": "trace",
+    "status": "DISJOINT",
+    "n_gt_files": 1,
+    "n_cur_files": 5,
+    "latency_ms": 275.286
+   },
+   {
+    "task_id": "mcp-trace-005",
+    "kind": "trace",
+    "status": "SUPERSET_STALE",
+    "n_gt_files": 1,
+    "n_cur_files": 5,
+    "latency_ms": 69.416
+   },
+   {
+    "task_id": "mcp-trace-006",
+    "kind": "trace",
+    "status": "SUPERSET_STALE",
+    "n_gt_files": 1,
+    "n_cur_files": 5,
+    "latency_ms": 60.959
+   },
+   {
+    "task_id": "mcp-trace-007",
+    "kind": "trace",
+    "status": "SUPERSET_STALE",
+    "n_gt_files": 1,
+    "n_cur_files": 4,
+    "latency_ms": 58.941
+   },
+   {
+    "task_id": "mcp-trace-008",
+    "kind": "trace",
+    "status": "DISJOINT",
+    "n_gt_files": 1,
+    "n_cur_files": 5,
+    "latency_ms": 106.22
+   },
+   {
+    "task_id": "mcp-trace-009",
+    "kind": "trace",
+    "status": "DISJOINT",
+    "n_gt_files": 1,
+    "n_cur_files": 5,
+    "latency_ms": 274.353
+   },
+   {
+    "task_id": "mcp-trace-010",
+    "kind": "trace",
+    "status": "DISJOINT",
+    "n_gt_files": 1,
+    "n_cur_files": 5,
+    "latency_ms": 102.487
+   }
+  ]
+ },
+ "experiment_id": "20260920-164036-10553f2159b6"
+}

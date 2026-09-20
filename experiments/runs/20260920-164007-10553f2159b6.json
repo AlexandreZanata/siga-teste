@@ -1,0 +1,28 @@
+{
+  "experiment_id": "20260920-164007-10553f2159b6",
+  "date": "2026-09-20T16:40:07+00:00",
+  "siga_commit": "48610bd6504692ad3f2e99ef318beb84e2668fd6",
+  "sigateste_commit": "66f2998127b17828f01057ff1f7a13cc518f913d",
+  "needle_version": null,
+  "needle_depth": null,
+  "artifact_hash": null,
+  "dataset_version": "v1.0",
+  "tool_version": "1.0.0",
+  "index_version": "tree-sitter-java-0.23",
+  "bench_version": "v1.0",
+  "metrics": {
+    "n_superset_stale": 12,
+    "recommendation": "RE-FREEZE"
+  },
+  "hardware": {
+    "system": "Linux",
+    "machine": "x86_64",
+    "cpu_count": 16,
+    "python": "3.12.2"
+  },
+  "latency": {
+    "p50_ms": 0.0,
+    "p95_ms": null
+  },
+  "notes": "F23: auditoria de dessincronização GT×tools pós-F21 (sem re-freeze)."
+}
