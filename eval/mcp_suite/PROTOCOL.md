@@ -162,3 +162,58 @@ Requisitos de replicação (o que torna a linha comparável):
   (fail-closed, F14/ADR-024);
 - Rate limit 60 requisições/60s por token;
 - Cliente nunca importa o core; os 5 métodos via stdio.
+
+## 8. Rodada de referência 3 (ref3 cega) — gate do ADR-032
+
+A ref3 resolve o veredito **CONDICIONAL** do ADR-032 (`DECISIONS.md`): só
+com ela o G07 pode migrar para GO pleno de economia (ou NO-GO). É uma
+**rodada cega de braço B** pós-correções F21/F22, comparada com a ref2.
+
+### 8.1 Higiene (idêntica à ref2 — §5)
+
+- Sessão/IDE nova; operador limpo que **nunca** abriu `tasks.jsonl`,
+  `answers/` ou reports de avaliação (exceto ler cada prompt para respondê-lo);
+- SIGA em `../` somente leitura; `tasks.jsonl` congelado **não é re-freezado**
+  (comparabilidade com ref1/ref2);
+- Transcrever as respostas das tools **integralmente** (sem curadoria) —
+  o run mede as tools, não a habilidade de edição do agente.
+
+### 8.2 Braço A
+
+- **Reuso obrigatório:** o braço A da ref2 (`buffy-freebuff-20260920.jsonl`,
+  braço `A`) é o baseline — as 60 respostas rg/git são independentes das
+  ferramentas e o SIGA está no mesmo HEAD congelado. Não re-executar;
+  **copie as 60 linhas braço A verbatim** para o run da ref3 (o scorer
+  computa A vs B dentro de um único arquivo).
+
+### 8.3 Braço B (a única execução nova)
+
+- Sessão limpa nova; 1 chamada `mcp.server.dispatch` por tarefa via
+  `mcp/client.py` (token `SIGA_MCP_TOKEN_FILE`, rate 60/60s);
+- Mesmas queries verbatim dos prompts; `chamadas_mcp` preenchida;
+  `latency_ms` real por tarefa;
+- Artefatos: `eval/mcp_suite/runs/<modelo>-<ide>-ref3-<data>.jsonl`
+  (**120 linhas** = 60 A reusadas verbatim + 60 B novas) + relatório do
+  scorer; `notas` do ledger registra que o A veio da ref2.
+
+### 8.4 Pontuação e veredito
+
+```bash
+python -m evaluation.mcp_suite_score --runs eval/mcp_suite/runs/<modelo>-<ide>-ref3-<data>.jsonl
+python -m evaluation.mcp_suite_ledger --runs ... --modelo <modelo> --ide <ide>
+```
+
+- Score do B v3 **vs o A da ref2** (mesmo run file, braço A reusado);
+- Reusar a regra do G07 (`evaluation/g07_verdict.py`):
+  `ref3 == mcp_helps` ⇒ **GO** (economia comprovada, promove alegação);
+  `ref3 == mcp_hurts` ⇒ **NO-GO para a alegação de economia** (uso assistido
+  permanece; cápsula v2/H04 segue alternativa válida);
+- Registrar o desfecho em novo ADR (`docs(...): ...` em `DECISIONS.md`),
+  citando o run da ref3 e os números do scorer.
+
+### 8.5 Salvaguardas de dessincronização (lição ref2/F23)
+
+- Antes de pontuar, conferir que **nenhuma tool mudou** desde o freeze do
+  artefato (`git log --oneline -- tools/ mcp/` vs `siga_head_commit`);
+- Se houver mudança de comportamento de tool ⇒ documentar no `notas` do
+  ledger e avaliar re-freeze **humano** do artefato (nunca automático).
