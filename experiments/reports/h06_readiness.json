@@ -1,0 +1,27 @@
+{
+ "suite": "EVAL-MCP/H06",
+ "generated_at": "2026-09-20T16:04:52.060561+00:00",
+ "manifest": {
+  "export_version": "v1.0",
+  "source": "eval/mcp_suite/gold (H03, suite EVAL-MCP)",
+  "format": "cactus-needle-v2",
+  "split_cutoff": "2020-01-01",
+  "train_records": 6,
+  "val_records": 23,
+  "total_records": 29,
+  "hashes": {
+   "needle_train": "270702db8437134f374092f83d7e8bc30f82423b4799b8eeec9f2511e1287f78",
+   "needle_val": "59be53d5e4dec540f796ef9bbb605cfefa16ff47daf1f1cc711fbd00aa859ccc",
+   "needle_full": "00fc226d7c861b62b61cbf888491b33d75dfce1056b5e5e5fbc3d270e6e9924b"
+  },
+  "bench_derived": true,
+  "note": "bench-derived: treinar aqui e avaliar no mesmo bench é contaminação; avaliar em holdout fresco."
+ },
+ "readiness": {
+  "data_ready": true,
+  "engine_available": false,
+  "ready": false,
+  "blocker": "sem torch/transformers local — `needle finetune` pendente; dado pronto e versionado."
+ },
+ "experiment_id": "20260920-160452-a9ed9adbc530"
+}
