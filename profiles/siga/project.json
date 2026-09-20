@@ -1,0 +1,12 @@
+{
+  "name": "siga",
+  "languages": ["java", "jsp", "sql"],
+  "code_globs": ["**/*.java", "**/*.jsp", "**/*.sql"],
+  "test_globs": ["**/src/test/java/**/*.java"],
+  "test_command": ["mvn", "-q", "test"],
+  "module_discovery": "maven",
+  "symbol_strategy": "suffix",
+  "symbol_suffixes": ["BL", "Controller", "DAO", "Service"],
+  "bench_seed_tasks": ["locate", "trace", "impact", "history", "context"],
+  "source": "baseline medida em docs/00 (2026-09-18): 25 modulos maven, siga-ex 506 java, sigaex 270 java"
+}

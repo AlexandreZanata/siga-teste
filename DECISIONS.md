@@ -136,4 +136,30 @@ Formato por decisão: Decision / Reason / Alternatives / Advantages / Disadvanta
   (120 linhas, A verbatim da ref2); report do scorer; regra
   `evaluation/g07_verdict.py`; §8 do PROTOCOL.md.
 
+## ADR-034 — Chassi genérico em `core/` com perfil JSON (não YAML)
+
+- **Date:** 2026-09-20
+- **Status:** aceito (J01, docs/20 §5)
+- **Context:** o DoD da ramificação docs/20 exige chassi extraído sem imports do SIGA
+  (`core` genérico + `profiles/`); o doc cita `projeto.yaml`, mas PyYAML não está na
+  allowlist V1 de dependências (AGENTS.md §3) e adicionar dependência só para parse
+  de arquivo que o próprio projeto controla viola a política standard-first.
+- **Decision:** contrato de perfil em `core/profile.py` (`project.json`, validação
+  fail-closed citando o arquivo), discovery genérico pela estratégia declarada no
+  perfil (`core/discovery.py`: maven/gradle/glob/explicit, read-only) e perfil do
+  piloto em `profiles/siga/project.json` (JSON). Boundary nova em
+  `tests/test_boundaries.py`: `core` não importa packages acoplados ao SIGA
+  (tools/retrieval/graph/indexer/teachers/training/mcp/context).
+- **Alternatives:** PyYAML (rejeitado: dependência nova sem ganho); parser YAML
+  próprio (rejeitado: pior que JSON stdlib); adiar J01 (rejeitado: última task
+  finalizável do roadmap — H06/LoRA segue bloqueado por falta de engine local).
+- **Advantages:** zero dependência nova; fail-closed; discovery 100% dirigido por
+  perfil — nada do SIGA hardcodado no core (testado).
+- **Disadvantages:** divergência de formato com o nome `projeto.yaml` do docs/20 —
+  o doc segue canônico para a semântica; o formato (JSON) fica resolvido aqui.
+- **Risks:** perfis futuros exigirão campos novos — schema evolui por
+  `REQUIRED_FIELDS` explícito e nota `source` no perfil.
+- **Validate:** `tests/test_j01_core_chassis.py` (18 testes; 24 módulos do pom e
+  contagens 673/834 coerentes com o INDEX do G06); `make verify` verde.
+
 > Novas decisões entram aqui via tarefas com `docs(...): ...` e referência à fase.

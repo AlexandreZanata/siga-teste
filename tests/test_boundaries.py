@@ -16,10 +16,14 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parent.parent
 
 # package escaneado -> packages raiz proibidos nos seus imports
+# `core` é o chassi genérico (docs/20 §5): nunca importa código acoplado ao SIGA.
 RULES: dict[str, frozenset[str]] = {
     "tools": frozenset({"teachers"}),
     "inference": frozenset({"teachers"}),
     "training": frozenset({"mcp"}),
+    "core": frozenset(
+        {"tools", "retrieval", "graph", "indexer", "teachers", "training", "mcp", "context"}
+    ),
 }
 
 
