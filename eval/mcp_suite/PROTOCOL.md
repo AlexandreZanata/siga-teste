@@ -76,6 +76,28 @@ Recall@1/3/5, Tool Accuracy, Argument Exact Match, `task_success` A vs B,
 `evaluation/mcp_suite_score.py` (**G02**), que lerá os `runs/`. Este checker
 valida honestamente a superfície de arquivos/commits.
 
+## 4b. Scoring A/B (G02)
+
+Com os `runs/*.jsonl` preenchidos, o harness emite o veredito:
+
+```bash
+python -m evaluation.mcp_suite_score                # lê eval/mcp_suite/runs/
+python -m evaluation.mcp_suite_score --runs <arquivo.jsonl>
+```
+
+- Veredito por tarefa: `exact` (recall = precision = 1) / `partial`
+  (recall@|GT| ≥ 0.5 e precision ≥ 0.5) / `fail`; `task_success = partial ou
+  melhor` (history: cobertura dos commits do GT);
+- Métricas docs/10 §2: Recall@1/3/5 de arquivo e símbolo, Tool Selection
+  Accuracy e Argument Exact Match (braço B), Hallucination Rate, latência
+  P50/P95, `tokens_proxy`;
+- **A vs B** (≥ 5 tarefas por braço): `effective_token_reduction = 1 −
+  tok_B/tok_A` sempre com `task_success_delta` — redução de tokens com queda
+  de success = `failure_token_reduction_with_regression` (docs/11 §1);
+- Report + run com provenance em `experiments/reports/mcp_suite_score.json`.
+
+Run com `task_id` fora do artefato congelado **aborta** (nunca sucesso falso).
+
 ## 5. Segurança e contaminação
 
 - Checkout do SIGA somente leitura durante o benchmark; nenhuma tarefa pede escrita.
