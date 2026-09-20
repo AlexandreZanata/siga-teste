@@ -102,8 +102,63 @@ Run com `task_id` fora do artefato congelado **aborta** (nunca sucesso falso).
 
 - Checkout do SIGA somente leitura durante o benchmark; nenhuma tarefa pede escrita.
 - O modelo não vê `tasks.jsonl` (GT). Prompts são gerados dele, mas sem GT.
+- **O agente respondente nunca viu o GT**: o mesmo agente não pode ter gerado
+  nem lido `tasks.jsonl` (regra "o modelo não vê `tasks.jsonl`"); a rodada de
+  referência (G03) é operada por **operador limpo** em sessão que nunca abriu
+  o artefato congelado;
 - O mesmo artefato congelado serve todos os modelos/IDEs (comparabilidade).
 - Anti-leakage: GT veio do `dispatch` real, não da resposta de nenhum modelo;
   o checker valida existência real dos paths citados no commit do bench.
 - Anti-leakage do GT de impact/history: o próprio alvo (`args.target`) é
   excluído do GT — é input da pergunta, nunca descoberta a medir.
+
+## 6. Replicação multi-modelo/IDE (G04)
+
+A planilha-livro `eval/mcp_suite/replication.csv` é o índice canônico de
+replicação: uma linha por `(modelo, ide, braço, run_file)`, métricas
+**derivadas do scorer** (`score_run_file`) — nunca redigidas à mão.
+
+Ciclo por par modelo/IDE (Freebuff, OpenCode, Cursor, Codex, ...):
+
+1. Operador limpo executa os braços A e B conforme §2 (60 tarefas cada,
+   sessão limpa por braço, mesmo modelo/versão de IDE);
+2. Registra os runs em `eval/mcp_suite/runs/<modelo>-<ide>-<data>.jsonl`
+   (formato §2; um arquivo por par modelo/IDE/data);
+3. Lança na planilha:
+
+   ```bash
+   python -m evaluation.mcp_suite_ledger --runs eval/mcp_suite/runs/<modelo>-<ide>-<data>.jsonl \
+     --modelo <modelo> --ide <ide>
+   ```
+
+   A linha é idempotente pela chave `(modelo, ide, braço, run_file)` —
+   reexecutar substitui a linha anterior; header divergente aborta;
+4. Compara entre pares: colunas `task_success`, `mean_recall_at_k`,
+   `mean_hallucination_rate`, `tokens_proxy_total`, `p50/p95_ms`,
+   `mean_mcp_calls`; A×B por par vem do scorer (§4b, regra docs/11).
+
+Requisitos de replicação (o que torna a linha comparável):
+
+- mesmo artefato congelado `tasks.jsonl` (HEAD do SIGA no provenance);
+- mesmo modelo+versão e IDE+versão; sessão limpa por braço; sem acesso ao
+  GT pelo agente respondente;
+- `notas` registra desvios (ex.: versão da IDE, limitações do braço B).
+
+### Instruções de replicação rápidas (novo par modelo/IDE)
+
+```bash
+# 1. checkout do siga-teste no HEAD congelado; SIGA em ../ (somente leitura)
+# 2. braço A: IDE sem MCP → colar prompts 001–060, colher respostas
+# 3. braço B: mesma IDE com mcp/server.py via stdio (SIGA_MCP_TOKEN_FILE, rate 60/60s)
+# 4. montar o run JSONL no formato §2
+# 5. checar cegamente:  python -m evaluation.mcp_suite_check --all-answers <dir>
+# 6. score A/B:         python -m evaluation.mcp_suite_score
+# 7. lançar na planilha: python -m evaluation.mcp_suite_ledger --runs <run.jsonl> --modelo ... --ide ...
+```
+
+## 7. Segurança MCP (braço B)
+
+- Token de sessão via `SIGA_MCP_TOKEN_FILE`; sem token o servidor não sobe
+  (fail-closed, F14/ADR-024);
+- Rate limit 60 requisições/60s por token;
+- Cliente nunca importa o core; os 5 métodos via stdio.

@@ -1,0 +1,1 @@
+modelo,ide,braco,data,run_file,n_tasks,n_exact,n_partial,n_fail,task_success,mean_recall_at_k,mean_hallucination_rate,tokens_proxy_total,p50_ms,p95_ms,mean_mcp_calls,generated_at,notas
