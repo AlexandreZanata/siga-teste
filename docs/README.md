@@ -32,6 +32,7 @@ docs/20-mcp-qualquer-projeto.md
 docs/21-real-needle-training-benchmark.md
 docs/22-real-needle-training-runbook.md
 docs/23-jev-like-nano-controller.md
+docs/24-real-nano-jev-mcp-delivery.md
 ```
 
 Regras:

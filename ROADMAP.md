@@ -17,7 +17,8 @@ Fases obrigatórias em ordem (nenhuma começa sem o exit gate da anterior):
 13. `P12` Release local, privacidade, licença
 14. `P13` Evidência real: Needle 3 em JAX/CUDA na RTX 4060 + benchmark v2 não contaminado (`docs/21`)
 15. `P14` Controlador JEV-like: decisões tipadas, calibração, stop/escalada e economia e2e (`docs/23`)
+16. `P15` Integração de produto: nano + JEV-like + MCP real + edição verificada do SIGA (`docs/24`)
 
-Detalhes, tarefas `PXX-TYY`, validações e commits exatos: `.local/MASTER_PLAN.md` + `.local/phases/*.md`.
+As fases abertas P13–P15 usam o funil curto, os orçamentos e os critérios de parada de `docs/24-real-nano-jev-mcp-delivery.md`. Detalhes operacionais por tarefa continuam em `.local/MASTER_PLAN.md` + `.local/phases/*.md`.
 
 Definição de pronto e métrica central (`effective_token_reduction` com `task_success_delta`): `docs/10-siga-bench.md`, `docs/11-evaluation.md`, `docs/15-roadmap.md` (Phase 0).
