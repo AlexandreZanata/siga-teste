@@ -12,7 +12,7 @@ import re
 import unicodedata
 from pathlib import Path
 
-from retrieval.search import search_text
+from retrieval.search import _slice_globs, search_text
 
 STOPWORDS = frozenset(
     "a ao aos aquela aquelas aquele aqueles aquilo as ate com como da das de "
@@ -86,9 +86,10 @@ def broadened_terms(query: str) -> list[str]:
 def naive_locate(repo: str | Path, query: str, limit: int = 5) -> list[str]:
     """Top arquivos por nº de termos distintos que ocorrem (desempate: nome)."""
     root = Path(repo)
+    globs = _slice_globs(root)
     votes: dict[str, int] = {}
     for term in expanded_terms(query):
-        for hit in search_text(root, term, globs=["siga-ex/**", "sigaex/**"], limit=100):
+        for hit in search_text(root, term, globs=globs, limit=100):
             votes[hit["file"]] = votes.get(hit["file"], 0) + 1
     ranked = sorted(votes, key=lambda f: (-votes[f], f))
     return ranked[:limit]

@@ -152,7 +152,7 @@ def siga_locate(
                 for hit in primitives.search_text(
                     root,
                     text_term,
-                    globs=["siga-ex/**", "sigaex/**"] if (root / "siga-ex").is_dir() else None,
+                    globs=_locate_globs(root),
                     limit=limit,
                 ):
                     add_hit(hit["file"], None, "file", 0.5)
@@ -189,7 +189,7 @@ def siga_locate(
     if not ranked:
         tried = set(query_terms or [query])
         extras = [t for t in broadened_terms(query) if t not in tried]
-        globs = ["siga-ex/**", "sigaex/**"] if (root / "siga-ex").is_dir() else None
+        globs = _locate_globs(root)
         fb: dict[str, dict[str, Any]] = {}
         for term in extras:
             for hit in primitives.search_text(
@@ -211,3 +211,15 @@ def siga_locate(
         ranked = filter_by_module(ranked, module, root)[:limit]
 
     return ranked
+
+
+def _locate_globs(root: Path) -> list[str] | None:
+    """Globs de busca textual do locate (J02): derivados do perfil ativo.
+
+    Com sentinela SIGA reproduz byte a byte o hardcode antigo
+    (`["siga-ex/**", "sigaex/**"]`); sem, globs genéricos do perfil —
+    nunca `None` (repo inteiro) por acidente.
+    """
+    from retrieval.search import _slice_globs
+
+    return _slice_globs(root)

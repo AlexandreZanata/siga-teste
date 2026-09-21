@@ -5,6 +5,7 @@
   "test_globs": ["**/src/test/java/**/*.java"],
   "test_command": ["mvn", "-q", "test"],
   "module_discovery": "maven",
+  "scope_modules": ["siga-ex", "sigaex"],
   "symbol_strategy": "suffix",
   "symbol_suffixes": ["BL", "Controller", "DAO", "Service"],
   "bench_seed_tasks": ["locate", "trace", "impact", "history", "context"],

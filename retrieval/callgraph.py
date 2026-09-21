@@ -11,9 +11,15 @@ import subprocess
 from pathlib import Path
 
 from indexer.java_symbols import parse_file
-from retrieval.search import SLICE_MODULES, search_text
+from retrieval.search import search_text
 
-_JAVA_GLOBS = [f"{m}**/*.java" for m in SLICE_MODULES]
+
+def _java_globs(root: Path | None = None) -> list[str]:
+    """Globs `**/*.java` por módulo do escopo ativo (J02: era `SLICE_MODULES`;
+    com perfil SIGA ativo reproduz `[siga-ex**/*.java, sigaex**/*.java]`)."""
+    from retrieval.search import _current_scope
+
+    return [f"{m}**/*.java" for m in _current_scope()]
 
 
 def method_callees(java_path: str | Path, method_name: str) -> set[str]:
@@ -59,7 +65,7 @@ def defined_symbols(java_path: str | Path) -> list[str]:
 
 def find_callers(repo: str | Path, symbol: str, limit: int = 50) -> list[dict]:
     """Arquivos .java do slice com ocorrência word-boundary (exclui nada; chamador filtra)."""
-    return search_text(repo, symbol, globs=_JAVA_GLOBS, limit=limit)
+    return search_text(repo, symbol, globs=_java_globs(), limit=limit)
 
 
 def file_imports(java_path: str | Path) -> list[str]:
@@ -139,8 +145,11 @@ def impact_recall(repo: str | Path, commit_sha: str) -> dict:
     """
     from indexer.git_history import files_in_commit
 
+    from retrieval.search import _current_scope
+
+    scope = _current_scope()
     files = [f for f in files_in_commit(repo, commit_sha) if f.endswith(".java")]
-    in_slice = [f for f in files if f.startswith(SLICE_MODULES)]
+    in_slice = [f for f in files if f.startswith(scope)]
     if len(in_slice) < 2:
         return {"sha": commit_sha, "skipped": True, "reason": "<2 java do slice"}
     root = Path(repo)
@@ -171,8 +180,11 @@ def impact_recall_with_cochange(repo: str | Path, commit_sha: str, cochange_limi
     """
     from indexer.git_history import files_in_commit
 
+    from retrieval.search import _current_scope
+
+    scope = _current_scope()
     files = [f for f in files_in_commit(repo, commit_sha) if f.endswith(".java")]
-    in_slice = [f for f in files if f.startswith(SLICE_MODULES)]
+    in_slice = [f for f in files if f.startswith(scope)]
     if len(in_slice) < 2:
         return {"sha": commit_sha, "skipped": True, "reason": "<2 java do slice"}
     root = Path(repo)

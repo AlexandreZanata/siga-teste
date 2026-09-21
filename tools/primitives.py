@@ -252,10 +252,9 @@ def find_references(
     """Ocorrências de referência textual a símbolo no código."""
     root = Path(repo)
     if globs is None:
-        if (root / "siga-ex").is_dir():
-            globs = ["siga-ex/**", "sigaex/**"]
-        else:
-            globs = None
+        from retrieval.search import _slice_globs
+
+        globs = _slice_globs(root)
     return search.search_text(root, symbol, globs=globs, limit=limit)
 
 
@@ -268,10 +267,9 @@ def find_callers(
     """Chamadores estáticos de um símbolo no repositório."""
     root = Path(repo)
     if globs is None:
-        if (root / "siga-ex").is_dir():
-            globs = ["siga-ex/**/*.java", "sigaex/**/*.java"]
-        else:
-            globs = ["**/*.java"]
+        from retrieval.search import _slice_globs
+
+        globs = _slice_globs(root)
     return search.search_text(root, symbol, globs=globs, limit=limit)
 
 

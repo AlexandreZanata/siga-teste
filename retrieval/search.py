@@ -14,7 +14,30 @@ import shutil
 import subprocess
 from pathlib import Path
 
-SLICE_MODULES = ("siga-ex/", "sigaex/")
+from core.profile import DEFAULT_RUNTIME_GLOBS, active_profile
+
+# Escopo default do slice (SIGA). Com perfil ativo, o escopo vem de
+# `scope_modules` do `project.json` (docs/20 §2, J02/ADR-035) — este
+# módulo não conhece mais nomes de módulo de projeto algum.
+_DEFAULT_SCOPE_MODULES = ("siga-ex/", "sigaex/")
+
+# Alias de compatibilidade (usado por retrieval/callgraph e testes antigos).
+SLICE_MODULES = _DEFAULT_SCOPE_MODULES
+
+
+def _current_scope() -> tuple[str, ...]:
+    """Prefixos de escopo (com barra final) do perfil ativo."""
+    return active_profile().code_scope_modules() or _DEFAULT_SCOPE_MODULES
+
+
+def _slice_globs(root: Path) -> list[str]:
+    """Globs `<modulo>**` restritos ao escopo ativo (byte-compatível com o
+    hardcode `siga-ex/**, sigaex/**` quando o sentinela existe; globs
+    genéricos do perfil caso contrário — nunca repo inteiro por acidente)."""
+    scope = _current_scope()
+    if scope and all((root / m.rstrip("/")).is_dir() for m in scope):
+        return [f"{m}**" for m in scope]
+    return list(active_profile(root).code_globs) or list(DEFAULT_RUNTIME_GLOBS)
 
 FALLBACK_MAX_BYTES = 8 * 1024 * 1024
 
@@ -116,9 +139,9 @@ def _search_python(
 
 
 def _rank_file(path: str, pattern: str) -> tuple[int, int]:
-    """Determinístico: basename com o termo primeiro, slice antes do resto."""
+    """Determinístico: basename com o termo primeiro, escopo do slice antes do resto."""
     base = path.rsplit("/", 1)[-1].lower()
-    in_slice = 0 if any(m in path for m in SLICE_MODULES) else 1
+    in_slice = 0 if any(m in path for m in _current_scope()) else 1
     return (0 if pattern.lower() in base else 1, in_slice)
 
 
@@ -143,7 +166,7 @@ def find_files(repo: str | Path, name_part: str, limit: int = 20) -> list[str]:
 
 def find_references(repo: str | Path, symbol: str, limit: int = 20) -> list[dict]:
     """Ocorrências word-boundary do símbolo no slice (`rg -w`)."""
-    return search_text(repo, symbol, globs=["siga-ex/**", "sigaex/**"], limit=limit)
+    return search_text(repo, symbol, globs=_slice_globs(Path(repo)), limit=limit)
 
 
 def find_symbol(conn, name: str, limit: int = 20) -> list[dict]:
