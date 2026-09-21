@@ -31,6 +31,7 @@ docs/19-pos-treino-99-recall.md
 docs/20-mcp-qualquer-projeto.md
 docs/21-real-needle-training-benchmark.md
 docs/22-real-needle-training-runbook.md
+docs/23-jev-like-nano-controller.md
 ```
 
 Regras:

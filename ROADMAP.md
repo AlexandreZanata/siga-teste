@@ -16,6 +16,7 @@ Fases obrigatórias em ordem (nenhuma começa sem o exit gate da anterior):
 12. `P11` On-policy improvement + avaliação final
 13. `P12` Release local, privacidade, licença
 14. `P13` Evidência real: Needle 3 em JAX/CUDA na RTX 4060 + benchmark v2 não contaminado (`docs/21`)
+15. `P14` Controlador JEV-like: decisões tipadas, calibração, stop/escalada e economia e2e (`docs/23`)
 
 Detalhes, tarefas `PXX-TYY`, validações e commits exatos: `.local/MASTER_PLAN.md` + `.local/phases/*.md`.
 
