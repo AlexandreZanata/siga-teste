@@ -1,0 +1,149 @@
+[
+  {
+    "name": "siga_locate",
+    "description": "Localiza arquivos, símbolos e componentes de uma funcionalidade no repositório.",
+    "parameters": {
+      "type": "object",
+      "required": [
+        "query"
+      ],
+      "properties": {
+        "query": {
+          "type": "string",
+          "description": "Span da tarefa descrevendo a funcionalidade a localizar."
+        },
+        "kind": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "enum": [
+            "file",
+            "symbol",
+            "controller",
+            "entity",
+            "jsp",
+            "migration",
+            "test",
+            null
+          ],
+          "description": "Tipo opcional de componente a filtrar."
+        },
+        "limit": {
+          "type": "integer",
+          "minimum": 1,
+          "default": 10
+        }
+      },
+      "additionalProperties": false
+    }
+  },
+  {
+    "name": "siga_trace",
+    "description": "Traça o fluxo de execução endpoint→controller→negócio(BL)→entidade→persistência→view.",
+    "parameters": {
+      "type": "object",
+      "required": [
+        "symbol"
+      ],
+      "properties": {
+        "symbol": {
+          "type": "string",
+          "description": "Símbolo real de passo anterior a ser rastreado."
+        },
+        "depth": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 3,
+          "default": 2,
+          "description": "Profundidade do grafo (1 a 3 hops)."
+        }
+      },
+      "additionalProperties": false
+    }
+  },
+  {
+    "name": "siga_impact",
+    "description": "Calcula os efeitos e impacto estático de modificar arquivo/classe/método.",
+    "parameters": {
+      "type": "object",
+      "required": [
+        "target"
+      ],
+      "properties": {
+        "target": {
+          "type": "string",
+          "description": "Símbolo ou caminho real a inspecionar."
+        },
+        "hops": {
+          "type": "integer",
+          "minimum": 1,
+          "default": 1,
+          "description": "Raio de propagação de impacto."
+        }
+      },
+      "additionalProperties": false
+    }
+  },
+  {
+    "name": "siga_history",
+    "description": "Busca histórico Git, commits, diffs e co-alterações (CHANGED_WITH).",
+    "parameters": {
+      "type": "object",
+      "properties": {
+        "target": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "description": "Símbolo ou arquivo alvo."
+        },
+        "query": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "description": "Texto para buscar nas mensagens de commit."
+        },
+        "since": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "description": "Data limite inicial."
+        },
+        "limit": {
+          "type": "integer",
+          "minimum": 1,
+          "default": 10
+        }
+      },
+      "additionalProperties": false
+    }
+  },
+  {
+    "name": "siga_context",
+    "description": "Produz a cápsula de contexto mínima para a IA grande a partir de símbolos validados.",
+    "parameters": {
+      "type": "object",
+      "required": [
+        "symbols",
+        "task"
+      ],
+      "properties": {
+        "symbols": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "description": "Lista de símbolos âncora reais."
+        },
+        "task": {
+          "type": "string",
+          "description": "Descrição verbatim da tarefa."
+        }
+      },
+      "additionalProperties": false
+    }
+  }
+]

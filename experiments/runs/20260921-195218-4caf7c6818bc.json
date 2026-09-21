@@ -1,0 +1,27 @@
+{
+  "artifact_hash": "b41ced7695d63d1fb5336901cf5e4c2af0a37e5816795c561460b3ccfdb65b26",
+  "bench_version": "needle_val-temporal",
+  "dataset_version": "needle_val-v1-stage4-seed0",
+  "date": "2026-09-21T19:52:18+00:00",
+  "experiment_id": "20260921-195218-4caf7c6818bc",
+  "hardware": {
+    "cpu_count": 16,
+    "machine": "x86_64",
+    "python": "3.12.2",
+    "system": "Linux"
+  },
+  "index_version": "not-used-b1b2",
+  "latency": {
+    "p50_ms": 1458.1728814955568,
+    "p95_ms": 1859.6020632481666
+  },
+  "metrics": {
+    "schema_validity_rate": 1.0
+  },
+  "needle_depth": 20,
+  "needle_version": "cactus-needle 3.0.4",
+  "notes": "P13-T03 b2 stage=4 seed=0 status=completed; labels s\u00f3 no scorer; engine real sem simulador",
+  "siga_commit": "48610bd6504692ad3f2e99ef318beb84e2668fd6",
+  "sigateste_commit": "36b0e8a9e0fccd91d32fe3b33c2693e796de36b6",
+  "tool_version": "inference/siga_tools_schema.json"
+}

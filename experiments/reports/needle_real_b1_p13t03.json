@@ -1,0 +1,699 @@
+{
+  "task": "P13-T03",
+  "mode": "b1",
+  "label": "p13t03-smoke20L",
+  "status": "completed",
+  "abort_reason": null,
+  "model": {
+    "weights": "data/needle-real/runs/P13-T04/tuned-20L.cact",
+    "weights_sha256": "b41ced7695d63d1fb5336901cf5e4c2af0a37e5816795c561460b3ccfdb65b26",
+    "engine": "cactus-needle 3.0.4",
+    "engine_backend_note": "engine oficial cactus-needle: inferência CPU-only publicada pelo upstream; treino JAX gpu registrado no train_summary.json do run de treino; nenhum fallback silencioso"
+  },
+  "tools_schema": {
+    "path": "inference/siga_tools_schema.json",
+    "sha256": "07a81566bc293cdf7c2842830291eeb7816c8083c24b9546ce31f263a5596f1b"
+  },
+  "dataset": {
+    "path": "datasets/needle_export/needle_val.jsonl",
+    "sha256": "702e8b261453299edbb12a6f80a4b9ed215fc9175f8f854ac7f7a106625f21d0",
+    "split": "valid (temporal, test cego nunca lido)",
+    "stage": 16,
+    "seed": 0,
+    "counts": {
+      "tasks": 16,
+      "tool_tasks": 14,
+      "no_tool_tasks": 2
+    }
+  },
+  "profile": {
+    "max_new_tokens": 128,
+    "escalate_to": 256,
+    "timeout_s": 120.0,
+    "budget_s": 300.0
+  },
+  "preflight": {
+    "devices": [
+      "nvidia-modeset",
+      "nvidia-uvm",
+      "nvidia-uvm-tools",
+      "nvidia0",
+      "nvidiactl"
+    ],
+    "gpu_list": [
+      "GPU 0: NVIDIA GeForce RTX 4060 Laptop GPU (UUID: GPU-c8f47863-5bba-1c49-df93-c133c86ca190)"
+    ],
+    "gpu_query": "0, NVIDIA GeForce RTX 4060 Laptop GPU, GPU-c8f47863-5bba-1c49-df93-c133c86ca190, 580.173.02, 8188 MiB, 7804 MiB, 53",
+    "jax": {
+      "version": "0.11.2",
+      "backend": "gpu",
+      "devices": [
+        "cuda:0"
+      ]
+    }
+  },
+  "timing": {
+    "elapsed_s": 4.1,
+    "num_tasks": 16,
+    "num_done": 16,
+    "peak_rss_mb": 619.50390625
+  },
+  "checkpoint": "data/needle-real/runs/P13-T03/b1-p13t03-smoke20L.partial.jsonl",
+  "metrics": {
+    "counts": {
+      "tasks": 16,
+      "tool_tasks": 14,
+      "no_tool_tasks": 2
+    },
+    "tool_selection_accuracy": 0.42857142857142855,
+    "argument_exact_match": 0.07142857142857142,
+    "schema_validity_rate": 1.0,
+    "invalid_tool_call_rate": 0.0,
+    "no_tool_accuracy": 0.0,
+    "grounding_clean_rate": 0.75,
+    "timeout_count": 0,
+    "truncation_count": 0,
+    "escalated_count": 0,
+    "generations_max": 1,
+    "generations_mean": 1.0,
+    "latency_ms": {
+      "p50": 340.77253149007447,
+      "p95": 416.97081975871697,
+      "mean": 341.39393706027477
+    }
+  },
+  "predictions": [
+    {
+      "type": "call",
+      "success": true,
+      "tool": "siga_history",
+      "arguments": {
+        "query": "ExMovimentacao.java"
+      },
+      "reasoning": "'commits e co-alterações' -> query 'ExMovimentacao.java'; 'recentes' -> limit 10; 'do arquivo' -> target 'arquivo'.",
+      "confidence": null,
+      "schema_valid": true,
+      "is_invalid_call": false,
+      "invalid_reasons": [],
+      "grounding_violations": [],
+      "suppressed_calls": 0,
+      "error": null,
+      "error_code": null,
+      "timeout": false,
+      "truncated": false,
+      "escalated": false,
+      "generations": 1,
+      "max_new_tokens": 128,
+      "prefill_tps": 667.9,
+      "decode_tps": 365.6,
+      "peak_ram_mb": 615.2,
+      "latency_ms": 364.9096319859382,
+      "task_id": "val-091",
+      "expected_tool": "siga_history",
+      "expected_arguments": {
+        "target": "ExMovimentacao.java",
+        "limit": 5
+      },
+      "expected_sequence": [
+        "siga_history"
+      ],
+      "task_type": "tool"
+    },
+    {
+      "type": "call",
+      "success": true,
+      "tool": "siga_history",
+      "arguments": {
+        "target": "arquivo",
+        "query": "ExPreenchimento.java"
+      },
+      "reasoning": "histórico de commits y co-alterações; ahora consulta histórico de commits y co-alterações",
+      "confidence": null,
+      "schema_valid": true,
+      "is_invalid_call": false,
+      "invalid_reasons": [],
+      "grounding_violations": [],
+      "suppressed_calls": 0,
+      "error": null,
+      "error_code": null,
+      "timeout": false,
+      "truncated": false,
+      "escalated": false,
+      "generations": 1,
+      "max_new_tokens": 128,
+      "prefill_tps": 609.3,
+      "decode_tps": 327.9,
+      "peak_ram_mb": 615.2,
+      "latency_ms": 334.3101569917053,
+      "task_id": "val-092",
+      "expected_tool": "siga_history",
+      "expected_arguments": {
+        "target": "ExPreenchimento.java",
+        "limit": 5
+      },
+      "expected_sequence": [
+        "siga_history"
+      ],
+      "task_type": "tool"
+    },
+    {
+      "type": "call",
+      "success": true,
+      "tool": "siga_context",
+      "arguments": {
+        "symbols": [
+          "composite",
+          "composite",
+          "composite",
+          "composite"
+        ],
+        "task": "refatoração 3"
+      },
+      "reasoning": "historial: histórico de commits y co-alterações; ahora pide contexto de compacta con tareas específicas",
+      "confidence": null,
+      "schema_valid": true,
+      "is_invalid_call": false,
+      "invalid_reasons": [],
+      "grounding_violations": [
+        "siga_context.task"
+      ],
+      "suppressed_calls": 0,
+      "error": null,
+      "error_code": null,
+      "timeout": false,
+      "truncated": false,
+      "escalated": false,
+      "generations": 1,
+      "max_new_tokens": 128,
+      "prefill_tps": 599.3,
+      "decode_tps": 332.1,
+      "peak_ram_mb": 615.2,
+      "latency_ms": 396.45453801495023,
+      "task_id": "val-130",
+      "expected_tool": "siga_context",
+      "expected_arguments": {
+        "symbols": [
+          "ExDocumento",
+          "ExDocumentoController"
+        ],
+        "task": "Refatoração de documento"
+      },
+      "expected_sequence": [
+        "siga_context"
+      ],
+      "task_type": "tool"
+    },
+    {
+      "type": "call",
+      "success": true,
+      "tool": "siga_context",
+      "arguments": {
+        "symbols": [
+          "REL"
+        ],
+        "task": "relatividade geral de Albert Einstein"
+      },
+      "reasoning": "Historial: localizó ExMobilController. Nueva consulta: pide explicación de relación con una herramienta diferente.",
+      "confidence": null,
+      "schema_valid": true,
+      "is_invalid_call": false,
+      "invalid_reasons": [],
+      "grounding_violations": [],
+      "suppressed_calls": 0,
+      "error": null,
+      "error_code": null,
+      "timeout": false,
+      "truncated": false,
+      "escalated": false,
+      "generations": 1,
+      "max_new_tokens": 128,
+      "prefill_tps": 587.9,
+      "decode_tps": 209.9,
+      "peak_ram_mb": 614.9,
+      "latency_ms": 478.5196649900172,
+      "task_id": "val-108",
+      "expected_tool": null,
+      "expected_arguments": {},
+      "expected_sequence": [],
+      "task_type": "no-tool"
+    },
+    {
+      "type": "call",
+      "success": true,
+      "tool": "siga_trace",
+      "arguments": {
+        "symbol": "belo_horizonte"
+      },
+      "reasoning": "historial: histórico de commits y compacta; nueva consulta: previsão de tempo para una empezación específica",
+      "confidence": null,
+      "schema_valid": true,
+      "is_invalid_call": false,
+      "invalid_reasons": [],
+      "grounding_violations": [],
+      "suppressed_calls": 0,
+      "error": null,
+      "error_code": null,
+      "timeout": false,
+      "truncated": false,
+      "escalated": false,
+      "generations": 1,
+      "max_new_tokens": 128,
+      "prefill_tps": 634.2,
+      "decode_tps": 351.1,
+      "peak_ram_mb": 615.2,
+      "latency_ms": 289.95330797624774,
+      "task_id": "val-109",
+      "expected_tool": null,
+      "expected_arguments": {},
+      "expected_sequence": [],
+      "task_type": "no-tool"
+    },
+    {
+      "type": "call",
+      "success": true,
+      "tool": "siga_trace",
+      "arguments": {
+        "symbol": "ExRelatorioController",
+        "depth": 1
+      },
+      "reasoning": "symbol 'exRelatorioController' from query; depth 1 from 'profundidade 1'; tool siga_trace",
+      "confidence": null,
+      "schema_valid": true,
+      "is_invalid_call": false,
+      "invalid_reasons": [],
+      "grounding_violations": [],
+      "suppressed_calls": 0,
+      "error": null,
+      "error_code": null,
+      "timeout": false,
+      "truncated": false,
+      "escalated": false,
+      "generations": 1,
+      "max_new_tokens": 128,
+      "prefill_tps": 573.7,
+      "decode_tps": 313.6,
+      "peak_ram_mb": 614.9,
+      "latency_ms": 295.93751998618245,
+      "task_id": "val-045",
+      "expected_tool": "siga_trace",
+      "expected_arguments": {
+        "symbol": "ExRelatorioController",
+        "depth": 1
+      },
+      "expected_sequence": [
+        "siga_trace"
+      ],
+      "task_type": "tool"
+    },
+    {
+      "type": "call",
+      "success": true,
+      "tool": "siga_impact",
+      "arguments": {
+        "target": "REL",
+        "hops": 1
+      },
+      "reasoning": "Historial: localizó ExMobilController. Nueva consulta: pide impacto estático de modificar arquivo/classe/método.",
+      "confidence": null,
+      "schema_valid": true,
+      "is_invalid_call": false,
+      "invalid_reasons": [],
+      "grounding_violations": [],
+      "suppressed_calls": 0,
+      "error": null,
+      "error_code": null,
+      "timeout": false,
+      "truncated": false,
+      "escalated": false,
+      "generations": 1,
+      "max_new_tokens": 128,
+      "prefill_tps": 615.7,
+      "decode_tps": 345.3,
+      "peak_ram_mb": 614.9,
+      "latency_ms": 291.99331600102596,
+      "task_id": "val-066",
+      "expected_tool": "siga_impact",
+      "expected_arguments": {
+        "target": "ExTramiteBL"
+      },
+      "expected_sequence": [
+        "siga_impact"
+      ],
+      "task_type": "tool"
+    },
+    {
+      "type": "call",
+      "success": true,
+      "tool": "siga_impact",
+      "arguments": {
+        "target": "ExMobilController.java"
+      },
+      "reasoning": "historial: histórico de commits y compacta; nueva consulta: arquivo de contraseña específica, tool diferente",
+      "confidence": null,
+      "schema_valid": true,
+      "is_invalid_call": false,
+      "invalid_reasons": [],
+      "grounding_violations": [],
+      "suppressed_calls": 0,
+      "error": null,
+      "error_code": null,
+      "timeout": false,
+      "truncated": false,
+      "escalated": false,
+      "generations": 1,
+      "max_new_tokens": 128,
+      "prefill_tps": 679.8,
+      "decode_tps": 352.8,
+      "peak_ram_mb": 615.2,
+      "latency_ms": 275.9024889965076,
+      "task_id": "val-002",
+      "expected_tool": "siga_locate",
+      "expected_arguments": {
+        "query": "ExMobilController",
+        "kind": "controller"
+      },
+      "expected_sequence": [
+        "siga_locate"
+      ],
+      "task_type": "tool"
+    },
+    {
+      "type": "call",
+      "success": true,
+      "tool": "siga_context",
+      "arguments": {
+        "symbols": [
+          "exmarcadorb"
+        ],
+        "task": "Compactar compacta ExMobilController.java"
+      },
+      "reasoning": "turno 1: histórico de commits y compacta; turno 2: compacta ExMobilController.java; cambia target a ExMarcadorBL, mantiene hops y description",
+      "confidence": null,
+      "schema_valid": true,
+      "is_invalid_call": false,
+      "invalid_reasons": [],
+      "grounding_violations": [
+        "siga_context.task"
+      ],
+      "suppressed_calls": 0,
+      "error": null,
+      "error_code": null,
+      "timeout": false,
+      "truncated": false,
+      "escalated": false,
+      "generations": 1,
+      "max_new_tokens": 128,
+      "prefill_tps": 615.5,
+      "decode_tps": 367.0,
+      "peak_ram_mb": 615.2,
+      "latency_ms": 356.8226180213969,
+      "task_id": "val-068",
+      "expected_tool": "siga_impact",
+      "expected_arguments": {
+        "target": "ExMarcadorBL"
+      },
+      "expected_sequence": [
+        "siga_impact"
+      ],
+      "task_type": "tool"
+    },
+    {
+      "type": "call",
+      "success": true,
+      "tool": "siga_context",
+      "arguments": {
+        "symbols": [
+          "exblo"
+        ],
+        "task": "Fluxo arquitetural ExBL"
+      },
+      "reasoning": "turno 2: execução ExBL; turno 3: compacta ExMobilController.java; cambia task a 'Fluxo arquitetural ExBL' y cambia target a ExBL",
+      "confidence": null,
+      "schema_valid": true,
+      "is_invalid_call": false,
+      "invalid_reasons": [],
+      "grounding_violations": [
+        "siga_context.task"
+      ],
+      "suppressed_calls": 0,
+      "error": null,
+      "error_code": null,
+      "timeout": false,
+      "truncated": false,
+      "escalated": false,
+      "generations": 1,
+      "max_new_tokens": 128,
+      "prefill_tps": 774.0,
+      "decode_tps": 385.0,
+      "peak_ram_mb": 615.2,
+      "latency_ms": 325.2858830092009,
+      "task_id": "val-046",
+      "expected_tool": "siga_trace",
+      "expected_arguments": {
+        "symbol": "ExBL",
+        "depth": 2
+      },
+      "expected_sequence": [
+        "siga_trace"
+      ],
+      "task_type": "tool"
+    },
+    {
+      "type": "call",
+      "success": true,
+      "tool": "siga_context",
+      "arguments": {
+        "symbols": [
+          "exconfiguracaoBL"
+        ],
+        "task": "Analisar o impacto estático"
+      },
+      "reasoning": "turno 1: impacto ExBL; turno 2: chamadores ExBL; cambia target a ExConfiguracaoBL",
+      "confidence": null,
+      "schema_valid": true,
+      "is_invalid_call": false,
+      "invalid_reasons": [],
+      "grounding_violations": [],
+      "suppressed_calls": 0,
+      "error": null,
+      "error_code": null,
+      "timeout": false,
+      "truncated": false,
+      "escalated": false,
+      "generations": 1,
+      "max_new_tokens": 128,
+      "prefill_tps": 851.2,
+      "decode_tps": 383.8,
+      "peak_ram_mb": 615.2,
+      "latency_ms": 266.1999140109401,
+      "task_id": "val-067",
+      "expected_tool": "siga_impact",
+      "expected_arguments": {
+        "target": "ExConfiguracaoBL"
+      },
+      "expected_sequence": [
+        "siga_impact"
+      ],
+      "task_type": "tool"
+    },
+    {
+      "type": "call",
+      "success": true,
+      "tool": "siga_context",
+      "arguments": {
+        "symbols": [
+          "ArquivoExTipoDocumento.java"
+        ],
+        "task": "Analisar o impacto estático"
+      },
+      "reasoning": "Turno 2: commits e co-alterações; turno 3: co-alterações. Cambia target a ArquivoExTipoDocumento.java, manteniendo todos los parámetros.",
+      "confidence": null,
+      "schema_valid": true,
+      "is_invalid_call": false,
+      "invalid_reasons": [],
+      "grounding_violations": [],
+      "suppressed_calls": 0,
+      "error": null,
+      "error_code": null,
+      "timeout": false,
+      "truncated": false,
+      "escalated": false,
+      "generations": 1,
+      "max_new_tokens": 128,
+      "prefill_tps": 846.0,
+      "decode_tps": 394.0,
+      "peak_ram_mb": 615.2,
+      "latency_ms": 371.03384599322453,
+      "task_id": "val-090",
+      "expected_tool": "siga_history",
+      "expected_arguments": {
+        "target": "ExTipoDocumento.java",
+        "limit": 5
+      },
+      "expected_sequence": [
+        "siga_history"
+      ],
+      "task_type": "tool"
+    },
+    {
+      "type": "call",
+      "success": true,
+      "tool": "siga_locate",
+      "arguments": {
+        "query": "ExMobilController responsável",
+        "kind": "controller"
+      },
+      "reasoning": "Trace de execução obtenida; ahora localizar o controller ExMobilController responsável",
+      "confidence": null,
+      "schema_valid": true,
+      "is_invalid_call": false,
+      "invalid_reasons": [],
+      "grounding_violations": [],
+      "suppressed_calls": 0,
+      "error": null,
+      "error_code": null,
+      "timeout": false,
+      "truncated": false,
+      "escalated": false,
+      "generations": 1,
+      "max_new_tokens": 128,
+      "prefill_tps": 631.8,
+      "decode_tps": 320.7,
+      "peak_ram_mb": 614.9,
+      "latency_ms": 294.8883780045435,
+      "task_id": "val-000",
+      "expected_tool": "siga_locate",
+      "expected_arguments": {
+        "query": "ExMobilController",
+        "kind": "controller"
+      },
+      "expected_sequence": [
+        "siga_locate"
+      ],
+      "task_type": "tool"
+    },
+    {
+      "type": "call",
+      "success": true,
+      "tool": "siga_context",
+      "arguments": {
+        "symbols": [
+          "ExMobilController"
+        ],
+        "task": "Analisar o impacto estático"
+      },
+      "reasoning": "Turno 2: onde está definido. Turno 3: controller ExMobilController no módulo. Cambia query a ExMobilController, manteniendo todos los parámetros.",
+      "confidence": null,
+      "schema_valid": true,
+      "is_invalid_call": false,
+      "invalid_reasons": [],
+      "grounding_violations": [],
+      "suppressed_calls": 0,
+      "error": null,
+      "error_code": null,
+      "timeout": false,
+      "truncated": false,
+      "escalated": false,
+      "generations": 1,
+      "max_new_tokens": 128,
+      "prefill_tps": 609.7,
+      "decode_tps": 338.7,
+      "peak_ram_mb": 615.2,
+      "latency_ms": 386.98233899776824,
+      "task_id": "val-001",
+      "expected_tool": "siga_locate",
+      "expected_arguments": {
+        "query": "ExMobilController",
+        "kind": "controller"
+      },
+      "expected_sequence": [
+        "siga_locate"
+      ],
+      "task_type": "tool"
+    },
+    {
+      "type": "call",
+      "success": true,
+      "tool": "siga_context",
+      "arguments": {
+        "symbols": [
+          "ExFormaDocumentoController"
+        ],
+        "task": "Analisar o impacto estático"
+      },
+      "reasoning": "Turno 2: onde está definido. Turno 3: controller ExFormaDocumentoController no módulo. Cambia query a ExFormaDocumentoController, manteniendo todos los parámetros.",
+      "confidence": null,
+      "schema_valid": true,
+      "is_invalid_call": false,
+      "invalid_reasons": [],
+      "grounding_violations": [],
+      "suppressed_calls": 0,
+      "error": null,
+      "error_code": null,
+      "timeout": false,
+      "truncated": false,
+      "escalated": false,
+      "generations": 1,
+      "max_new_tokens": 128,
+      "prefill_tps": 793.7,
+      "decode_tps": 402.2,
+      "peak_ram_mb": 615.2,
+      "latency_ms": 347.23490598844364,
+      "task_id": "val-003",
+      "expected_tool": "siga_locate",
+      "expected_arguments": {
+        "query": "ExFormaDocumentoController",
+        "kind": "controller"
+      },
+      "expected_sequence": [
+        "siga_locate"
+      ],
+      "task_type": "tool"
+    },
+    {
+      "type": "call",
+      "success": true,
+      "tool": "siga_context",
+      "arguments": {
+        "symbols": [
+          "ExTramiteBL"
+        ],
+        "task": "Fluxo arquitetural execução"
+      },
+      "reasoning": "Turno 2: fluxo arquitetural execução. Turno 3: ExTramiteBL execução. Cambia query a 'fluxo arquitetural execução', manteniendo todos los parámetros.",
+      "confidence": null,
+      "schema_valid": true,
+      "is_invalid_call": false,
+      "invalid_reasons": [],
+      "grounding_violations": [
+        "siga_context.task"
+      ],
+      "suppressed_calls": 0,
+      "error": null,
+      "error_code": null,
+      "timeout": false,
+      "truncated": false,
+      "escalated": false,
+      "generations": 1,
+      "max_new_tokens": 128,
+      "prefill_tps": 799.4,
+      "decode_tps": 383.2,
+      "peak_ram_mb": 615.2,
+      "latency_ms": 385.87448399630375,
+      "task_id": "val-047",
+      "expected_tool": "siga_trace",
+      "expected_arguments": {
+        "symbol": "ExTramiteBL",
+        "depth": 2
+      },
+      "expected_sequence": [
+        "siga_trace"
+      ],
+      "task_type": "tool"
+    }
+  ],
+  "harness": {
+    "real_needle_eval_sha256": "519804679b0b4360538a92cc0e114480cf34eb228b28ed18db569037ba3fbdf3",
+    "needle_real_sha256": "33871f3b49201218ec72458860015e9ba0a1d06cc08d626886c39c386e63cc49"
+  }
+}

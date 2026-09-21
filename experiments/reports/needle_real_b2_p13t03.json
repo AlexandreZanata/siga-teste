@@ -1,0 +1,307 @@
+{
+  "task": "P13-T03",
+  "mode": "b2",
+  "label": "p13t03-smoke20L",
+  "status": "completed",
+  "abort_reason": null,
+  "model": {
+    "weights": "data/needle-real/runs/P13-T04/tuned-20L.cact",
+    "weights_sha256": "b41ced7695d63d1fb5336901cf5e4c2af0a37e5816795c561460b3ccfdb65b26",
+    "engine": "cactus-needle 3.0.4",
+    "engine_backend_note": "engine oficial + cinco callables reais (tools SIGA read-only); inferência CPU-only do upstream registrada; treino real em JAX gpu"
+  },
+  "tools_schema": {
+    "path": "inference/siga_tools_schema.json",
+    "sha256": "07a81566bc293cdf7c2842830291eeb7816c8083c24b9546ce31f263a5596f1b"
+  },
+  "dataset": {
+    "path": "datasets/needle_export/needle_val.jsonl",
+    "sha256": "702e8b261453299edbb12a6f80a4b9ed215fc9175f8f854ac7f7a106625f21d0",
+    "split": "valid (temporal, test cego nunca lido)",
+    "stage": 4,
+    "seed": 0,
+    "counts": {
+      "tasks": 4
+    }
+  },
+  "profile": {
+    "max_steps": 3,
+    "max_new_tokens": 128,
+    "timeout_s": 120.0,
+    "budget_s": 120.0,
+    "extra_site_used": true
+  },
+  "preflight": {
+    "devices": [
+      "nvidia-modeset",
+      "nvidia-uvm",
+      "nvidia-uvm-tools",
+      "nvidia0",
+      "nvidiactl"
+    ],
+    "gpu_list": [
+      "GPU 0: NVIDIA GeForce RTX 4060 Laptop GPU (UUID: GPU-c8f47863-5bba-1c49-df93-c133c86ca190)"
+    ],
+    "gpu_query": "0, NVIDIA GeForce RTX 4060 Laptop GPU, GPU-c8f47863-5bba-1c49-df93-c133c86ca190, 580.173.02, 8188 MiB, 7804 MiB, 53",
+    "jax": {
+      "version": "0.11.2",
+      "backend": "gpu",
+      "devices": [
+        "cuda:0"
+      ]
+    }
+  },
+  "timing": {
+    "elapsed_s": 6.27,
+    "num_tasks": 4,
+    "num_done": 4,
+    "peak_rss_mb": 624.46875
+  },
+  "checkpoint": "data/needle-real/runs/P13-T03/b2-p13t03-smoke20L.partial.jsonl",
+  "metrics": {
+    "counts": {
+      "tasks": 4
+    },
+    "sequence_success_rate": 0.25,
+    "first_tool_accuracy": 0.5,
+    "unknown_tool_count": 0,
+    "tool_error_count": 0,
+    "calls_total": 7,
+    "calls_mean": 1.75,
+    "timeout_count": 0,
+    "schema_validity_rate": 1.0,
+    "latency_ms": {
+      "p50": 1458.1728814955568,
+      "p95": 1859.6020632481666,
+      "mean": 1566.3745324927731
+    }
+  },
+  "predictions": [
+    {
+      "type": "respond",
+      "success": true,
+      "tool": null,
+      "arguments": {},
+      "reasoning": "Result shows business logic empty. User asked for info, so respond with concrete values.",
+      "confidence": null,
+      "schema_valid": true,
+      "is_invalid_call": false,
+      "invalid_reasons": [],
+      "grounding_violations": [],
+      "suppressed_calls": 0,
+      "error": null,
+      "error_code": null,
+      "timeout": false,
+      "truncated": false,
+      "escalated": false,
+      "generations": 2,
+      "max_new_tokens": 128,
+      "prefill_tps": 520.1,
+      "decode_tps": 339.2,
+      "peak_ram_mb": 615.5,
+      "latency_ms": 1423.822669981746,
+      "executed_calls": 1,
+      "max_steps": 3,
+      "tool_sequence": [
+        "siga_trace"
+      ],
+      "tool_calls": [
+        {
+          "name": "siga_trace",
+          "arguments": {
+            "symbol": "ExRelatorioController",
+            "depth": 1
+          },
+          "ok": true,
+          "error": null
+        }
+      ],
+      "task_id": "val-045",
+      "expected_tool": "siga_trace",
+      "expected_arguments": {
+        "symbol": "ExRelatorioController",
+        "depth": 1
+      },
+      "expected_sequence": [
+        "siga_trace"
+      ],
+      "task_type": "tool"
+    },
+    {
+      "type": "call",
+      "success": true,
+      "tool": "siga_locate",
+      "arguments": {
+        "query": "ExMobilController"
+      },
+      "reasoning": "Tengo el nombre exacto del os.ex.com.ar y el teléfono. localiza con query 'ExMobilController'.",
+      "confidence": null,
+      "schema_valid": true,
+      "is_invalid_call": false,
+      "invalid_reasons": [],
+      "grounding_violations": [],
+      "suppressed_calls": 0,
+      "error": null,
+      "error_code": null,
+      "timeout": false,
+      "truncated": false,
+      "escalated": false,
+      "generations": 4,
+      "max_new_tokens": 128,
+      "prefill_tps": 641.7,
+      "decode_tps": 343.7,
+      "peak_ram_mb": 615.5,
+      "latency_ms": 1925.329696998233,
+      "executed_calls": 3,
+      "max_steps": 3,
+      "tool_sequence": [
+        "siga_locate",
+        "siga_locate",
+        "siga_locate"
+      ],
+      "tool_calls": [
+        {
+          "name": "siga_locate",
+          "arguments": {
+            "query": "ExMobilController"
+          },
+          "ok": true,
+          "error": null
+        },
+        {
+          "name": "siga_locate",
+          "arguments": {
+            "query": "ExMobilController"
+          },
+          "ok": true,
+          "error": null
+        },
+        {
+          "name": "siga_locate",
+          "arguments": {
+            "query": "ExMobilController"
+          },
+          "ok": true,
+          "error": null
+        }
+      ],
+      "task_id": "val-000",
+      "expected_tool": "siga_locate",
+      "expected_arguments": {
+        "query": "ExMobilController",
+        "kind": "controller"
+      },
+      "expected_sequence": [
+        "siga_locate"
+      ],
+      "task_type": "tool"
+    },
+    {
+      "type": "respond",
+      "success": true,
+      "tool": null,
+      "arguments": {},
+      "reasoning": "El usuario preguntó por el estado y el estado. Respondo con los valores concretos de los resultados.",
+      "confidence": null,
+      "schema_valid": true,
+      "is_invalid_call": false,
+      "invalid_reasons": [],
+      "grounding_violations": [],
+      "suppressed_calls": 0,
+      "error": null,
+      "error_code": null,
+      "timeout": false,
+      "truncated": false,
+      "escalated": false,
+      "generations": 3,
+      "max_new_tokens": 128,
+      "prefill_tps": 764.4,
+      "decode_tps": 402.3,
+      "peak_ram_mb": 615.5,
+      "latency_ms": 1487.145471997792,
+      "executed_calls": 2,
+      "max_steps": 3,
+      "tool_sequence": [
+        "siga_locate",
+        "siga_locate"
+      ],
+      "tool_calls": [
+        {
+          "name": "siga_locate",
+          "arguments": {
+            "query": "ExMobilController"
+          },
+          "ok": true,
+          "error": null
+        },
+        {
+          "name": "siga_locate",
+          "arguments": {
+            "query": "exMobilController"
+          },
+          "ok": true,
+          "error": null
+        }
+      ],
+      "task_id": "val-108",
+      "expected_tool": null,
+      "expected_arguments": {},
+      "expected_sequence": [],
+      "task_type": "no-tool"
+    },
+    {
+      "type": "call",
+      "success": true,
+      "tool": "siga_impact",
+      "arguments": {
+        "target": "SigaEx"
+      },
+      "reasoning": "El error indica que el usuario no especificó una búsqueda. El usuario quiere verificar el estado de la búsqueda anterior. Llamo a siga_impact con el target 'SigaEx'.",
+      "confidence": null,
+      "schema_valid": true,
+      "is_invalid_call": false,
+      "invalid_reasons": [],
+      "grounding_violations": [],
+      "suppressed_calls": 0,
+      "error": null,
+      "error_code": null,
+      "timeout": false,
+      "truncated": false,
+      "escalated": false,
+      "generations": 4,
+      "max_new_tokens": 128,
+      "prefill_tps": 804.8,
+      "decode_tps": 405.9,
+      "peak_ram_mb": 615.5,
+      "latency_ms": 1429.2002909933217,
+      "executed_calls": 3,
+      "max_steps": 3,
+      "tool_sequence": [
+        "siga_locate"
+      ],
+      "tool_calls": [
+        {
+          "name": "siga_locate",
+          "arguments": {
+            "query": "ExTramiteBL"
+          },
+          "ok": true,
+          "error": null
+        }
+      ],
+      "task_id": "val-066",
+      "expected_tool": "siga_impact",
+      "expected_arguments": {
+        "target": "ExTramiteBL"
+      },
+      "expected_sequence": [
+        "siga_impact"
+      ],
+      "task_type": "tool"
+    }
+  ],
+  "harness": {
+    "real_needle_eval_sha256": "519804679b0b4360538a92cc0e114480cf34eb228b28ed18db569037ba3fbdf3",
+    "needle_real_sha256": "33871f3b49201218ec72458860015e9ba0a1d06cc08d626886c39c386e63cc49"
+  }
+}
