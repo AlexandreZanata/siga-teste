@@ -9,6 +9,8 @@ Nunca alterar o clone do SIGA em `../` — ele é somente leitura (branch `desen
 - **Base:** trabalhar somente em `siga-teste`. Nunca editar, mover ou commitar nada fora dele. `git status` no repo pai (`../`) deve continuar sem modificações rastreadas (apenas `siga-teste/` untracked é esperado).
 - **Commits locais e atômicos:** cada tarefa concluída gera exatamente um commit local atômico após todos os gates passarem, dentro de `siga-teste`.
 - **Padrão de commit:** Conventional Commits (`type(scope): descrição`), mensagem exata definida na tarefa.
+- **Lifecycle 1:1 preservado:** cada microtarefa usa 1 issue, 1 branch `task/PXX-TYY-slug`, 1 commit atômico e 1 PR. Falha posterior do CI vira microtarefa corretiva vinculada à mesma issue/PR ou issue própria quando o escopo mudar.
+- **CI remoto assíncrono:** os gates locais são o critério para concluir o ciclo e criar o PR. Depois do push/PR autorizado, registrar URL e SHA e **não aguardar, não fazer polling e não bloquear a próxima microtarefa pelo GitHub Actions**. A próxima tarefa começa em novo ciclo e branch/worktree isolado. A proteção da `main` continua decidindo quando o merge é permitido; nunca mesclar CI vermelho.
 - **Proibição de push/publicação:** nunca executar `git push`, criar PR, tag ou release sem autorização humana explícita. Publicação remota é decisão humana.
 - **Proibição de operações destrutivas:** proibido `git reset --hard`, `git clean -fd`, `--force`, `--no-verify`.
 - **Limpeza:** antes de alterar, confirmar `git status --short` limpo dentro de `siga-teste`. Ao final, limpo.
@@ -45,6 +47,8 @@ make test-unit
 
 Quando `Makefile` ganhar gates (`test-integration`, `test-contract`, `verify`), executar os pertinentes. Gate inexistente falha explícito, nunca sucesso falso.
 
+O CI remoto repete estes gates como rede de segurança, mas não é uma espera ativa do agente. Não usar `gh run watch`, loops de polling ou pausas aguardando CI. Se uma falha remota for informada em ciclo posterior, tratá-la como evidência nova e abrir/executar a correção atômica correspondente.
+
 - Python: `ruff check` (ou `black --check`) + `pytest -q`.
 - Medições do SIGA: somente scripts read-only em `scripts/` (ex.: contar arquivos, mapear `pom.xml`). Nunca escrever em `../`.
 - Benchmark/dataset nunca contaminados: splits temporais Git, holdout isolado em `datasets/benchmark/`.
@@ -54,3 +58,4 @@ Quando `Makefile` ganhar gates (`test-integration`, `test-contract`, `verify`), 
 - Ler `.local/README.md`, `.local/MASTER_PLAN.md`, `.local/PROGRESS.md` (próxima tarefa), abrir somente a fase atual em `.local/phases/`.
 - `.local/` é ignorado pelo Git (`*`). Nunca `git add -f .local/`.
 - Registrar em `.local/PROGRESS.md`: ID, hash curto, data, comandos e resultado. Sem commit seguinte no mesmo turno.
+- Quando houver PR autorizado, registrar issue/branch/PR/SHA e encerrar o ciclo sem esperar o CI; o ciclo seguinte pode começar imediatamente em isolamento Git.

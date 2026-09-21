@@ -2,6 +2,8 @@
 
 > Formato e comandos Needle em `docs/00 §1.5`; dados em `docs/07`/`docs/08`; bench em `docs/10`. Decisões em ADR resumido.
 
+> **Correção de escopo (P13-T00):** P07/P08 validaram export, harness e simulações determinísticas, não pesos treinados. O protocolo executável para treino Needle 3 real em JAX/CUDA na RTX 4060, benchmark novo e critérios de evidência está em `docs/21-real-needle-training-benchmark.md`. Nenhuma métrica produzida por `evaluation.NeedleTunedModel` conta como resultado neural real.
+
 ## ADR-025 — Val-loss tracking determinístico para os próximos LoRAs (F15)
 
 - **Decision:** cada treino de LoRA registra a curva real por época em `training/val_loss.py` (`ValLossTracker`: `{step, train_loss, val_loss, timestamp}` UTC validado) e recebe veredito determinístico de `analyze_curve`: tendência por regressão linear de mínimos quadrados sobre a **cauda** (padrão 5 pontos, ajustável), `overfit_gap` = val − train na cauda e veredito `continue`/`stop_overfitting`/`add_data` (val subindo → parar; platô com gap > 0.10 → adicionar dados; caso restante → continuar). O run é gravado via `experiments.log.new_run` (provenance completa: `siga_commit`, `sigateste_commit`, dataset/needle/depth, `artifact_hash`) em `experiments/runs/<id>.json`, e `experiments/reports/val_loss_tracking.json` agrega o histórico comparável entre LoRAs. Só stdlib; relógio injetável para reprodutibilidade.

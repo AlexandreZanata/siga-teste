@@ -17,7 +17,7 @@ from pathlib import Path
 from core.profile import DEFAULT_RUNTIME_GLOBS, active_profile
 
 # Escopo default do slice (SIGA). Com perfil ativo, o escopo vem de
-# `scope_modules` do `project.json` (docs/20 §2, J02/ADR-035) — este
+# `scope_modules` do `project.json` (docs/20 §2, J02/ADR-037) — este
 # módulo não conhece mais nomes de módulo de projeto algum.
 _DEFAULT_SCOPE_MODULES = ("siga-ex/", "sigaex/")
 

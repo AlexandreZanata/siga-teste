@@ -1,4 +1,4 @@
-"""Testes do J02 — runtime dirigido pelo perfil (docs/20 §2/§5, ADR-035).
+"""Testes do J02 — runtime dirigido pelo perfil (docs/20 §2/§5, ADR-037).
 
 Cobre:
 - perfil default neutro e resolução env > sentinela > default (fail-closed);

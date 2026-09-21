@@ -15,6 +15,7 @@ Fases obrigatórias em ordem (nenhuma começa sem o exit gate da anterior):
 11. `P10` MCP/API para agentes externos
 12. `P11` On-policy improvement + avaliação final
 13. `P12` Release local, privacidade, licença
+14. `P13` Evidência real: Needle 3 em JAX/CUDA na RTX 4060 + benchmark v2 não contaminado (`docs/21`)
 
 Detalhes, tarefas `PXX-TYY`, validações e commits exatos: `.local/MASTER_PLAN.md` + `.local/phases/*.md`.
 

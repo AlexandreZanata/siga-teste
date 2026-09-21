@@ -29,6 +29,8 @@ Pós-slice (fora da Phase 0, cada um com gate próprio):
 docs/18-mcp-eval-suite.md
 docs/19-pos-treino-99-recall.md
 docs/20-mcp-qualquer-projeto.md
+docs/21-real-needle-training-benchmark.md
+docs/22-real-needle-training-runbook.md
 ```
 
 Regras:

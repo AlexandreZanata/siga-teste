@@ -162,4 +162,39 @@ Formato por decisão: Decision / Reason / Alternatives / Advantages / Disadvanta
 - **Validate:** `tests/test_j01_core_chassis.py` (18 testes; 24 módulos do pom e
   contagens 673/834 coerentes com o INDEX do G06); `make verify` verde.
 
+## ADR-035 — Treino real Needle 3 local na RTX 4060, fail-closed sem CUDA
+
+- **Date:** 2026-09-21
+- **Status:** aceito como plano (`P13-T00`); execução começa em `P13-T01`.
+- **Decision:** separar formalmente simulador, Needle base real, Needle tuned real e sistema e2e. A trilha primária usa `cactus-needle[train,gpu]` (JAX/CUDA) na RTX 4060 Laptop detectada por PCI. O agente só inicia treino quando `nvidia-smi`, `/dev/nvidia*` e `jax.devices()` comprovarem a mesma GPU; fallback silencioso para CPU é proibido. Um benchmark v2 temporal e cego será congelado antes do primeiro LoRA real. Relatórios anteriores baseados em `evaluation.NeedleTunedModel` são infraestrutura/simulação, não evidência neural.
+- **Reason:** a auditoria encontrou a GPU física (`AD107M`, PCI `10de:28a0`) e módulos NVIDIA carregados, mas `nvidia-smi` falha, device nodes não aparecem e não há engine/pesos Needle no projeto. O H06 já registrava `engine_available=false`; avançar diretamente para treino produziria números sem prova do backend. A documentação oficial atual do Needle usa JAX/Flax/Optax e o extra `[train,gpu]`, não PyTorch.
+- **Alternatives:** continuar simulando depth/dataset por hash (rejeitado: não mede modelo); CPU como fallback automático (rejeitado: mascara erro de acesso e invalida comparação de hardware); Cactus Platform como caminho primário (rejeitado: envia dados/consome quota e foge do requisito local; permanece baseline opcional mediante autorização).
+- **Advantages:** evidência auditável de GPU→adapter→`.cact`→inferência; nenhum score recebe o rótulo `real` sem hash de pesos e backend; a RTX 4060 é usada como compute node enquanto a iGPU pode renderizar o desktop.
+- **Disadvantages:** exige ação humana para modo gráfico/driver e reboot; dataset/bench precisam ser refeitos porque o gold H06 é bench-derived; três seeds e benchmarks cegos aumentam o tempo experimental.
+- **Risks:** VRAM real ainda não medida; mitigado por busca de batch 1→16 e bloqueio se batch 1 falhar. Pressão atual de RAM/swap; mitigada por gate de ≥12 GiB disponíveis. Mudança de API/versão do Needle; mitigada por lock e smoke antes do dataset completo.
+- **Validate:** `docs/21-real-needle-training-benchmark.md`; no P13-T01, `hardware_preflight.json` deve provar GPU JAX ou registrar `BLOCKED` sem treino.
+
+## ADR-036 — CI remoto assíncrono sem remover gates ou proteção da main
+
+- **Date:** 2026-09-21
+- **Status:** aceito (`P13-T00`, política operacional).
+- **Decision:** gates locais completos concluem a microtarefa. Mantém-se 1 issue, 1 branch, 1 commit e 1 PR por tarefa; depois do push/PR autorizado, o agente registra URL/SHA e encerra sem `gh run watch`, polling ou espera pelo GitHub Actions. A próxima microtarefa pode começar em novo ciclo e branch/worktree isolado. A proteção da `main` e o check remoto continuam obrigatórios para merge; CI vermelho conhecido nunca é mesclado e vira correção atômica posterior.
+- **Reason:** esperar ativamente o CI duplica os mesmos gates locais e serializa trabalho que pode avançar isoladamente. O valor do CI é validar ambiente limpo/remoto e proteger o merge, não manter o agente ocioso.
+- **Alternatives:** remover CI/proteção (rejeitado: perde defesa em checkout limpo); aguardar cada run (rejeitado: latência sem trabalho); acumular várias tarefas na mesma branch (rejeitado: destrói lifecycle 1:1).
+- **Advantages:** menor tempo ocioso, mesmo histórico por issue/PR e mesma proteção de merge.
+- **Disadvantages:** uma falha remota pode chegar depois de outra tarefa ter começado; exige isolamento Git e priorização da correção.
+- **Risks:** derivar nova branch de commit ainda não integrado; mitigado escolhendo explicitamente a base e registrando dependência entre PRs. Ignorar CI vermelho; mitigado por proibir merge e criar correção vinculada.
+- **Validate:** `AGENTS.md` e `.local/README.md` proíbem polling; branch protection do ADR-027 permanece ativa; cada `PROGRESS` registra URL/SHA sem afirmar CI verde antes da evidência.
+
 > Novas decisões entram aqui via tarefas com `docs(...): ...` e referência à fase.
+## ADR-037 — Runtime de busca dirigido pelo perfil (chassi genérico, docs/20)
+
+- **Date:** 2026-09-21
+- **Status:** aceito (J02, docs/20 §2/§5).
+- **Decision:** o escopo de busca do runtime vem do perfil ativo — `scope_modules` do `project.json`, resolvido por `$PROJECT_PROFILE` → `profiles/<projeto>/project.json` detectado no checkout (walk-up; ambíguo = fail-closed) → default neutro. `retrieval/search.py` (priorização de ranking + `find_references`), `retrieval/callgraph.py` (globs Java + filtro de slice), `retrieval/baseline.py` (`naive_locate`), `tools/primitives.py` (`find_references`/`find_callers`) e os fallbacks do `tools/siga_locate.py` consomem `core.profile`; nenhum nome de projeto no código do runtime.
+- **Reason:** último hardcode do SIGA no runtime (constante de slice + globs de módulo) impedia o DoD docs/20 — um segundo projeto não poderia instanciar o chassi. `code_globs` do perfil permanece no papel de cobertura (J01); o escopo de busca é papel exclusivo de `scope_modules`.
+- **Alternatives:** sentinela de projeto no core (rejeitado: viola a boundary do J01 — nome de projeto no chassi); sentinela ao lado da raiz (rejeitado: layout frágil); duplicar a API por projeto (rejeitado: divergência).
+- **Advantages:** byte-compatibilidade comprovada para o SIGA (valores do perfil reproduzem o comportamento anterior; `make verify` verde); segundo projeto instancia apenas um JSON; busca sem globs permanece `rg` verbatim (repo inteiro) com ranking escopo-primeiro.
+- **Disadvantages:** resolução do perfil depende de cwd/env — para servidores, o caminho recomendado é `$PROJECT_PROFILE` explícito no launch.
+- **Risks:** perfil errado silenciosamente ativo — mitigado por fail-closed (`ProfileError` para env inválido e para múltiplos perfis) e testes de byte-compatibilidade sobre o clone real.
+- **Validate:** `tests/test_j02_profile_runtime.py` (13 testes: resolução, fail-closed, byte-compat, escopo dirigindo search/primitives/naive_locate/callgraph); `tests/test_j01_core_chassis.py` (isolamento do core intocado); `make verify` completo.
