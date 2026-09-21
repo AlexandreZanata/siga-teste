@@ -1,0 +1,28 @@
+{
+  "artifact_hash": "69a506dce529cd83f7a272eb6daa2cf1651056062f20cf96dc6eaf9b6e314d05",
+  "bench_version": "needle_val-temporal",
+  "dataset_version": "needle_export-v1 + benchmark_v2 (valida\u00e7\u00e3o temporal)",
+  "date": "2026-09-21T20:03:17+00:00",
+  "experiment_id": "20260921-200317-28c995493cd3",
+  "hardware": {
+    "cpu_count": 16,
+    "machine": "x86_64",
+    "python": "3.12.2",
+    "system": "Linux"
+  },
+  "index_version": "not-used-loads",
+  "latency": {
+    "p50_ms": 227.450551756192,
+    "p95_ms": 288.48505750647746
+  },
+  "metrics": {
+    "artifacts_verified": 1,
+    "exports_loaded": 2
+  },
+  "needle_depth": null,
+  "needle_version": "cactus-needle 3.0.4",
+  "notes": "P13-T04: consolida\u00e7\u00e3o + carregamento offline 20L/12L; nenhuma \u00e9poca nova",
+  "siga_commit": "48610bd6504692ad3f2e99ef318beb84e2668fd6",
+  "sigateste_commit": "18610156b27b9d49ab3f89168d0ba7e90d571fa6",
+  "tool_version": "inference/siga_tools_schema.json"
+}
